@@ -11,4 +11,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Library.Services\**\*.cs" />
+    <Compile Include="..\Library.Repository\**\*.cs" />
+    <Compile Include="..\Library.Domain\**\*.cs" />
+  </ItemGroup>
 </Project>

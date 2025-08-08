@@ -1,43 +1,15 @@
-public class LibraryService: ILibraryService{
-    private readonly List<Book> _books = new();
-
-    public Task<IEnumerable<Book>> GetBooksAsync()
+using Library.Domain;
+namespace Library.Services.Impl
+{
+    public class LibraryService : ILibraryService
     {
-        return Task.FromResult<IEnumerable<Book>>(_books);
-    }
-
-    public Task<Book?> GetBookByIdAsync(int id)
-    {
-        var book = _books.FirstOrDefault(b => b.Id == id);
-        return Task.FromResult(book);
-    }
-
-    public Task AddBookAsync(Book book)
-    {
-        _books.Add(book);
-        return Task.CompletedTask;
-    }
-
-    public Task UpdateBookAsync(Book book)
-    {
-        var existingBook = _books.FirstOrDefault(b => b.Id == book.Id);
-        if (existingBook != null)
+        public Task<IEnumerable<Book>> GetBooksAsync()
         {
-            existingBook.Title = book.Title;
-            existingBook.Author = book.Author;
-            existingBook.PublishedYear = book.PublishedYear;
+            return null;
         }
-        return Task.CompletedTask;
-    }
-
-    public Task DeleteBookAsync(int id)
-    {
-        var book = _books.FirstOrDefault(b => b.Id == id);
-        if (book != null)
+        public Task AddBookAsync(Book book)
         {
-            _books.Remove(book);
+            return null;
         }
-        return Task.CompletedTask;
     }
-
 }
