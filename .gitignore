@@ -1,0 +1,5 @@
+Library.API/bin
+Library.API/bin/Debug/net8.0
+Library.API/obj/
+Library.API/obj/*.*
+Library.API/bin/Debug/net8.0/Library.deps.json
