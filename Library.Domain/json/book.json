@@ -1,0 +1,82 @@
+[
+  {
+    "BookId": 101,
+    "Title": "The God of Small Things",
+    "Author": "Arundhati Roy",
+    "ISBN": "9780679781146",
+    "Genre": "Literary Fiction",
+    "PublicationYear": 1997
+  },
+  {
+    "BookId": 102,
+    "Title": "The White Tiger",
+    "Author": "Aravind Adiga",
+    "ISBN": "9781416562604",
+    "Genre": "Satirical Fiction",
+    "PublicationYear": 2008
+  },
+  {
+    "BookId": 103,
+    "Title": "Midnight's Children",
+    "Author": "Salman Rushdie",
+    "ISBN": "9780812976535",
+    "Genre": "Magical Realism",
+    "PublicationYear": 1981
+  },
+  {
+    "BookId": 104,
+    "Title": "A Suitable Boy",
+    "Author": "Vikram Seth",
+    "ISBN": "9780060975807",
+    "Genre": "Historical Fiction",
+    "PublicationYear": 1993
+  },
+  {
+    "BookId": 105,
+    "Title": "India After Gandhi",
+    "Author": "Ramachandra Guha",
+    "ISBN": "9780330505543",
+    "Genre": "Non-Fiction, History",
+    "PublicationYear": 2007
+  },
+  {
+    "BookId": 106,
+    "Title": "Train to Pakistan",
+    "Author": "Khushwant Singh",
+    "ISBN": "9780143065319",
+    "Genre": "Historical Fiction",
+    "PublicationYear": 1956
+  },
+  {
+    "BookId": 107,
+    "Title": "The Immortals of Meluha",
+    "Author": "Amish Tripathi",
+    "ISBN": "9789380658742",
+    "Genre": "Mythological Fiction",
+    "PublicationYear": 2010
+  },
+  {
+    "BookId": 108,
+    "Title": "The Great Indian Novel",
+    "Author": "Shashi Tharoor",
+    "ISBN": "9780140129219",
+    "Genre": "Political Satire",
+    "PublicationYear": 1989
+  },
+  {
+    "BookId": 109,
+    "Title": "The Guide",
+    "Author": "R. K. Narayan",
+    "ISBN": "9780141185449",
+    "Genre": "Literary Fiction",
+    "PublicationYear": 1958
+  },
+  {
+    "BookId": 110,
+    "Title": "Malice",
+    "Author": "Samit Basu",
+    "ISBN": "9789387692131",
+    "Genre": "Fantasy",
+    "PublicationYear": 2017
+  }
+]

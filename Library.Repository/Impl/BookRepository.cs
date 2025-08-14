@@ -9,23 +9,29 @@ namespace Library.Repository.Impl{
         {
             _connectionString = config.GetConnectionString("DefaultConnection") ?? "";
         }
-        public Task AddBookAsync(Book book)
+        public int AddBook(Book book)
         {
-            return null;
+            var sql = "INSERT INTO LibrarySchema.Books ("
+             + "Title, ISBN, PublicationYear, Genre) VALUES ("
+             + "@Title, @ISBN, @PublicationYear, @Genre);"
+             + "SELECT CAST(SCOPE_IDENTITY() AS INT);"; // this one is to fetch latest Identity;
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.QuerySingle<int>(sql, book);
+            }
         }
         public Task DeleteBookAsync(int id)
         {
             return null;
         }
-        public Task FetchBook()
+        public  IEnumerable<Book> FetchBook()
         {
-            var sql = "SELECT * FROM LibrarySchema.Book";
+            var sql = "SELECT * FROM LibrarySchema.Books";
             using (IDbConnection connection = new SqlConnection(_connectionString))
             {
-                var data = connection.Query(sql);
-                Console.WriteLine(data);
+                var data =  connection.Query<Book>(sql);
+                return data;
             }
-            return null;
         }
     }
 }

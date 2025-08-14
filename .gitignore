@@ -1,5 +1,15 @@
 Library.API/bin
-Library.API/bin/Debug/net8.0
+Library.API/bin/Debug/net8.0/
 Library.API/obj/
 Library.API/obj/*.*
 Library.API/bin/Debug/net8.0/Library.deps.json
+
+.fake
+Library.API/obj/Debug/net8.0/ref/Library.dll
+Library.API/obj/Debug/net8.0/Library.dll
+# Visual Studio
+.vs/
+
+# Binaries and build artifacts
+[Bb]in/
+[Oo]bj/

@@ -1,8 +1,8 @@
 using Library.Domain;
 namespace Library.Repository{
     public interface IBookRepository{
-        Task AddBookAsync(Book book);
+        public int AddBook(Book book);
         Task DeleteBookAsync(int id);
-        public Task FetchBook();
+        public IEnumerable<Book> FetchBook();
     }
 }

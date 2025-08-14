@@ -9,14 +9,13 @@ namespace Library.Services.Impl
         {
             _bookRepository = bookRepository;
         }
-        public Task<IEnumerable<Book>> GetBooksAsync()
+        public IEnumerable<Book> GetBooks()
         {
-            return null;
+            return _bookRepository.FetchBook();
         }
-        public Task AddBookAsync(Book book)
+        public int AddBook(Book book)
         {
-            _bookRepository.FetchBook();
-            return null;
+            return _bookRepository.AddBook(book);
         }
     }
 }

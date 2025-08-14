@@ -1,0 +1,2 @@
+1. How to install root certificate in database and use it for connection in code.
+2. Path vs Query Parameter
