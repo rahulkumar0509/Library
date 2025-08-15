@@ -9,6 +9,7 @@ namespace Library.API.Endpoints
         {
             var booksApi = app.MapGroup("/v1/books");
             var authorsAPi = app.MapGroup("/v1/authors");
+            var bookAuthors = app.MapGroup("/v1/bookAuthors");
 
             // books endpoints
             // booksApi.CacheOutput // how to cache the API
@@ -36,10 +37,27 @@ namespace Library.API.Endpoints
             });
 
             // authors end point
-            authorsAPi.MapPost("", (Author author) =>
+            authorsAPi.MapPost("", (Author author, ILibraryService libraryService) =>
             {
-                return Results.Ok();
+                int authorId = libraryService.AddAuthor(author);
+                if (authorId > 0)
+                {
+                    return Results.Ok(authorId);
+                }
+                else
+                {
+                    throw new Exception("Author couldn't added");
+                }
             });
+
+            authorsAPi.MapGet("", (ILibraryService libraryService) =>
+            {
+                var authors = libraryService.GetAuthors();
+                return Results.Ok(authors);
+            });
+
+            // bookAuthors.MapPost("", )
+            // add new book, author and their entry
         }
     }
 }

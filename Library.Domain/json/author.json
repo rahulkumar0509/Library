@@ -1,0 +1,62 @@
+[
+  {
+    "authorId": 1,
+    "firstName": "Arundhati",
+    "lastName": "Roy",
+    "biography": "Arundhati Roy is a celebrated Indian author and political activist, best known for her debut novel, The God of Small Things (1997). This novel, a poignant and complex story of fraternal twins navigating love and loss in Kerala, earned her the prestigious Booker Prize. Her writing is characterized by its lyrical prose and rich, descriptive detail. Beyond fiction, Roy is a fierce critic of globalization, neo-imperialism, and corporate power, with her non-fiction work tackling contentious political and social issues in India and globally."
+  },
+  {
+    "authorId": 2,
+    "firstName": "Aravind",
+    "lastName": "Adiga",
+    "biography": "Aravind Adiga is a journalist and novelist who rose to international fame with his debut novel, The White Tiger (2008). The book, a dark and satirical portrayal of India's class struggle and the stark divide between the wealthy and the poor, won the Man Booker Prize. His work often uses a cynical and witty narrative voice to explore themes of corruption, social mobility, and the darker side of modern Indian society."
+  },
+  {
+    "authorId": 3,
+    "firstName": "Salman",
+    "lastName": "Rushdie",
+    "biography": "Sir Ahmed Salman Rushdie is one of the most prominent and controversial writers of the post-colonial era. He gained widespread acclaim with his novel Midnight's Children (1981), a work of magical realism that chronicles India's transition from British colonial rule to independence. The novel won the Booker Prize and was later awarded the \"Booker of Bookers\" and \"Best of the Booker\" prizes. Rushdie's fiction is known for its blend of historical events with fantastical elements, and his use of a unique, multi-layered prose style."
+  },
+  {
+    "authorId": 4,
+    "firstName": "Vikram",
+    "lastName": "Seth",
+    "biography": "Vikram Seth is a versatile Indian novelist and poet. He is most famous for his epic novel, A Suitable Boy (1993), one of the longest novels ever published in a single volume. This sprawling work of historical fiction is set in post-partition India and explores the lives of four families. Seth's writing is celebrated for its elegance, humor, and detailed characterizations, and he is equally adept at writing poetry, fiction, and non-fiction."
+  },
+  {
+    "authorId": 5,
+    "firstName": "Ramachandra",
+    "lastName": "Guha",
+    "biography": "Ramachandra Guha is a renowned Indian historian and biographer. His most significant work is India After Gandhi: The History of the World's Largest Democracy (2007), a comprehensive and accessible account of India's history from 1947 to the early 21st century. Guha's writing is known for its meticulous research and engaging narrative style, making complex historical and political topics understandable to a general audience. He is also a leading public intellectual and a prolific writer on topics ranging from cricket to environmental history."
+  },
+  {
+    "authorId": 6,
+    "firstName": "Khushwant",
+    "lastName": "Singh",
+    "biography": "Khushwant Singh was a prolific Indian author, lawyer, journalist, and politician. His classic novel Train to Pakistan (1956) is a powerful and poignant account of the partition of India in 1947. Singh's writing is often direct and unsparing, tackling difficult subjects with a raw honesty. He was also a celebrated editor and columnist known for his wit, humor, and secularist views."
+  },
+  {
+    "authorId": 7,
+    "firstName": "Amish",
+    "lastName": "Tripathi",
+    "biography": "Amish Tripathi is an Indian author known for his mythological fiction. His debut novel, The Immortals of Meluha (2010), was the first book in his popular Shiva Trilogy. Tripathi's books reimagine ancient Hindu myths and gods as historical figures, making them accessible and exciting for modern readers. His work is characterized by fast-paced storytelling and the exploration of philosophical and religious themes."
+  },
+  {
+    "authorId": 8,
+    "firstName": "Shashi",
+    "lastName": "Tharoor",
+    "biography": "Shashi Tharoor is an Indian politician, diplomat, and acclaimed writer. A former Under-Secretary-General of the United Nations, he is a Member of Parliament. Tharoor has authored numerous books, including The Great Indian Novel (1989), a satirical reimagining of the Mahabharata set in the context of 20th-century Indian politics. His writing is often witty, erudite, and combines his deep knowledge of history and politics with a sophisticated literary style."
+  },
+  {
+    "authorId": 9,
+    "firstName": "R. K.",
+    "lastName": "Narayan",
+    "biography": "R. K. Narayan was one of the founding figures of Indian English literature. His works are primarily set in the fictional South Indian town of Malgudi, which serves as a microcosm of Indian society. His most famous novels include The Guide (1958), which won the Sahitya Akademi Award. Narayan's writing style is simple, gentle, and full of subtle irony, capturing the essence of everyday Indian life and its characters with great affection and insight."
+  },
+  {
+    "authorId": 10,
+    "firstName": "Samit",
+    "lastName": "Basu",
+    "biography": "Samit Basu is a contemporary Indian author known for his work in fantasy, science fiction, and graphic novels. He is considered one of the pioneers of Indian speculative fiction. His debut novel, The Simoqin Prophecies (2004), was a critical success, launching a trilogy. Basu's writing is fast-paced and imaginative, often blending elements of Indian mythology with modern sensibilities and sharp social commentary."
+  }
+]

@@ -24,6 +24,21 @@ namespace Library.API.Endpoints
             return Results.Empty;
         }
 
-        
+        [HttpPost("v2/Members")]
+        public IResult AddMember(Member member)
+        {
+            var memberId = _libraryService.AddMember(member);
+            if (memberId > 0)
+            {
+                return Results.Ok(memberId);
+            }
+            return Results.BadRequest();
+        }
+        [HttpGet("v2/Members")]
+        public IResult GetMembers()
+        {
+            return Results.Ok(_libraryService.GetMembers());
+        }
+
     }
 }

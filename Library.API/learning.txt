@@ -1,2 +1,32 @@
 1. How to install root certificate in database and use it for connection in code.
 2. Path vs Query Parameter
+
+Topic to complete
+-------------------------------------
+Logger
+Authentication
+Authorization
+Exception handling
+Token Management
+OAuth
+
+Microservices Architecture 
+Docker Image creation
+
+
+
+Cloud topics
+---------------------------------
+Cloud, DevOps, and Infrastructure
+Containerization and Orchestration: Master Docker for containerizing applications and Kubernetes for orchestrating them at scale. Understand concepts like Helm charts for deployment and managing secrets.
+
+Serverless Architecture: Learn to build event-driven backend services using Azure Functions or AWS Lambda. Understand the trade-offs and best practices for serverless.
+
+Infrastructure as Code (IaC): Gain experience with tools like Terraform or Bicep to define and manage cloud infrastructure programmatically.
+
+CI/CD Pipeline Mastery: Go beyond simple build/deploy steps. Focus on building robust pipelines that include automated testing, security scanning, and blue/green or canary deployments.
+
+Advance
+-----------------------------
+.NET Internals: Understand how the Garbage Collector (GC), Just-In-Time (JIT) compiler, and runtime host work. This knowledge is invaluable for advanced debugging and performance tuning.
+Customization of ASP.NET Core: Develop custom middleware, filters, and endpoint conventions to extend the ASP.NET Core pipeline in sophisticated ways.

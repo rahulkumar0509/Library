@@ -19,6 +19,9 @@ builder.Services.AddSwaggerGen();
 // service registration
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<IBookAuthorsRepository, BookAuthorsRepository>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 // Controller registration
 builder.Services.AddControllers();

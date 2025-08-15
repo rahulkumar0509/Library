@@ -4,5 +4,10 @@ namespace Library.Services{
     {
         IEnumerable<Book> GetBooks();
         int AddBook(Book book);
+        int AddAuthor(Author author);
+        IEnumerable<Author> GetAuthors();
+        public int AddBookAuthor(int bookId, int authorId);
+        public int AddMember(Member member);
+        public IEnumerable<Member> GetMembers();
     }   
 }
