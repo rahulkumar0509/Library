@@ -10,8 +10,8 @@ Exception handling
 Token Management
 OAuth
 
-Microservices Architecture 
-Docker Image creation
+Microservices Architecture
+Docker Image creation == tough
 
 
 
