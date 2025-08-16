@@ -1,4 +1,5 @@
 using Library.Domain;
+using Library.Domain.Dto;
 using Library.Repository;
 namespace Library.Services.Impl
 {
@@ -33,8 +34,10 @@ namespace Library.Services.Impl
             return _authorRepository.GetAuthors();
         }
 
-        public int AddBookAuthor(int bookId, int authorId)
+        public int AddBookAuthorDetails(BookInfo bookInfo)
         {
+            var bookId = _bookRepository.AddBook(bookInfo.Book);
+            var authorId = _authorRepository.AddAuthor(bookInfo.Author);
             return _bookAuthorsRepository.AddBookAuthor(bookId, authorId);
         }
 
@@ -44,9 +47,7 @@ namespace Library.Services.Impl
             {
                 throw new ArgumentException("Email cannot be null or empty.", nameof(member.Email));
             }
-
             Member existingMember = _memberRepository.GetMemberByEmail(member.Email);
-
             if (existingMember == null)
             {
                 return _memberRepository.AddMember(member);
@@ -56,7 +57,7 @@ namespace Library.Services.Impl
                 throw new InvalidOperationException($"User with email '{member.Email}' already exists.");
             }
         }
-        
+
         public IEnumerable<Member> GetMembers()
         {
             return _memberRepository.GetMembers();

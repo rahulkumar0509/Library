@@ -30,3 +30,55 @@ Advance
 -----------------------------
 .NET Internals: Understand how the Garbage Collector (GC), Just-In-Time (JIT) compiler, and runtime host work. This knowledge is invaluable for advanced debugging and performance tuning.
 Customization of ASP.NET Core: Develop custom middleware, filters, and endpoint conventions to extend the ASP.NET Core pipeline in sophisticated ways.
+
+
+
+Complex problems:
+--------------------------
+1. Find the most popular book(s): 
+This operation involves joining Book with a table that tracks checkouts or loans. You'd group the results by BookID and count the number of checkouts to find the book with the highest count.
+
+SQL
+
+SELECT B.Title, B.ISBN, COUNT(L.LoanID) AS NumberOfLoans
+FROM Books AS B
+JOIN Loans AS L ON B.BookID = L.BookID
+GROUP BY B.BookID
+ORDER BY NumberOfLoans DESC
+LIMIT 5;
+
+2. Identify overdue books and the members who have them: 
+This requires joining Book with Loan and Member tables. The condition would check if the loan's return date is null and if the due date is in the past.
+
+SQL
+
+SELECT M.MemberName, B.Title, L.DueDate
+FROM Loans AS L
+JOIN Members AS M ON L.MemberID = M.MemberID
+JOIN Books AS B ON L.BookID = B.BookID
+WHERE L.ReturnDate IS NULL AND L.DueDate < CURRENT_DATE;
+
+3. Find authors who have not published a book in the last five years: 
+This involves using a subquery or a LEFT JOIN. You'd find all authors, then filter out the ones whose most recent book was published within the last five years.
+
+SQL
+
+SELECT A.AuthorName
+FROM Authors AS A
+WHERE A.AuthorID NOT IN (
+    SELECT B.AuthorID
+    FROM Books AS B
+    WHERE B.PublicationYear >= YEAR(CURRENT_DATE) - 5
+);
+
+4. Find members who have read books from more than one genre: 
+This involves joining Member, Loan, and Book tables, then grouping by MemberID and counting the distinct genres they've borrowed.
+
+SQL
+
+SELECT M.MemberName, COUNT(DISTINCT B.Genre) AS NumberOfGenres
+FROM Members AS M
+JOIN Loans AS L ON M.MemberID = L.MemberID
+JOIN Books AS B ON L.BookID = B.BookID
+GROUP BY M.MemberID
+HAVING COUNT(DISTINCT B.Genre) > 1;

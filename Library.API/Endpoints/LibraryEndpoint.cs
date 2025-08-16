@@ -1,4 +1,5 @@
 using Library.Domain;
+using Library.Domain.Dto;
 using Library.Services;
 
 namespace Library.API.Endpoints
@@ -34,6 +35,11 @@ namespace Library.API.Endpoints
                 {
                     throw new Exception("Book failed to add in the table");
                 }
+            });
+
+            booksApi.MapPost("/details", (BookInfo bookInfo, ILibraryService libraryService) =>
+            {
+                libraryService.AddBookAuthorDetails(bookInfo);
             });
 
             // authors end point
