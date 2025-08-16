@@ -6,5 +6,6 @@ namespace Library.Repository
     {
         public int AddMember(Member member);
         public IEnumerable<Member> GetMembers();
+        public Member GetMemberByEmail(string email);
     }
 }

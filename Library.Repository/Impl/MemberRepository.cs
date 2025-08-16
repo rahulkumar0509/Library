@@ -32,5 +32,14 @@ namespace Library.Repository.Impl
                 return connection.Query<Member>(sql);
             }
         }
+
+        public Member GetMemberByEmail(string email)
+        {
+            var sql = "SELECT [MemberId] FROM LibrarySchema.Members WHERE Email = @email";
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.QueryFirst<Member>(sql, new {email = email});
+            }
+        }
     }
 }

@@ -40,8 +40,23 @@ namespace Library.Services.Impl
 
         public int AddMember(Member member)
         {
-            return _memberRepository.AddMember(member);
+            if (String.IsNullOrWhiteSpace(member.Email))
+            {
+                throw new ArgumentException("Email cannot be null or empty.", nameof(member.Email));
+            }
+
+            Member existingMember = _memberRepository.GetMemberByEmail(member.Email);
+
+            if (existingMember == null)
+            {
+                return _memberRepository.AddMember(member);
+            }
+            else
+            {
+                throw new InvalidOperationException($"User with email '{member.Email}' already exists.");
+            }
         }
+        
         public IEnumerable<Member> GetMembers()
         {
             return _memberRepository.GetMembers();
