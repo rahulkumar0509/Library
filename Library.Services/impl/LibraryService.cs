@@ -80,12 +80,13 @@ namespace Library.Services.Impl
                 throw new ArgumentException("Book details and MemberId must be valid.", nameof(bookRequest));
             }
 
+            // check if book is already rented;
+
             // var author = _authorRepository.GetAuthorByName(bookRequest.AuthorFullName);
             var book = _bookRepository.GetBookByDetails(bookRequest.BookIsbn, bookRequest.BookTitle);
             Loan loan = new Loan();
             loan.MemberId = bookRequest.MemberId;
             loan.BookId = book.BookId;
-            Console.WriteLine("newwwwwwwwwwww", loan.ToString());
             var loanJson = JsonSerializer.Serialize(loan);
             _logger.LogInformation("Loggin Loan Object: {loanJson}", loanJson);
             return _loanRepository.BorrowBook(loan);

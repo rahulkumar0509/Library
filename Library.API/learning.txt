@@ -3,7 +3,7 @@
 
 Topic to complete
 -------------------------------------
-Logger          -------------------------------------- start this--------------------------------------
+Logger          -------- start this-----------SERILOG----------DATADOG-----------------
 Authentication
 Authorization
 Exception handling
@@ -11,9 +11,30 @@ Token Management
 OAuth
 fluent api 
 LINQ
+stored procedure
+entity framework.
 
+
+REDIS 
+SYSTEM Design
 Microservices Architecture
 Docker Image creation == tough
+CI/CD Pipeline
+
+Cache the API request response
+
+Load Balancer and it's algorithms.
+Casandra DB speciality
+
+Docker 
+Kubernetes 
+
+2. Middleware
+You've already been using middleware without maybe realizing it (like app.UseRouting() or app.UseHttpsRedirection()). Understanding it fully is essential for building custom logic into the request pipeline.
+What it is: Middleware is a component that sits in an application's request pipeline to handle requests and responses. It's a key part of how ASP.NET Core processes HTTP traffic.
+Custom Middleware: You should learn how to create your own middleware to handle cross-cutting concerns like logging requests, handling exceptions, or performing custom authentication logic.
+
+Asynchronous Programming
 
 
 
