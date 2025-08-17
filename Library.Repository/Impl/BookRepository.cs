@@ -3,7 +3,8 @@ using Dapper;
 using Library.Domain;
 using Microsoft.Data.SqlClient;
 namespace Library.Repository.Impl{
-    public class BookRepository: IBookRepository {
+    public class BookRepository : IBookRepository
+    {
         private string _connectionString;
         public BookRepository(IConfiguration config)
         {
@@ -24,13 +25,21 @@ namespace Library.Repository.Impl{
         {
             return null;
         }
-        public  IEnumerable<Book> FetchBook()
+        public IEnumerable<Book> FetchBook()
         {
             var sql = "SELECT * FROM LibrarySchema.Books";
             using (IDbConnection connection = new SqlConnection(_connectionString))
             {
-                var data =  connection.Query<Book>(sql);
+                var data = connection.Query<Book>(sql);
                 return data;
+            }
+        }
+        public Book GetBookByDetails(string ISBN, string Title)
+        {
+            var sql = "SELECT * FROM LibrarySchema.Books WHERE ISBN = @ISBN AND Title = @Title";
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.QuerySingle<Book>(sql, new { ISBN, Title });
             }
         }
     }

@@ -6,5 +6,6 @@ namespace Library.Repository
     {
         public int AddAuthor(Author author);
         public IEnumerable<Author> GetAuthors();
+        public Author GetAuthorByName(string name);
     }
 }

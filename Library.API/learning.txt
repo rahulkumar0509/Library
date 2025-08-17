@@ -3,12 +3,14 @@
 
 Topic to complete
 -------------------------------------
-Logger
+Logger          -------------------------------------- start this--------------------------------------
 Authentication
 Authorization
 Exception handling
 Token Management
 OAuth
+fluent api 
+LINQ
 
 Microservices Architecture
 Docker Image creation == tough

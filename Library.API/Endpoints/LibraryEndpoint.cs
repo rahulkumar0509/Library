@@ -14,6 +14,11 @@ namespace Library.API.Endpoints
 
             // books endpoints
             // booksApi.CacheOutput // how to cache the API
+            booksApi.MapGet("/mostpopularbooks", ()=>
+            {
+                
+            });
+
             booksApi.MapGet("", (ILibraryService libraryService) =>
             {
                 var books = libraryService.GetBooks();

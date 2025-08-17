@@ -31,5 +31,14 @@ namespace Library.Repository.Impl
                 return connection.Query<Author>(sql);
             }
         }
+        public Author GetAuthorByName(string name)
+        {
+            // sql to find author by first + Last Name
+            var sql = "SELECT * FROM LibrarySchema.Authors WHERE FirstName + ' ' + LastName = @name;";
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.QuerySingle<Author>(sql, new {name = name});
+            }
+        }
     }
 }

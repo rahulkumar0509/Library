@@ -11,5 +11,6 @@ namespace Library.Services{
         public int AddBookAuthorDetails(BookInfo bookInfo);
         public int AddMember(Member member);
         public IEnumerable<Member> GetMembers();
+        public int BorrowBook(BorrowBook book);
     }   
 }

@@ -1,4 +1,5 @@
 using Library.Domain;
+using Library.Domain.Dto;
 using Library.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,11 @@ namespace Library.API.Endpoints
     public class LibraryController : ControllerBase
     {
         private ILibraryService _libraryService;
-        public LibraryController(ILibraryService libraryService)
+        private readonly ILogger<LibraryController> _logger;
+        public LibraryController(ILibraryService libraryService, ILogger<LibraryController> logger)
         {
             _libraryService = libraryService;
+            _logger = logger;
         }
 
         [HttpGet("/v2/Books")] // name is path parameter and mandatory
@@ -40,7 +43,17 @@ namespace Library.API.Endpoints
             return Results.Ok(_libraryService.GetMembers());
         }
 
-        // [HttpPost("")]
+        [HttpPost("v2/borrow-book")]
+        public IResult BorrowBook(BorrowBook borrowBook)
+        {
+            _logger.LogInformation("Borrow Book API started!");
+            var result = _libraryService.BorrowBook(borrowBook);
+            if (result > 0)
+            {
+                return Results.Created();
+            }
+            throw new InvalidOperationException("couldn't crate book transaction");
+        }
 
     }
 }
