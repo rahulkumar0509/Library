@@ -4,7 +4,11 @@
 Topic to complete
 -------------------------------------
 Logger          -------- start this-----------SERILOG----------DATADOG-----------------
-Authentication
+Authentication  
+-- ASP .NET CORE identity for Razor pages
+-- Token based , Best for APIs and SPAs like angular 
+    -- dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+    -- Add JwtBearer configuration in program.cs 
 Authorization
 Exception handling
 Token Management
@@ -12,7 +16,9 @@ OAuth
 fluent api 
 LINQ
 stored procedure
-entity framework.
+entity framework
+app.UseMiddleWare<>(); // app.UseAuthentication(); app.UseAuthorization(); are middleware added in program.cs
+
 
 
 REDIS 

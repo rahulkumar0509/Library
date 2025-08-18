@@ -72,7 +72,8 @@ namespace Library.Services.Impl
         public int BorrowBook(BorrowBook bookRequest)
         {
             // find author id
-            if(bookRequest == null){
+            if (bookRequest == null)
+            {
                 throw new ArgumentNullException("Borrow request can not be null");
             }
             if (String.IsNullOrEmpty(bookRequest.BookIsbn) || bookRequest.MemberId <= 0)
@@ -80,7 +81,8 @@ namespace Library.Services.Impl
                 throw new ArgumentException("Book details and MemberId must be valid.", nameof(bookRequest));
             }
 
-            // check if book is already rented;
+            // check if book is already rented; see if any record with isReturned false
+
 
             // var author = _authorRepository.GetAuthorByName(bookRequest.AuthorFullName);
             var book = _bookRepository.GetBookByDetails(bookRequest.BookIsbn, bookRequest.BookTitle);
@@ -90,6 +92,14 @@ namespace Library.Services.Impl
             var loanJson = JsonSerializer.Serialize(loan);
             _logger.LogInformation("Loggin Loan Object: {loanJson}", loanJson);
             return _loanRepository.BorrowBook(loan);
+        }
+        public int ReturnBook(int MemberId, int BookId)
+        {
+            if (MemberId > 0 && BookId > 0)
+            {
+                return _loanRepository.ReturnBook(MemberId, BookId);
+            }
+            return 0;
         }
     }
 }

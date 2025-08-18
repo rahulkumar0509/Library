@@ -55,5 +55,17 @@ namespace Library.API.Endpoints
             throw new InvalidOperationException("couldn't crate book transaction");
         }
 
+        [HttpPost("v2/return-books")]
+        public IActionResult ReturnBook(int MemberId, int BookId)
+        {
+            var result = _libraryService.ReturnBook(MemberId, BookId);
+            _logger.LogInformation("update command {result}", result);
+            // DateTime.UtcNow;
+            if (result > 0)
+            {
+                return NoContent();
+            }
+            return Conflict();
+        }
     }
 }

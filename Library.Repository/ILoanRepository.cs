@@ -6,5 +6,6 @@ namespace Library.Repository
     public interface ILoanRepository
     {
         public int BorrowBook(Loan loan);
+        public int ReturnBook(int MemberId, int BookId);
     }
 }

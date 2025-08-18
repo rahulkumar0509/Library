@@ -24,5 +24,13 @@ namespace Library.Repository.Impl
                 return connection.Execute(sql, loan);
             }
         }
+        public int ReturnBook(int MemberId, int BookId)
+        {
+            var sql = "UPDATE LibrarySchema.Loans SET isReturned = 1, ReturnDate = GETDATE() WHERE MemberId = @MemberId AND BookId = @BookId;";
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Execute(sql, new {MemberId, BookId});
+            }
+        }
     }
 } 
