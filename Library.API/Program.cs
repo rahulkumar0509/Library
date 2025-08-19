@@ -26,6 +26,7 @@ builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookAuthorsRepository, BookAuthorsRepository>();
 builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Controller registration
 builder.Services.AddControllers();

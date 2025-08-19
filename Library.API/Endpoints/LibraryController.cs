@@ -10,15 +10,20 @@ namespace Library.API.Endpoints
     {
         private ILibraryService _libraryService;
         private readonly ILogger<LibraryController> _logger;
-        public LibraryController(ILibraryService libraryService, ILogger<LibraryController> logger)
+        private readonly IJwtService _jwtService;
+        public LibraryController(ILibraryService libraryService, ILogger<LibraryController> logger, IJwtService jwtService)
         {
             _libraryService = libraryService;
             _logger = logger;
+            _jwtService = jwtService;
         }
 
         [HttpGet("/v2/Books")] // name is path parameter and mandatory
         public IResult GetBooks() // type is query parameter
         {
+            var token = _jwtService.GenerateAccessToken("rahul");
+            _logger.LogInformation($"token: {token}");
+            
             var books = _libraryService.GetBooks();
             if (books is not null)
             {
