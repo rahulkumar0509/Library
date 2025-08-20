@@ -1,10 +1,12 @@
 using Library.Domain;
 using Library.Domain.Dto;
 using Library.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Endpoints
 {
+    [Authorize]
     [ApiController]
     public class LibraryController : ControllerBase
     {
@@ -21,9 +23,6 @@ namespace Library.API.Endpoints
         [HttpGet("/v2/Books")] // name is path parameter and mandatory
         public IResult GetBooks() // type is query parameter
         {
-            var token = _jwtService.GenerateAccessToken("rahul");
-            _logger.LogInformation($"token: {token}");
-            
             var books = _libraryService.GetBooks();
             if (books is not null)
             {

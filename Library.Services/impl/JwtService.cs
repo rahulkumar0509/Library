@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
+using System.Security;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Library.Services.Impl
@@ -52,7 +54,30 @@ namespace Library.Services.Impl
         }
         public bool VerifyToken(string token)
         {
-            return false;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenParameter = new TokenValidationParameters
+            { 
+                ValidIssuer = _config["JWT:Issuer"],
+                ValidAudience = _config["JWT:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]))
+            };
+            SecurityToken ValidatedToken;
+            try
+            {
+                var principal = tokenHandler.ValidateToken(token, tokenParameter, out ValidatedToken);
+                _logger.LogInformation($"Token type: ${principal.Identity.AuthenticationType}");
+                return true;
+            }
+            catch (SecurityTokenException)
+            {
+                _logger.LogInformation("Token is not valid");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Couldn't validate the token {ex.Message}"); 
+                return false;
+            }
         }
     }
 }

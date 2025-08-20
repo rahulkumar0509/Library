@@ -1,3 +1,5 @@
+docker run --name sql_server_container -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=rahul@123" -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latestdotnet --list-runtimes
+
 1. How to install root certificate in database and use it for connection in code.
 2. Path vs Query Parameter
 
@@ -8,10 +10,16 @@ Authentication
 -- ASP .NET CORE identity for Razor pages
 -- Token based , Best for APIs and SPAs like angular 
     -- dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
-    -- Add JwtBearer configuration in program.cs 
+    -- Add JwtBearer configuration in program.cs // this is to Authorize the token 
+    -- expose and API to create token
 Authorization
+    -- Add [Authorize] for ApiController and .RequireAuthorization for the minimal endpoint.
+    -- check the expiry of the token
+    -- check the user id 
+    -- Add custome middleware to validate the token and check the principal
 Exception handling
 Token Management
+    -- Refresh token
 OAuth
 fluent api 
 LINQ
@@ -29,7 +37,7 @@ CI/CD Pipeline
 
 Cache the API request response
 
-Load Balancer and it's algorithms.
+Load Balancer and it's algorithms. 
 Casandra DB speciality
 
 Docker 

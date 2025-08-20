@@ -27,7 +27,7 @@ namespace Library.API.Endpoints
                     return Results.Ok(books);
                 }
                 return Results.Empty;
-            });
+            }).RequireAuthorization();
 
             booksApi.MapPost("", (Book book, ILibraryService libraryService) =>
             {
@@ -65,7 +65,7 @@ namespace Library.API.Endpoints
             {
                 var authors = libraryService.GetAuthors();
                 return Results.Ok(authors);
-            });
+            }).RequireAuthorization();
 
             // bookAuthors.MapPost("", )
             // add new book, author and their entry
