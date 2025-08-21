@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 using Library.Domain;
 using Library.Domain.Dto;
@@ -71,35 +72,51 @@ namespace Library.Services.Impl
 
         public int BorrowBook(BorrowBook bookRequest)
         {
-            // find author id
             if (bookRequest == null)
             {
                 throw new ArgumentNullException("Borrow request can not be null");
             }
-            if (String.IsNullOrEmpty(bookRequest.BookIsbn) || bookRequest.MemberId <= 0)
+            if (String.IsNullOrEmpty(bookRequest.BookIsbn) || bookRequest.MemberId < 1)
             {
                 throw new ArgumentException("Book details and MemberId must be valid.", nameof(bookRequest));
             }
 
-            // check if book is already rented; see if any record with isReturned false
-
-
-            // var author = _authorRepository.GetAuthorByName(bookRequest.AuthorFullName);
             var book = _bookRepository.GetBookByDetails(bookRequest.BookIsbn, bookRequest.BookTitle);
+            if (book.CopiesAvailable == 0)
+            {
+                _logger.LogError("Book is not available to rent!");
+                return 0;
+            }
+        
             Loan loan = new Loan();
             loan.MemberId = bookRequest.MemberId;
             loan.BookId = book.BookId;
             var loanJson = JsonSerializer.Serialize(loan);
             _logger.LogInformation("Loggin Loan Object: {loanJson}", loanJson);
-            return _loanRepository.BorrowBook(loan);
-        }
-        public int ReturnBook(int MemberId, int BookId)
-        {
-            if (MemberId > 0 && BookId > 0)
+            try
             {
-                return _loanRepository.ReturnBook(MemberId, BookId);
+                _loanRepository.BorrowBook(loan);
+                _bookRepository.UpdateBookAvailability(book.CopiesAvailable - 1, book.BookId);
+                return 1;
             }
-            return 0;
+            catch (Exception ex)
+            {
+                _logger.LogError($"SQL Error: {MethodBase.GetCurrentMethod().Name} : {ex.Message}");
+                return 0;
+            }
+        }
+        public int ReturnBook(BorrowBook returnBook)
+        {
+            var book = _bookRepository.GetBookByDetails(returnBook.BookIsbn, returnBook.BookTitle);
+            if (returnBook.MemberId > 0 && book.BookId > 0)
+            {
+                var returned = _loanRepository.ReturnBook(returnBook.MemberId, book.BookId);
+                if (returned > 0)
+                {
+                    _bookRepository.UpdateBookAvailability(book.CopiesAvailable, book.BookId);
+                }
+            }
+            return 1;
         }
     }
 }

@@ -42,5 +42,14 @@ namespace Library.Repository.Impl{
                 return connection.QuerySingle<Book>(sql, new { ISBN, Title });
             }
         }
+
+        public void UpdateBookAvailability(int Copies, int BookId) // Task return type is only for Async operation
+        {
+            var sql = "UPDATE LibrarySchema.Books SET CopiesAvailable = @Copies WHERE BookId = @BookId";
+            using (IDbConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Execute(sql, new { Copies, BookId });
+            }
+        }
     }
 }

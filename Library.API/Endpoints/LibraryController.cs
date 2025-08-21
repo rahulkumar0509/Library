@@ -60,9 +60,9 @@ namespace Library.API.Endpoints
         }
 
         [HttpPost("v2/return-books")]
-        public IActionResult ReturnBook(int MemberId, int BookId)
+        public IActionResult ReturnBook(BorrowBook returnBook)
         {
-            var result = _libraryService.ReturnBook(MemberId, BookId);
+            var result = _libraryService.ReturnBook(returnBook);
             _logger.LogInformation("update command {result}", result);
             // DateTime.UtcNow;
             if (result > 0)

@@ -74,7 +74,7 @@ app.MapControllers();
 app.MapLibraryEndpoint();
 
 // middleware is singleton context, so define all the Scoped services in invoke mthod instead of constructor.
-app.UseLibraryAuthenticationMiddleware();
+// app.UseLibraryAuthenticationMiddleware();
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();

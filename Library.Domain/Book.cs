@@ -14,6 +14,7 @@ namespace Library.Domain
         public int PublicationYear { get; set; }
         [StringLength(50)]
         public string? Genre { get; set; }
+        public int CopiesAvailable { get; set; }
         
         // [InverseProperty("Book")]
         // public ICollection<Loan> Loans { get; set; } = new List<Loan>();
