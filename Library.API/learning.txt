@@ -5,6 +5,8 @@ docker run --name sql_server_container -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=
 
 Topic to complete
 -------------------------------------
+Minimal API
+MVC API 
 Logger          -------- start this-----------SERILOG----------DATADOG-----------------
 Authentication  
 -- ASP .NET CORE identity for Razor pages
@@ -18,22 +20,33 @@ Authorization
     -- check the user id 
     -- Add custome middleware to validate the token and check the principal
 Exception handling
+    -- Global Exception
+        -- Use IExceptionHandler Interface with TryHandleAsync 
+        -- Use Custome Middleware to handle the exception.
 Token Management
+    -- Create token
+    -- Verify token
     -- Refresh token
+
+Rate limiting Middleware -- NEXT
+    -- theory 
+
 OAuth
 Fluent api && LINQ
-stored procedure
+stored procedure -- NEXT 
 entity framework
 app.UseMiddleWare<>(); // app.UseAuthentication(); app.UseAuthorization(); are middleware added in program.cs
 
+performance optimization
 
-REDIS 
+REDIS -- Caching technique -- NEXT
 SYSTEM Design
 Microservices Architecture
-Docker Image creation == tough
 CI/CD Pipeline
 
 Cache the API request response
+    -- In Memory Caching
+    -- Output Caching
 
 Docker 
 Kubernetes 

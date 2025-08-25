@@ -36,7 +36,6 @@ namespace Library.API.Middleware
                 return;
             }
             string authHeader = context.Request.Headers["Authorization"].FirstOrDefault().Split(" ")[1];
-            Console.WriteLine($"header token {authHeader}", authHeader);
             if (String.IsNullOrEmpty(authHeader))
             {
                 _logger.LogError("Invalid token!");

@@ -17,7 +17,6 @@ namespace Library.Repository.Impl
             using (IDbConnection connection = new SqlConnection(_connectionString))
             {
                 var sql = "INSERT INTO LibrarySchema.Members (FirstName, LastName, Email, RegistrationDate) VALUES (@FirstName, @LastName, @Email, @RegistrationDate); SELECT CAST(SCOPE_IDENTITY() AS INT);";
-
                 var memberId = connection.QuerySingle<int>(sql, member);
                 Console.WriteLine(memberId);
                 return memberId;
@@ -35,10 +34,11 @@ namespace Library.Repository.Impl
 
         public Member GetMemberByEmail(string email)
         {
-            var sql = "SELECT [MemberId] FROM LibrarySchema.Members WHERE Email = @email";
+            Console.WriteLine($"Email: {email}");
+            var sql = "SELECT * FROM LibrarySchema.Members WHERE Email = @email";
             using (IDbConnection connection = new SqlConnection(_connectionString))
             {
-                return connection.QueryFirst<Member>(sql, new {email = email});
+                return connection.QueryFirstOrDefault<Member>(sql, new {email}); // Use QueryFirstOrDefault instead of Query or QueryFirst in case of WHERE clause;
             }
         }
     }
