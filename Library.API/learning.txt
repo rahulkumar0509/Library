@@ -34,7 +34,7 @@ Rate limiting Middleware -- NEXT
 OAuth
 Fluent api && LINQ
 stored procedure -- NEXT 
-entity framework
+entity framework -- NEXT 
 app.UseMiddleWare<>(); // app.UseAuthentication(); app.UseAuthorization(); are middleware added in program.cs
 
 performance optimization
@@ -50,6 +50,8 @@ Cache the API request response
 
 Docker 
 Kubernetes 
+
+Angular Unit testing
 
 Load Balancer and it's algorithms. 
 Casandra DB speciality

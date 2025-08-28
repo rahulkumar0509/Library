@@ -23,7 +23,7 @@ namespace Library.API.Middleware
         public async Task Invoke(HttpContext context, IJwtService jwtService)
         {
             _logger.LogInformation("inside middleware");
-            if (context.Request.Path.StartsWithSegments("/v2/Login"))
+            if (context.Request.Path.StartsWithSegments("/v2/Login") || context.Request.Path.StartsWithSegments("/swagger"))
             {
                 await _requestDelegate(context);
                 return;

@@ -1,0 +1,12 @@
+=========================================================================GITHUB==ACTIONS============================================================================
+GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline. 
+You can create workflows that run tests whenever you push a change to your repository, or that deploy merged pull requests to production.
+
+Workflows are defined in the .github/workflows directory in a repository. 
+A repository can have multiple workflows, each of which can perform a different set of tasks such as:
+
+    Building and testing pull requests
+    Deploying your application every time a release is created
+    Adding a label whenever a new issue is opened
+
+https://docs.github.com/en/actions/get-started/understand-github-actions 
