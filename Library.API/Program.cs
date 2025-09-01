@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Library.API.Middleware;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +44,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// cors policy 
+builder.Services.AddCors(Options =>
+{
+    Options.AddPolicy("AngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // service registration
 builder.Services.AddScoped<ILibraryService, LibraryService>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
@@ -56,6 +69,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddProblemDetails(); // It works as fallback plan for UseExceptionHandler so it is mandatory. When you call builder.Services.AddProblemDetails(), the framework adds its own default IExceptionHandler implementation to the dependency injection container. This handler is a built-in component of the ASP.NET Core framework designed to automatically generate RFC 9457-compliant error responses. You don't need to manually create or configure these services; they are part of the framework's internal plumbing for standardized error handling.
 builder.Services.AddExceptionHandler<LibraryExceptionHandler>();
+builder.Services.AddDbContext<LibraryDbContext>(option=>option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Logging
 builder.Logging.ClearProviders();
@@ -98,6 +112,7 @@ if (app.Environment.IsDevelopment())
 //     Console.WriteLine(JsonSerializer.Serialize(header).ToString());
 //     await next(context);
 // });
+app.UseCors("AngularApp");
 app.UseExceptionHandler(); // Must add .AddProblemDetails()
 app.UseHttpsRedirection();
 app.MapControllers();

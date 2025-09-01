@@ -1,11 +1,13 @@
 using System.Reflection;
 using Library.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Endpoints
 {
     [ApiController]
+    [EnableCors("AngularApp")]
     public class LoginController : ControllerBase
     {
         private IJwtService _jwtService;

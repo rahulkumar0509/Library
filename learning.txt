@@ -6,6 +6,8 @@ docker run --name sql_server_container -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=
 Topic to complete
 -------------------------------------
 Minimal API
+IEnumerable Vs IQueryable In LINQ
+
 MVC API 
 Logger          -------- start this-----------SERILOG----------DATADOG-----------------
 Authentication  
@@ -18,11 +20,11 @@ Authorization
     -- Add [Authorize] for ApiController and .RequireAuthorization for the minimal endpoint.
     -- check the expiry of the token
     -- check the user id 
-    -- Add custome middleware to validate the token and check the principal
+    -- Add custom middleware to validate the token and check the principal
 Exception handling
     -- Global Exception
         -- Use IExceptionHandler Interface with TryHandleAsync 
-        -- Use Custome Middleware to handle the exception.
+        -- Use Custom Middleware to handle the exception.
 Token Management
     -- Create token
     -- Verify token
@@ -31,11 +33,13 @@ Token Management
 Rate limiting Middleware -- NEXT
     -- theory 
 
-OAuth
-Fluent api && LINQ
+OAuth2.0 
+Fluent API && LINQ
 stored procedure -- NEXT 
 entity framework -- NEXT 
 app.UseMiddleWare<>(); // app.UseAuthentication(); app.UseAuthorization(); are middleware added in program.cs
+
+Allow CORS & effects 
 
 performance optimization
 
@@ -48,10 +52,8 @@ Cache the API request response
     -- In Memory Caching
     -- Output Caching
 
-Docker 
+Docker -- done
 Kubernetes 
-
-Angular Unit testing
 
 Load Balancer and it's algorithms. 
 Casandra DB speciality
@@ -131,4 +133,4 @@ FROM Members AS M
 JOIN Loans AS L ON M.MemberID = L.MemberID
 JOIN Books AS B ON L.BookID = B.BookID
 GROUP BY M.MemberID
-HAVING COUNT(DISTINCT B.Genre) > 1;
+HAVING COUNT(DISTINCT B.Genre) > 1; 

@@ -69,6 +69,11 @@ namespace Library.Services.Impl
         {
             return _memberRepository.GetMembers();
         }
+        
+        public IEnumerable<Member> GetMembers(DateOnly date)
+        {
+            return _memberRepository.GetMembers(date);
+        }
 
         public int BorrowBook(BorrowBook bookRequest)
         {
@@ -87,7 +92,7 @@ namespace Library.Services.Impl
                 _logger.LogError("Book is not available to rent!");
                 return 0;
             }
-        
+
             Loan loan = new Loan();
             loan.MemberId = bookRequest.MemberId;
             loan.BookId = book.BookId;

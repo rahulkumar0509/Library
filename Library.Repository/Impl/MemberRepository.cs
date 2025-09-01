@@ -8,9 +8,13 @@ namespace Library.Repository.Impl
     public class MemberRepository : IMemberRepository
     {
         private string _connectionString;
-        public MemberRepository(IConfiguration configuration)
+        ILogger<MemberRepository> _logger;
+        private LibraryDbContext _context;
+        public MemberRepository(IConfiguration configuration, LibraryDbContext context, ILogger<MemberRepository> logger)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection") ?? "";
+            _context = context;
+            _logger = logger;
         }
         public int AddMember(Member member)
         {
@@ -38,8 +42,18 @@ namespace Library.Repository.Impl
             var sql = "SELECT * FROM LibrarySchema.Members WHERE Email = @email";
             using (IDbConnection connection = new SqlConnection(_connectionString))
             {
-                return connection.QueryFirstOrDefault<Member>(sql, new {email}); // Use QueryFirstOrDefault instead of Query or QueryFirst in case of WHERE clause;
+                return connection.QueryFirstOrDefault<Member>(sql, new { email }); // Use QueryFirstOrDefault instead of Query or QueryFirst in case of WHERE clause;
             }
+        }
+
+        public IEnumerable<Member> GetMembers(DateOnly date)
+        {
+            var x = date.ToDateTime(TimeOnly.MinValue); // covert dateonly to datetime
+            _logger.LogInformation($"Registration Date: {x} and date: {date}");
+            // match sql server table date time value and c# datetime value
+            var y = _context.Members.Where(prop => prop.RegistrationDate.Date == x).ToList(); // .Date is to convert into Date
+            _context.SaveChanges();
+            return y;
         }
     }
 }
