@@ -46,7 +46,7 @@ namespace Library.Repository.Impl
             }
         }
 
-        public IEnumerable<Member> GetMembers(DateOnly date)
+        public IEnumerable<Member> GetMembers(DateOnly date) // use IQueryable
         {
             var x = date.ToDateTime(TimeOnly.MinValue); // covert dateonly to datetime
             _logger.LogInformation($"Registration Date: {x} and date: {date}");

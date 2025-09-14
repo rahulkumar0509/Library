@@ -29,41 +29,76 @@ Token Management
     -- Create token
     -- Verify token
     -- Refresh token
-
+app.UseMiddleWare<>(); // app.UseAuthentication(); app.UseAuthorization(); are middleware added in program.cs
+    -- done
 Rate limiting Middleware -- NEXT
     -- theory 
+Docker
+    -- done
+Allow CORS & effects 
+    -- done 
 
-OAuth2.0 
+OAuth2.0
+    -- see .txt file
+    -- OAuth 2.0 is an open-source authorization framework that allows a user to grant a third-party application limited access to their protected resources (like data on a website) without sharing their actual login credentials, such as their username and password. It works by issuing an access token to the third-party application, which the application uses to access the user's data on the resource server.
+
 Fluent API && LINQ
+    -- create notes
 stored procedure -- NEXT 
 entity framework -- NEXT 
-app.UseMiddleWare<>(); // app.UseAuthentication(); app.UseAuthorization(); are middleware added in program.cs
-
-Allow CORS & effects 
+what is database indexing 
 
 performance optimization
+    -- Asynchronous Programming
+    𝟗 𝐊𝐞𝐲 𝐒𝐭𝐫𝐚𝐭𝐞𝐠𝐢𝐞𝐬 𝐭𝐨 𝐁𝐨𝐨𝐬𝐭 𝐀𝐏𝐈 𝐏𝐞𝐫𝐟𝐨𝐫𝐦𝐚𝐧𝐜𝐞 💡 
 
-REDIS -- Caching technique -- NEXT
-SYSTEM Design
-Microservices Architecture
-CI/CD Pipeline
+        𝐔𝐬𝐞 𝐂𝐚𝐜𝐡𝐢𝐧𝐠:
+        Store frequently accessed data in memory so you don’t have to repeatedly fetch it from the database or other slow sources. This drastically cuts down on response time.
+
+        𝐌𝐢𝐧𝐢𝐦𝐢𝐳𝐞 𝐏𝐚𝐲𝐥𝐨𝐚𝐝 𝐒𝐢𝐳𝐞:
+        Send only the necessary data in responses. Avoid sending large, unneeded chunks of data by filtering fields or compressing the payload, which reduces bandwidth usage and speeds up responses.
+
+        𝐔𝐬𝐞 𝐀𝐬𝐲𝐧𝐜𝐡𝐫𝐨𝐧𝐨𝐮𝐬 𝐏𝐫𝐨𝐜𝐞𝐬𝐬𝐢𝐧𝐠:
+        Use asynchronous methods for tasks that don’t need an immediate response (like sending emails or processing large data sets). This keeps the API responsive while the heavy work happens in the background.
+
+        𝐋𝐨𝐚𝐝 𝐁𝐚𝐥𝐚𝐧𝐜𝐢𝐧𝐠:
+        Distribute incoming API requests across multiple servers to ensure no single server is overloaded. This improves availability and handles more traffic efficiently.
+
+        𝐎𝐩𝐭𝐢𝐦𝐢𝐳𝐞 𝐃𝐚𝐭𝐚 𝐅𝐨𝐫𝐦𝐚𝐭𝐬:
+        Use lightweight data formats like JSON or Protocol Buffers instead of XML. Smaller data formats reduce the time spent parsing and transmitting data.
+
+        𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐢𝐨𝐧 𝐏𝐨𝐨𝐥𝐢𝐧𝐠:
+        Reuse existing connections to the database or other services rather than opening a new one for each request. Connection pooling significantly reduces the overhead of establishing connections.
+
+        𝐔𝐬𝐞 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐃𝐞𝐥𝐢𝐯𝐞𝐫𝐲 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐬 (𝐂𝐃𝐍𝐬):
+        For APIs serving static content (like images or scripts), use CDNs to deliver content faster by caching it closer to the user’s location, reducing latency.
+
+        𝐈𝐦𝐩𝐥𝐞𝐦𝐞𝐧𝐭 𝐀𝐏𝐈 𝐆𝐚𝐭𝐞𝐰𝐚𝐲:
+        An API Gateway can help routing requests, handling authentication, rate limiting, and caching. By offloading these tasks from your API, you can improve its overall performance.
+
+        𝐀𝐯𝐨𝐢𝐝 𝐎𝐯𝐞𝐫𝐟𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐚𝐧𝐝 𝐔𝐧𝐝𝐞𝐫𝐟𝐞𝐭𝐜𝐡𝐢𝐧𝐠:
+        Design your API endpoints to return just the right amount of data. GraphQL, for example, allows clients to request exactly what they need, avoiding overfetching and underfetching issues common in REST APIs.
 
 Cache the API request response
     -- In Memory Caching
-    -- Output Caching
+    -- Output Caching REDIS
 
-Docker -- done
+CI/CD Pipeline
 Kubernetes 
-
+    - It is used to manage the containers, if one container is down then create a new one and kill the previous.
+    - It also provides load balancing 
+    - similar like docker compose up
+    - try the implementation
+SYSTEM Design
+Microservices Architecture
 Load Balancer and it's algorithms. 
 Casandra DB speciality
+basic authentication
 
 2. Middleware
 You've already been using middleware without maybe realizing it (like app.UseRouting() or app.UseHttpsRedirection()). Understanding it fully is essential for building custom logic into the request pipeline.
 What it is: Middleware is a component that sits in an application's request pipeline to handle requests and responses. It's a key part of how ASP.NET Core processes HTTP traffic.
 Custom Middleware: You should learn how to create your own middleware to handle cross-cutting concerns like logging requests, handling exceptions, or performing custom authentication logic.
-
-Asynchronous Programming
 
 
 

@@ -1,0 +1,65 @@
+1. What is dot net 
+-   Dot net is free, open source, cross platform software development platform developed by Microsoft for building various applications including web, mobile, Desktop and games. 
+    It includes tools, languages (like C#), and libraries that allow developers to create secure, high-performance applications that can run on different operating systems such as Windows, Linux, and macOS. 
+    The platform uses a two-stage compilation process, compiling code into an intermediate language called Common Intermediate Language (CIL), which is then executed by the .NET runtime on any compatible machine. 
+
+2. Dot net and it's evolutions:
+    Dot net Framework started on 2002 with Introduced ASP.NET for web development, ADO.NET for data access, and Windows Forms for desktop applications.
+    Dot net core was Introduced for the support of cross platform and open source as per the demand in the market.
+    From Dot net 5 it was named as Dot net instead of dot net framework because now is unified platform inclusinf dot net core, dot net framework and xamrin.
+    Now its dot net 9 with more cross platform and cloud support for development.
+
+Language C#
+--------------
+It is an object-oriented programming language created by Microsoft that runs on the .NET Framework.
+The first version was released in year 2002. The latest version, C# 13, was released in November 2024.
+
+Variables: int-4, long-8, float-4, double-8, string -2bytes per char, bool-1, char-2. Use const for constand variable. e.g. const int num = 19;
+
+To convert a larger type to a smaller size type, we need explicit casting.
+like double data = 8.74; int dataInt = (int) data;
+Built-in conversion methods: Convert.ToString(myInt), Convert.ToDouble, Convert.ToInt64-for double, Convert.ToInt64
+
+To read: string userName = Console.ReadLine();
+
+String Methods: txt.ToUpper(), txt.ToLower(), string.Concat(firstName, lastName); string name = $"My full name is: {firstName} {lastName}"; myString.IndexOf("e"), myString.Substring(5);
+backslash escape character: \n: new line, \t: tab space , \b: back space,  string txt = "We are the so-called \"Vikings\" from the north.";  
+
+foreach loop: foreach (string i in cars) ; i is the element of array but index.
+array: string[] cars = {"Volvo", "BMW", "Ford", "Mazda"}; Array.Sort(cars); cars.Max(), cars.Min(), cars, cars.GetLength(row_num) for multi dimensional array, Lenght for single
+method overriding: 
+    The method in the base class that is intended to be overridden must be declared with the virtual keyword. This signals that derived classes are allowed to provide their own implementation of this method.
+    public class Animal
+    {
+        public virtual void Speak()
+        {
+            Console.WriteLine("Animal makes a sound.");
+        }
+    }
+    The method in the derived class that provides a new implementation of the base class method must be declared with the override keyword. The override method must have the exact same signature (name, parameters, and return type) as the base class's virtual method.
+    public class Dog : Animal
+    {
+        public override void Speak()
+        {
+            Console.WriteLine("Dog barks: Woof!");
+        }
+    }
+
+The meaning of Encapsulation, is to make sure that "sensitive" data is hidden from users. To achieve this, you must:
+
+declare fields/variables as private
+provide public get and set methods, through properties, to access and update the value of a private field
+    A property is like a combination of a variable and a method, and it has two methods: a get and a set method:
+    class Person
+    {
+        private string name; // field
+
+        public string Name   // property
+        {
+            get { return name; }   // get method
+            set { name = value; }  // set method
+        }
+    }
+
+    shorthand:  public string Name { get; set; }
+    
