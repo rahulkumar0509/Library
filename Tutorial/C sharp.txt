@@ -1,0 +1,124 @@
+1. What is C sharp
+C sharp is object priented programming language developed by microsoft to use for web, Api & desktop application development.
+It has Encapsulation, Inheritance, interface, class & object. 
+
+it uses namespace to define the package of a class. 
+
+CLR:
+To run c sharp code we require CLR common language runtime virtual machine component of .net enviroment.
+Basically it provides the enviroement for dot net code to run smoothly and other services like thread Management, memory Management etc.
+
+Inheritance:
+Inheritance is a mechanism in C# by which we can resuse the feature of one class into another. Basically we define one super class and one sub class.
+we have single level, multilevel, Hierarchical  and multiple Inheritance.
+multple inheriatnce can only be achieved by using interface. 
+
+Class A: B{}, Class B: A {} Class C: A, Class B: A{} Class C: A{}, Inerafce A Interface B Class C: A,B {}
+
+Access Modifier: Private, Public, Protected, Internal (same assembly), 
+
+Encapsulation is core concept of C# where we define the field and methods in such a way that the actual data is not exposed to the the public.
+Instead privde it indirectly via asome method. best example is getter setter.
+public int Name {get; set;}
+
+A structure is a collection of variables of different data types under a single unit. 
+While a class have constructor and can be derived.
+
+Enumeration (enum) in C# is a special value type that defines a set of named constants. 
+enum month { jan, feb, mar, apr, may }
+
+Const & readonly
+Const means variable is constant and can not be re assigned while readonly can be re asiigned in the constructor even if its already assigned in declaration.
+readonly can not be assigned in any method
+
+JIT compiler process
+Just in time compiler is part of CLR common langauge runtime which manages the execution of dot net code regardless of language.
+C sharp compiler compiles the source code into intermediate language and then JIT converts this into machine code.
+
+String Vs StringeBuilder
+By default String is immutable object which means if we changes the value of string object from the intial then it will create new memory in Heap area instead of just replacing the previous content.
+To fix this we have StringBuilder whichis dynamic object takes the memory as required.
+
+Garbage collection concept- its done automatically whenever object work is done then it will be deleted.
+
+Extention method:
+Extention method is used to bind a new method into existing class using 'this' keyword as argument of that method.
+public static void MapLibraryEndpoint(this WebApplication app) {
+    app.MapPost("", (data)=>{
+
+    })
+}
+Here WebApplication is existing class and MapLibraryEndpoint is new method which will be defined there.
+
+Partial CLass:
+With Partial you can define same class in multiple file and at the compile time it will be combined together.
+just use public partial class hello{}
+
+Polymorphism:
+it emans you can define same method multiple time with different siganture but same name and ignore the return type.
+Method overloading is best example for this.
+
+Managed vs Unamanaged code
+A code that is written to aimed to get the services of the managed runtime environment execution like CLR(Common Language Runtime) in .NET Framework is known as Managed Code. It is always implemented by the managed runtime environment instead of directly executed by the operating system.
+
+Unamanged code directly runs on the computer operating systm. For example C# code where it uses pointer operation to direclty access the addressa dna value from os.
+
+Multithreading: can runs two different methods of same class in different thread parallely. 
+
+Sealed class & Sealed emthod:
+Sealed class means it can not be derived. 
+Sealed method can only only be used for overridden method in derived class. just use keyword sealed. 
+
+Virtual method:
+To oveeride a methodin derived class, the base class method must be defined as virtual. 
+
+Boxing & Unboxing
+Converting value type data to reference type is called Boxing. e.g., int age = 20; Object obj = age;
+Converting Reference type data to value type is called Unboxing. 
+
+Is and As operator
+the "is" operator to check the object type. 
+var speaker = new Speaker { Name="Gaurav Kumar Arora"};
+var data = speaker is Speaker // returns true;
+the "as" operator returns the data is object type is same;
+here it will return speaker obj having name attribute.
+
+Nullable type
+put ? as siffix of data type to define the value can be null;
+int? age = null;
+
+Abstract Class
+Anstrack class can be defined by keyword abstract and can have abstarct and non abstarct methods. can have constructor which will called by derived class contructor.
+Can not instantiated the class directly.
+
+ArrayList data = new ArrayList();
+data.add(123);
+data.add("hello);
+data.add({"key":"value"});
+
+data.remove("hello");
+data.contains(123);
+data.count;
+
+Generics
+Generics in C# are a way to create code that can be used with different data types. 
+This makes the code more versatile and reusable. Generics are declared using the <> symbol.
+IEnumerable<ModelName>
+
+ignored topics:
+-----------------------------
+Events & Delegates
+
+late Binding:
+Refers to the resolution of method calls or property access at runtime, rather than at compile time.
+ & early binding
+
+reflection
+When C# code is compiled, it's converted into an Intermediate Language (IL) and also generates metadata. 
+This metadata contains information about the types, members, and attributes defined in the assembly.
+Reflection in C# is a powerful mechanism that enables a program to inspect and manipulate its own metadata and code at runtime. 
+This means you can dynamically discover information about types, classes, methods, properties, fields, and events, and even invoke methods or access members without knowing them at compile time.
+
+lazy loading:
+Delays the initialization of an object or retrieval of data until it is actually needed.
+Typically involves using the Lazy<T> class or similar patterns (e.g., in Entity Framework, where related data is loaded only when accessed).

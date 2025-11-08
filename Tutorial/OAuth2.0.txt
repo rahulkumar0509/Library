@@ -1,0 +1,82 @@
+Core Building Blocks of OAuth2.0
+1. Roles (Actors)
+
+Defined in the spec:
+
+Resource Owner → the user who owns the data.
+Client → the app requesting access on behalf of the user.
+Resource Server → the API that holds the protected data.
+Authorization Server → the system that authenticates users and issues tokens.
+Can be separate (Google, Auth0) or self-hosted (IdentityServer, Duende).
+
+2. Authorization Flows (Grants)
+
+OAuth2 defines different flows for different scenarios:
+Authorization Code Flow → standard for web apps (with PKCE for SPAs).
+Client Credentials Flow → server-to-server (no user).
+Implicit Flow → legacy, now discouraged.
+Device Code Flow → login on TVs, IoT devices.
+Password Grant → legacy, deprecated (was username/password exchange).
+
+👉 Each flow defines how the client gets an Access Token.
+
+3. Tokens
+
+OAuth2 uses tokens for access and delegation:
+Access Token → short-lived, sent in Authorization: Bearer <token> header.
+Can be JWT or opaque.
+Defines user identity + scopes.
+Refresh Token → long-lived, used to get new Access Tokens.
+Must be stored securely.
+Can be revoked by server.
+(Optional) ID Token → from OpenID Connect (OIDC), contains identity claims (profile, email, etc.).
+
+4. Scopes & Claims
+
+Scopes = what the client is allowed to do (e.g., read:books, write:books).
+Claims = details inside the token about the user (e.g., sub, email, role).
+
+5. Endpoints (Authorization Server)
+
+A true OAuth2 Authorization Server must provide:
+Authorization Endpoint → /authorize → where users log in & consent.
+Token Endpoint → /token → issues access/refresh tokens.
+Introspection Endpoint (optional) → validate opaque tokens.
+Revocation Endpoint → revoke refresh tokens.
+Discovery Endpoint (if OIDC) → /.well-known/openid-configuration (metadata for clients).
+
+6. Consent & Delegation
+
+Users can grant or deny specific scopes to a client.
+Example: “This app wants to read your contacts.”
+
+7. Security Best Practices
+
+PKCE (Proof Key for Code Exchange) → required for public clients (SPAs, mobile apps).
+HTTPS only → tokens must not travel over plain HTTP.
+Token expiration → short-lived access tokens, long-lived refresh tokens.
+Rotation → refresh tokens should rotate to prevent replay attacks.
+Revocation → users/admins must be able to revoke tokens.
+
+🔹 Putting It Together (Example with Google)
+
+User tries to log in → redirected to Google /authorize.
+User logs in & consents → Google redirects back with auth code.
+Client exchanges code at /token → gets Access Token + Refresh Token (+ ID Token).
+Client calls your API with Bearer <Access Token>.
+Your API (Resource Server) validates token → grants access.
+When token expires → client uses Refresh Token at /token again.
+
+✅ So a “true OAuth2.0” system requires:
+
+Authorization Server (with /authorize, /token, /revocation, etc.).
+Resource Server (your API, validates tokens).
+Clients (apps consuming APIs).
+Tokens (Access + Refresh).
+Scopes & Consent UI.
+
+Flows depending on use case (Auth Code, Client Credentials, etc.).
+
+👉 In your current setup, you already have a Resource Server (your API) + tokens (JWTs). What’s missing is the Authorization Server (with endpoints, flows, consent, scopes) — that’s why it’s not yet a “true OAuth2.0” implementation.
+
+Would you like me to map this to a .NET 8 project structure, showing which parts you already have and which ones you’d need to add to reach full OAuth2.0 compliance?

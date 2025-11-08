@@ -1,11 +1,14 @@
 using System.Reflection;
 using Library.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace Library.API.Endpoints
 {
     [ApiController]
+    [EnableCors("AngularApp")]
     public class LoginController : ControllerBase
     {
         private IJwtService _jwtService;
@@ -20,6 +23,7 @@ namespace Library.API.Endpoints
         [HttpGet("v2/Login")]
         public string Login(string username, string password)
         {
+            Log.Information("Login user: {username}", username);
             _logger.LogInformation($"{MethodBase.GetCurrentMethod().Name} : Login with creds : {username}/{password}");
             var token = _jwtService.GenerateAccessToken(username);
             if (String.IsNullOrEmpty(token))

@@ -7,5 +7,6 @@ namespace Library.Repository
     {
         public int BorrowBook(Loan loan);
         public int ReturnBook(int MemberId, int BookId);
+        public IEnumerable<Loan> GetTransactionByBook(string ISBN, string Title);
     }
 }

@@ -2,12 +2,14 @@ using Library.Domain;
 using Library.Domain.Dto;
 using Library.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Endpoints
 {
     [Authorize]
     [ApiController]
+    [EnableCors("AngularApp")]
     public class LibraryController : ControllerBase
     {
         private ILibraryService _libraryService;
@@ -47,6 +49,14 @@ namespace Library.API.Endpoints
             return Results.Ok(_libraryService.GetMembers());
         }
 
+        [HttpGet("v2/members/{RegistrationDate}")]
+        public IActionResult GetMemberByDate(DateOnly RegistrationDate)
+        {
+            Console.WriteLine(RegistrationDate);
+            return Ok(_libraryService.GetMembers(RegistrationDate));
+        }
+
+
         [HttpPost("v2/borrow-book")]
         public IResult BorrowBook(BorrowBook borrowBook)
         {
@@ -60,9 +70,9 @@ namespace Library.API.Endpoints
         }
 
         [HttpPost("v2/return-books")]
-        public IActionResult ReturnBook(int MemberId, int BookId)
+        public IActionResult ReturnBook(BorrowBook returnBook)
         {
-            var result = _libraryService.ReturnBook(MemberId, BookId);
+            var result = _libraryService.ReturnBook(returnBook);
             _logger.LogInformation("update command {result}", result);
             // DateTime.UtcNow;
             if (result > 0)

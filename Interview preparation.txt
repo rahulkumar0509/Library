@@ -1,0 +1,76 @@
+1. Describe dependency injection, its benefits, and different scopes in ASP.NET Core. 
+    Dependecny Injection is a design pattern used to inject a service into class. It can be achieved by constructor injection, property injection or method injection.
+    DI is a core part of framework. It provides loose coupling making them independent and easy to modfiy and maintain. 
+    It helps in code reusability. 
+    ASP.net core DI container managed the lifetime of registered services using different scopes like:
+        - AddSingleton<IUserService, UserService>(); // It will create one single instance for the complete application and will be available for all the requests.
+        - AddScoped<>(); // It will be created and available for the one complete request. 
+        - AddTransient<>(); // It will be created every time service is invoked.
+
+2. Discuss attribute-based and conventional routing in ASP.NET Core. 
+    In conventional routing we already define the route template in program.cs like {Controller=Home}/{action}/{id?} for product/details/5
+    which is not flexible and difficult to handle for cutom path
+
+    attributes based route defined at controller and method level
+    [(Routes={controller})]
+    public class abc{
+        [HttpGet("details/{id}")]
+        public getProductDetails(string id){
+        }
+    }
+    In query parameter we add the paramter after ?id=5&name=rahul
+    
+3. 
+4. How to access and use the HttpContext object within a controller. 
+    var requestMethod = HttpContext.Request.Method;
+
+5. What is LINQ (Language Integrated Query)? Explain the difference between IQueryable and IEnumerable interfaces. 
+    see linq.txt
+
+6. Explain asynchronous programming, its importance, and how to use await correctly. 
+7. Multithreading vs. Asynchronicity:
+8. Explain the SOLID principles and how they lead to better software design
+    S - Single responsibility principles which means ther should be single object of the class.
+    O - open/close principle. Class should be closed for modification but open for extension'
+    L - Liskov principle. 
+    I = Interface segregation principle. Divide the Interface if all the methods are not required for implementation.
+    D - Dependecy inversion principle. High-level modules should not depend on low-level modules; both should depend on abstractions. 
+        Abstractions should not depend on details; details should depend on abstractions. 
+        This often involves using interfaces and dependency injection.
+
+9. Abstract Classes vs. Interfaces:
+    Abstract class can include abstract and non abstract methods. We can create instance of abstract class. 
+    Interface can only contain method declaration, no definition and it can be implemented in another class. 
+
+10. Explain the difference between value types (structs, primitives) and reference types (classes) and their implications for memory and performance. 
+11. Explain polymorphism, inheritance, and encapsulation, and provide C# examples.
+12. Describe what attributes are, how they are used, and the purpose of reflection in .NET. 
+13. Explain the CLR's role in managing code execution and memory. 
+14. How does the JIT compiler work and what are its benefits in the .NET ecosystem? 
+15. Managed vs. Unmanaged Code:
+16. Delegate and action in C#
+17. Abstrack class Vs Class Vs Interface
+18. Access modifier in c#
+19. dotnet API pipeline
+20. Kestrel vs IIS
+21. ref vs out
+
+https://doit.software/blog/net-interview-questions#screen14
+
+C sharp interview question:
+-----------------------------
+
+
+What data types do you know?
+The main data types in C# can be divided into value and reference types.
+
+Value types: Include the primitive data types (e.g., int, float, bool, char, byte) and user-defined structs. Store their data directly in memory.
+Reference types: Include classes, interfaces, delegates, and arrays. Store a reference (pointer) to the actual data, which is stored on the managed heap.
+
+30. What is the difference between StringBuilder and String?
+StringBuilder is a mutable string type, meaning its contents can be modified after creation.
+String is an immutable type, meaning its contents cannot be changed once created. StringBuilder is more efficient for concatenating strings, as it avoids the overhead of creating new string objects.
+
+Kestrel vs IIS
+--------------------
+Kestrel:Purpose: Kestrel is a lightweight, cross-platform web server developed by Microsoft. It is designed to be used as the default web server for ASP.NET Core applications. Characteristics: Cross-Platform: Kestrel is cross-platform and can run on Windows, Linux, and macOS. Lightweight: It is a lightweight and efficient web server that is optimized for hosting ASP.NET Core applications. Integration: While Kestrel is often used in conjunction with other web servers, such as IIS or Nginx, it can also be used as a standalone server. IIS (Internet Information Services):Purpose: IIS is a full-featured web server developed by Microsoft and is primarily used for hosting traditional ASP.NET applications, as well as other types of web applications. Characteristics: Windows-Centric: IIS is closely tied to the Windows operating system and is the default web server for Windows servers. Feature-Rich: It provides a wide range of features, including support for various web technologies, application pools, security features, and more. Integration: IIS can be used in conjunction with other web servers, such as Kestrel, to provide additional features like load balancing, reverse proxying, and SSL termination.

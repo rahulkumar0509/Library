@@ -1,0 +1,71 @@
+A stored procedure is a prepared SQL code which cab be saved to reuse the sql code when needed. 
+So, if you have an SQL query that you write over and over again, save it as a stored procedure and then just call it to execute it. 
+Stored procedures are used to speed up database processing because they run on the server side.
+
+Create procedure spEmployee
+As 
+Begin
+Select e.Name, s.Salary From Employee as e Inner join Salary As s On e.id=s.empId;
+End
+
+With parameter
+-------------------
+
+Create PROCEDURE spEmployeeSalary
+@Department Varchar(100), @MinSalary Int
+As 
+Begin 
+Select e.employeeName, s.Salary From Employee as e 
+    Inner Join Salary As s 
+    On e.empId = s.empId 
+    Where e.Department = @Department
+    AND e.Salary >= @MinSalary
+End;
+Go 
+
+Exec spEmployeeSalary @Department = 'Enginnering', @MinSalary = 1000;
+
+Drop PROCEDURE spEmployeeSalary;
+
+Output parameter
+-------------------
+Create PROCEDURE spEmployee
+@empCount Int Output,
+@MinSalary Int
+As
+Begin 
+    Select @empCount=Count(empId) From Employee Where Salary >= @MinSalary; 
+End;
+Go
+
+Declare @total Int 
+Exec spEmployee @MinSalary = 10000, @empCount = @total OUTPUT;
+Select @Total;
+
+return statement
+-----------------------
+Return only works send integer value and for text better to use Output
+
+-- Create procedure
+CREATE PROCEDURE spGetEmployeeCount
+    @Department VARCHAR(100)
+AS
+BEGIN
+    DECLARE @count INT;
+
+    SELECT @count = COUNT(*)
+    FROM Employee
+    WHERE Department = @Department;
+
+    RETURN @count;   -- return value
+END;
+GO
+
+-- Declare variable to capture return value
+DECLARE @empCount INT;
+
+-- Execute and store return value
+EXEC @empCount = spGetEmployeeCount @Department = 'Engineering';
+
+-- Show result
+SELECT @empCount AS EmployeeCount;

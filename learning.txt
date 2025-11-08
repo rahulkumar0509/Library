@@ -1,0 +1,218 @@
+docker run --name sql_server_container -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=rahul@123" -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latestdotnet --list-runtimes
+
+1. How to install root certificate in database and use it for connection in code.
+2. Path vs Query Parameter
+
+Topic to complete
+-------------------------------------
+Minimal API
+IEnumerable Vs IQueryable In LINQ
+
+MVC API 
+Logger       
+    -- ILogger done
+    -- SERILOG done
+    -- DATADOG
+
+Authentication  
+    -- ASP .NET CORE identity for Razor pages
+    -- Token based , Best for APIs and SPAs like angular 
+        -- dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+        -- Add JwtBearer configuration in program.cs // this is to Authorize the token 
+        -- expose and API to create token
+Authorization
+    -- Add [Authorize] for ApiController and .RequireAuthorization for the minimal endpoint.
+    -- check the expiry of the token
+    -- check the user id 
+    -- Add custom middleware to validate the token and check the principal
+Exception handling
+    -- Global Exception
+        -- Use IExceptionHandler Interface with TryHandleAsync 
+        -- Use Custom Middleware to handle the exception.
+Token Management
+    -- Create token
+    -- Verify token
+    -- Refresh token
+Rate limiting Middleware -- NEXT
+    -- theory 
+Docker
+    -- done
+Allow CORS & effects 
+    -- done 
+
+OAuth2.0
+    -- see .txt file
+    -- OAuth 2.0 is an open-source authorization framework that allows a user to grant a third-party application limited access to their protected resources (like data on a website) without sharing their actual login credentials, such as their username and password. It works by issuing an access token to the third-party application, which the application uses to access the user's data on the resource server.
+
+Fluent API && LINQ
+    -- create notes
+stored procedure -- NEXT 
+entity framework -- NEXT 
+what is database indexing 
+
+performance optimization
+    -- Asynchronous Programming
+    𝟗 𝐊𝐞𝐲 𝐒𝐭𝐫𝐚𝐭𝐞𝐠𝐢𝐞𝐬 𝐭𝐨 𝐁𝐨𝐨𝐬𝐭 𝐀𝐏𝐈 𝐏𝐞𝐫𝐟𝐨𝐫𝐦𝐚𝐧𝐜𝐞 💡 
+
+        𝐔𝐬𝐞 𝐂𝐚𝐜𝐡𝐢𝐧𝐠:
+        Store frequently accessed data in memory so you don’t have to repeatedly fetch it from the database or other slow sources. This drastically cuts down on response time.
+
+        𝐌𝐢𝐧𝐢𝐦𝐢𝐳𝐞 𝐏𝐚𝐲𝐥𝐨𝐚𝐝 𝐒𝐢𝐳𝐞:
+        Send only the necessary data in responses. Avoid sending large, unneeded chunks of data by filtering fields or compressing the payload, which reduces bandwidth usage and speeds up responses.
+
+        𝐔𝐬𝐞 𝐀𝐬𝐲𝐧𝐜𝐡𝐫𝐨𝐧𝐨𝐮𝐬 𝐏𝐫𝐨𝐜𝐞𝐬𝐬𝐢𝐧𝐠:
+        Use asynchronous methods for tasks that don’t need an immediate response (like sending emails or processing large data sets). This keeps the API responsive while the heavy work happens in the background.
+
+        𝐋𝐨𝐚𝐝 𝐁𝐚𝐥𝐚𝐧𝐜𝐢𝐧𝐠:
+        Distribute incoming API requests across multiple servers to ensure no single server is overloaded. This improves availability and handles more traffic efficiently.
+
+        𝐎𝐩𝐭𝐢𝐦𝐢𝐳𝐞 𝐃𝐚𝐭𝐚 𝐅𝐨𝐫𝐦𝐚𝐭𝐬:
+        Use lightweight data formats like JSON or Protocol Buffers instead of XML. Smaller data formats reduce the time spent parsing and transmitting data.
+
+        𝐂𝐨𝐧𝐧𝐞𝐜𝐭𝐢𝐨𝐧 𝐏𝐨𝐨𝐥𝐢𝐧𝐠:
+        Reuse existing connections to the database or other services rather than opening a new one for each request. Connection pooling significantly reduces the overhead of establishing connections.
+
+        𝐔𝐬𝐞 𝐂𝐨𝐧𝐭𝐞𝐧𝐭 𝐃𝐞𝐥𝐢𝐯𝐞𝐫𝐲 𝐍𝐞𝐭𝐰𝐨𝐫𝐤𝐬 (𝐂𝐃𝐍𝐬):
+        For APIs serving static content (like images or scripts), use CDNs to deliver content faster by caching it closer to the user’s location, reducing latency.
+
+        𝐈𝐦𝐩𝐥𝐞𝐦𝐞𝐧𝐭 𝐀𝐏𝐈 𝐆𝐚𝐭𝐞𝐰𝐚𝐲:
+        An API Gateway can help routing requests, handling authentication, rate limiting, and caching. By offloading these tasks from your API, you can improve its overall performance.
+
+        𝐀𝐯𝐨𝐢𝐝 𝐎𝐯𝐞𝐫𝐟𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐚𝐧𝐝 𝐔𝐧𝐝𝐞𝐫𝐟𝐞𝐭𝐜𝐡𝐢𝐧𝐠:
+        Design your API endpoints to return just the right amount of data. GraphQL, for example, allows clients to request exactly what they need, avoiding overfetching and underfetching issues common in REST APIs.
+
+Cache the API request response
+    -- In Memory Caching
+    -- Output Caching REDIS
+
+CI/CD Pipeline
+Kubernetes 
+    - It is used to manage the containers, if one container is down then create a new one and kill the previous.
+    - It also provides load balancing 
+    - similar like docker compose up
+    - try the implementation
+SYSTEM Design
+Microservices Architecture
+Load Balancer and it's algorithms. 
+Casandra DB speciality
+basic authentication
+
+2. Middleware
+You've already been using middleware without maybe realizing it (like app.UseRouting() or app.UseHttpsRedirection()). Understanding it fully is essential for building custom logic into the request pipeline.
+What it is: Middleware is a component that sits in an application's request pipeline to handle requests and responses. It's a key part of how ASP.NET Core processes HTTP traffic.
+Custom Middleware: You should learn how to create your own middleware to handle cross-cutting concerns like logging requests, handling exceptions, or performing custom authentication logic.
+
+
+
+Cloud topics
+---------------------------------
+Cloud, DevOps, and Infrastructure
+Containerization and Orchestration: Master Docker for containerizing applications and Kubernetes for orchestrating them at scale. Understand concepts like Helm charts for deployment and managing secrets.
+
+Serverless Architecture: Learn to build event-driven backend services using Azure Functions or AWS Lambda. Understand the trade-offs and best practices for serverless.
+
+Infrastructure as Code (IaC): Gain experience with tools like Terraform or Bicep to define and manage cloud infrastructure programmatically.
+
+CI/CD Pipeline Mastery: Go beyond simple build/deploy steps. Focus on building robust pipelines that include automated testing, security scanning, and blue/green or canary deployments.
+
+Advance
+-----------------------------
+.NET Internals: Understand how the Garbage Collector (GC), Just-In-Time (JIT) compiler, and runtime host work. This knowledge is invaluable for advanced debugging and performance tuning.
+Customization of ASP.NET Core: Develop custom middleware, filters, and endpoint conventions to extend the ASP.NET Core pipeline in sophisticated ways.
+
+
+
+Complex problems:
+--------------------------
+1. Find the most popular book(s): 
+This operation involves joining Book with a table that tracks checkouts or loans. You'd group the results by BookID and count the number of checkouts to find the book with the highest count.
+
+SQL
+
+SELECT B.Title, B.ISBN, COUNT(L.LoanID) AS NumberOfLoans
+FROM Books AS B
+JOIN Loans AS L ON B.BookID = L.BookID
+GROUP BY B.BookID
+ORDER BY NumberOfLoans DESC
+LIMIT 5;
+
+2. Identify overdue books and the members who have them: 
+This requires joining Book with Loan and Member tables. The condition would check if the loan's return date is null and if the due date is in the past.
+
+SQL
+
+SELECT M.MemberName, B.Title, L.DueDate
+FROM Loans AS L
+JOIN Members AS M ON L.MemberID = M.MemberID
+JOIN Books AS B ON L.BookID = B.BookID
+WHERE L.ReturnDate IS NULL AND L.DueDate < CURRENT_DATE;
+
+3. Find authors who have not published a book in the last five years: 
+This involves using a subquery or a LEFT JOIN. You'd find all authors, then filter out the ones whose most recent book was published within the last five years.
+
+SQL
+
+SELECT A.AuthorName
+FROM Authors AS A
+WHERE A.AuthorID NOT IN (
+    SELECT B.AuthorID
+    FROM Books AS B
+    WHERE B.PublicationYear >= YEAR(CURRENT_DATE) - 5
+);
+
+4. Find members who have read books from more than one genre: 
+This involves joining Member, Loan, and Book tables, then grouping by MemberID and counting the distinct genres they've borrowed.
+
+SQL
+
+SELECT M.MemberName, COUNT(DISTINCT B.Genre) AS NumberOfGenres
+FROM Members AS M
+JOIN Loans AS L ON M.MemberID = L.MemberID
+JOIN Books AS B ON L.BookID = B.BookID
+GROUP BY M.MemberID
+HAVING COUNT(DISTINCT B.Genre) > 1; 
+
+
+what is the framework we used for dependcy injection in dot net core? like kernal, autocrat, inject. design your own dependency injection.
+without invoke method what will happen to middleware? where this onvoke is defined and how its getting used.
+what framework is their for dependency injection ? what things should be consider to creaste my own dependency injection
+Behavioural vs creational Vs Repository pattern and which one falls under what? 
+repository patterns comes under which category
+step by step approach to design an application foe very high traffic and spotaneous request. what Architecture should we use?
+        -Microservices Architecture, Serverless Architecture, Event driven Architecture. 
+What is the cross cutting aspects in dot net? - Middleware, dependency Injection, Decorators, Authentication * authorization , logging, exception handling, cahcing, validation. 
+Task.start vs Task.run Asynchronous programming. 
+how to handle the exception for the batch processor? 
+why not to use exception filter instead of middleware. what is the benfit of middleware?
+
+The Repository pattern primarily falls under the category of a Structural Design Pattern.
+It is considered structural because it focuses on how classes and objects are composed to form larger structures, specifically by providing an abstraction layer over the data access logic. This abstraction decouples the domain layer (business logic) from the data persistence layer, making the system more modular, maintainable, and testable.
+While its core classification is structural, the Repository pattern can also be viewed as having elements or relationships with other categories:
+Facade (Structural): It acts as a facade to the data layer, simplifying the interface for accessing and manipulating domain objects.
+Factory (Creational): In some implementations, repositories might involve creating new instances of domain objects, thereby incorporating aspects of a factory pattern.
+Iterator (Behavioral): Repositories often provide collection-like interfaces for iterating through and accessing domain objects, which can be seen as a specific application of the Iterator pattern.
+
+
+While both exception filters and exception middleware handle exceptions in ASP.NET Core, middleware is generally preferred for global exception handling due to its broader scope and benefits:
+Why not use exception filters instead of middleware for global handling:
+Limited Scope: Exception filters are part of the MVC pipeline and only catch exceptions that occur within controller actions, action filters, or result filters. They cannot handle exceptions that occur earlier in the request pipeline, such as in other middleware components (e.g., routing, authentication).
+Less Centralized: Using multiple exception filters for different controllers or actions can lead to scattered and less centralized exception handling logic, making it harder to maintain and ensure consistent error responses across the application.
+No Access to Non-MVC Constructs: Exception filters have access to ActionContext and MVC-specific constructs, but they don't readily provide access to the full HttpContext and other non-MVC related services available to middleware.
+Benefits of using exception middleware:
+Global Scope: Middleware operates at a higher level in the request pipeline and can catch all unhandled exceptions that occur anywhere in the application, including those outside the MVC pipeline. This provides a truly global and centralized error handling mechanism.
+Centralized Logic: Exception middleware allows for a single, consistent place to implement application-wide error handling logic, including logging, custom error responses, and integration with monitoring tools.
+Full HttpContext Access: Middleware has full access to the HttpContext, enabling more comprehensive error reporting and the ability to modify the response in various ways, such as setting status codes or returning custom error pages/JSON.
+Flexibility: Middleware is more flexible for complex scenarios, such as re-executing the request in an alternate pipeline (e.g., displaying a generic error page) or handling different types of exceptions with specific logic.
+When to use exception filters:
+While middleware is generally preferred for global handling, exception filters are still valuable for specific scenarios:
+Action/Controller Specific Handling: When you need to handle exceptions in a very specific way for a particular action or controller, and this handling requires access to MVC-specific context like ModelState or IActionResults.
+Granular Control: For scenarios requiring fine-grained control over error responses based on the specific action or data involved in the request.
+
+The Invoke or InvokeAsync method is not defined in an interface or a base class. Instead, it is a convention-based contract that the ASP.NET Core framework expects from a middleware class. The framework uses reflection at runtime to find and execute this method.
+
+How It Works
+Framework Discovery: When you register a middleware class using app.UseMiddleware<YourMiddleware>(), the ASP.NET Core framework examines the class type (YourMiddleware).
+Reflection: It uses reflection to look for a public method named Invoke or InvokeAsync that takes an HttpContext object as its first parameter.
+Method Binding: Once found, the framework creates a delegate (a type-safe function pointer) that points to this specific method. It also handles dependency injection for any other parameters in the method signature (e.g., services like ILogger).
+Pipeline Construction: The framework constructs the middleware pipeline by chaining these delegates together. Each Invoke method is passed a delegate to the next method in the chain, which it can call to pass the request along.
+This convention-based approach, rather than a formal interface, gives developers flexibility. You don't have to inherit from a specific base class, and you can inject any services you need directly into the method signature, which is a powerful feature of ASP.NET Core.

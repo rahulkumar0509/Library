@@ -1,0 +1,39 @@
+LINQ is language integrated query used to query the data and for this we need db context which acts as a primary gateway with the database.
+Inside dbcontext we define DbSet for the table and the model. Once you define the Linq queries against dbset, Entity framework generates a sql statement 
+which will be executed in the database.
+
+Benefits:
+Code readability & maintainability
+easier to debug.
+
+context.TableName.ToList() // to fetch all record from table
+context.TableName.Where(d=>d.age>10).ToList(); // filter
+
+contex.TableName.GroupBy(c=>c.gender).select(g=>new {KeyColumn=g.gender, Count=g.count()}).ToList(); // group by
+
+Student st = new Student{'rahul', 30}; // to add 
+context.Students.Add(st);
+context.SaveChanges();
+
+context.Students.Take(10).ToList(); // limited result
+
+context.Student.Where(c=>c.name.startsWith("ra")).ToList();
+
+from customer in customers join order in orders on customer.customerId = order.customerId
+select new {customer.customerId, customer.customerName, order.orderId};
+
+.where
+First vs FirstOrDefault() - when no result found: default will return default value of the data type , like for reference it will be null, for integer it will be 0
+
+IEnumerable VS IQueryable
+-------------------------------
+IEnumerable first fetch the data from the source and then run the filter in memory. 
+It is helpful when the data is already in the memory.
+
+IQueryable directly run the filter in database and then returns the filtered records.
+
+to use this define,
+IQueryable query = context.Students;
+query = query.Where(s=>s.age>18);
+query = query.OrderByDescending(s=>s.age);
+var result = query.ToList();

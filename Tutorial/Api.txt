@@ -1,0 +1,32 @@
+1. Authentication & Authorization
+    - role based claims
+    - policy based claims
+2. 
+3. 
+4. 
+5. 
+6. 
+7. 
+8. JWT token creation, validation
+9. 
+10. Swagger setup for Authorize
+11. Entity framework
+12. DbContext 
+13. 
+14. 
+15. 
+16. 
+17. API lifecycle 
+Minimal API
+Model and data annotation
+Dapper 
+Serilog file writing 
+CORS policy 
+Controller API    
+conection string
+Controller & Service registration
+Http method verbs & path vs query parameter.
+lazy loading vs early loading 
+Global exception handling middleware
+Authorization middleware
+HttpPatch Doc 

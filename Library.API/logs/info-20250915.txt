@@ -1,0 +1,57 @@
+2025-09-15 00:46:05.048 +05:30 [INF] User profile is available. Using '/Users/rahul/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-09-15 00:46:05.332 +05:30 [INF] Now listening on: https://localhost:8081
+2025-09-15 00:46:05.333 +05:30 [INF] Now listening on: http://localhost:8080
+2025-09-15 00:46:05.335 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-09-15 00:46:05.336 +05:30 [INF] Hosting environment: Development
+2025-09-15 00:46:05.336 +05:30 [INF] Content root path: /Users/rahul/projects/Library/Library.API
+2025-09-15 00:46:14.511 +05:30 [INF] Request starting HTTP/2 GET https://localhost:8081/swagger/index.html - null null
+2025-09-15 00:46:14.570 +05:30 [INF] Request finished HTTP/2 GET https://localhost:8081/swagger/index.html - 200 null text/html;charset=utf-8 59.7554ms
+2025-09-15 00:46:14.812 +05:30 [INF] Request starting HTTP/2 GET https://localhost:8081/swagger/v1/swagger.json - null null
+2025-09-15 00:46:14.860 +05:30 [INF] Request finished HTTP/2 GET https://localhost:8081/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 48.294ms
+2025-09-15 00:46:23.018 +05:30 [INF] Request starting HTTP/2 GET https://localhost:8081/v2/Login?username=sds&password=dsds - null null
+2025-09-15 00:46:23.022 +05:30 [INF] inside middleware
+2025-09-15 00:46:23.025 +05:30 [INF] Url:https://localhost:8081/v2/Login?username=sds&password=dsds,
+ Body: Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream,
+ Headers: 
+2025-09-15 00:46:23.048 +05:30 [INF] Executing endpoint 'Library.API.Endpoints.LoginController.Login (Library)'
+2025-09-15 00:46:23.063 +05:30 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.String Login(System.String, System.String) on controller Library.API.Endpoints.LoginController (Library).
+2025-09-15 00:46:23.073 +05:30 [INF] Login user: sds
+2025-09-15 00:46:23.074 +05:30 [INF] Login : Login with creds : sds/dsds
+2025-09-15 00:46:23.087 +05:30 [INF] Login Successful!
+2025-09-15 00:46:23.090 +05:30 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2025-09-15 00:46:23.092 +05:30 [INF] Executed action Library.API.Endpoints.LoginController.Login (Library) in 26.7032ms
+2025-09-15 00:46:23.092 +05:30 [INF] Executed endpoint 'Library.API.Endpoints.LoginController.Login (Library)'
+2025-09-15 00:46:23.092 +05:30 [INF] Request finished HTTP/2 GET https://localhost:8081/v2/Login?username=sds&password=dsds - 200 null text/plain; charset=utf-8 73.9382ms
+2025-09-15 00:51:10.085 +05:30 [INF] Application is shutting down...
+2025-09-15 00:51:14.440 +05:30 [INF] User profile is available. Using '/Users/rahul/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-09-15 00:51:14.719 +05:30 [INF] Now listening on: https://localhost:8081
+2025-09-15 00:51:14.719 +05:30 [INF] Now listening on: http://localhost:8080
+2025-09-15 00:51:14.720 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-09-15 00:51:14.721 +05:30 [INF] Hosting environment: Development
+2025-09-15 00:51:14.721 +05:30 [INF] Content root path: /Users/rahul/projects/Library/Library.API
+2025-09-15 00:51:58.050 +05:30 [INF] Application is shutting down...
+2025-09-15 00:51:59.906 +05:30 [INF] User profile is available. Using '/Users/rahul/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-09-15 00:52:00.177 +05:30 [INF] Now listening on: https://localhost:8081
+2025-09-15 00:52:00.178 +05:30 [INF] Now listening on: http://localhost:8080
+2025-09-15 00:52:00.179 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-09-15 00:52:00.179 +05:30 [INF] Hosting environment: Development
+2025-09-15 00:52:00.179 +05:30 [INF] Content root path: /Users/rahul/projects/Library/Library.API
+2025-09-15 00:52:30.274 +05:30 [INF] Request starting HTTP/2 GET https://localhost:8081/swagger/index.html - null null
+2025-09-15 00:52:30.328 +05:30 [INF] Request finished HTTP/2 GET https://localhost:8081/swagger/index.html - 200 null text/html;charset=utf-8 55.3792ms
+2025-09-15 00:52:30.579 +05:30 [INF] Request starting HTTP/2 GET https://localhost:8081/swagger/v1/swagger.json - null null
+2025-09-15 00:52:30.629 +05:30 [INF] Request finished HTTP/2 GET https://localhost:8081/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 50.0239ms
+2025-09-15 00:52:37.101 +05:30 [INF] Request starting HTTP/2 GET https://localhost:8081/v2/Login?username=dsf&password=fsdfd - null null
+2025-09-15 00:52:37.106 +05:30 [INF] inside middleware
+2025-09-15 00:52:37.109 +05:30 [INF] Url:https://localhost:8081/v2/Login?username=dsf&password=fsdfd,
+ Body: Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream,
+ Headers: 
+2025-09-15 00:52:37.123 +05:30 [INF] Executing endpoint 'Library.API.Endpoints.LoginController.Login (Library)'
+2025-09-15 00:52:37.139 +05:30 [INF] Route matched with {action = "Login", controller = "Login"}. Executing controller action with signature System.String Login(System.String, System.String) on controller Library.API.Endpoints.LoginController (Library).
+2025-09-15 00:52:37.148 +05:30 [INF] Login user: dsf
+2025-09-15 00:52:37.149 +05:30 [INF] Login : Login with creds : dsf/fsdfd
+2025-09-15 00:52:37.162 +05:30 [INF] Login Successful!
+2025-09-15 00:52:37.165 +05:30 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2025-09-15 00:52:37.167 +05:30 [INF] Executed action Library.API.Endpoints.LoginController.Login (Library) in 25.7644ms
+2025-09-15 00:52:37.167 +05:30 [INF] Executed endpoint 'Library.API.Endpoints.LoginController.Login (Library)'
+2025-09-15 00:52:37.168 +05:30 [INF] HTTP GET /v2/Login responded 200 in 63.7458 ms
+2025-09-15 00:52:37.169 +05:30 [INF] Request finished HTTP/2 GET https://localhost:8081/v2/Login?username=dsf&password=fsdfd - 200 null text/plain; charset=utf-8 67.949ms

@@ -6,5 +6,6 @@ namespace Library.Repository{
         Task DeleteBookAsync(int id);
         public IEnumerable<Book> FetchBook();
         public Book GetBookByDetails(string ISBN, string Title);
+        public void UpdateBookAvailability(int Copies, int BookId);
     }
 }

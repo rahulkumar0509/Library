@@ -6,9 +6,9 @@ namespace Library.Domain
     {
         public int BookId { get; set; }
         public int AuthorId { get; set; }
-        [ForeignKey("BookId")]
+        // [ForeignKey("BookId")]
         public Book? book { get; set; }
-        [ForeignKey("AuthorId")]
+        // [ForeignKey("AuthorId")]
         public Author? author { get; set; }
     }
 }

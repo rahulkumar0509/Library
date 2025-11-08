@@ -1,0 +1,63 @@
+1. baisc crud statement.
+2. clause 
+3. order by group by
+4. aggreaget functions, Max, Min, methods 
+5. joins
+6. stored procedure 
+7. Unions
+8. optimize query
+9. Primary key, foreign key
+
+10. delete pk 
+11. Auto incremenet Id 
+12. Dates 
+13. Select into , insert into 
+14. Indexing 
+15. Triggers  
+
+
+Create Table Book(
+    Id int Identity(1000,1) Primary key Unique , // default next value for bookIdSeq
+    Title varchar(100),
+    copiesAvailable int
+);
+Select b.Id, b.copiesAvailable FROM SchemaName.Book AS b WHERE b.id = 100;
+Update SchemaName.Book SET Title = 'New Name' where id = 100;
+Alter Table Book Add description varchar(250);
+Alter Table Book Alter Column description varchar(500) Not Null;
+
+Create Table Book (
+    BookId Int,
+    AuthorId Int,
+    Constraint FK_book_author_Id Foreign key(AuthorId) References Author(AuthorId),
+    Primary Key(BookId, AuthorId)
+);
+Alter Table BookAuthors Add Constraint FK_Book_bookId Foreign Key(BookId) References Book(BookId);
+
+Delete From Book;
+Drop Table Book;
+Create Sequence bookIdSeq START with 1000 incremenet by 1 cache 1;
+
+
+
+Select * from Book order by bookId DESC;
+Select Department, count(*) from Library group by Department;
+Select Department, AVG(Salary) from Library group by Department Having AVG(Salary)>100000;
+Select * from Book Limit 5;
+Select Distinct City from Address;
+Select SUM(Salary), Min(Salary), Max(Salary), Avg(Salary), Count(Salary) from Employee;
+
+Select b.Title, a.Name, b.Price, a.BirthDate From Books As B Inner Join Author As A On Book.AuthorId = Author.AuthorId;
+Select e.Name, e.Address, d.Name From Employee As e Left Join Department as d On e.departmentId = d.id; // will return all data from left table and 
+Select c.customerName, o.orderid from Customer As c Right Join Orders As o On c.orderid = o.orderid;
+Select c.customerName, o.orderid from Customer As c Right Join Orders As o On c.orderid = o.orderid;
+Select c.customerName, o.orderid from Customer As c Full Join Orders As o On c.orderid = o.orderid;
+
+SELECT A.customerName AS Name1, B.customerName AS Name2
+FROM Address AS A
+JOIN Address AS B ON A.id <> B.id AND A.city = B.city;
+
+Select City, Country From Supplier
+Union 
+Select City, Country From Customer
+Order By City;

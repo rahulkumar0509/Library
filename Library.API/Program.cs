@@ -7,13 +7,54 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Library.API.Middleware;
+using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme() // add this to enable authorize token in swagger
+    {
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
+// cors policy 
+builder.Services.AddCors(Options =>
+{
+    Options.AddPolicy("AngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 // service registration
 builder.Services.AddScoped<ILibraryService, LibraryService>();
@@ -27,9 +68,30 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 // Controller registration
 builder.Services.AddControllers();
 
+builder.Services.AddProblemDetails(); // It works as fallback plan for UseExceptionHandler so it is mandatory. When you call builder.Services.AddProblemDetails(), the framework adds its own default IExceptionHandler implementation to the dependency injection container. This handler is a built-in component of the ASP.NET Core framework designed to automatically generate RFC 9457-compliant error responses. You don't need to manually create or configure these services; they are part of the framework's internal plumbing for standardized error handling.
+builder.Services.AddExceptionHandler<LibraryExceptionHandler>();
+builder.Services.AddDbContext<LibraryDbContext>(option=>option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Logging
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
+builder.Logging.ClearProviders(); // Clear any default logging providers
+builder.Logging.AddConsole(); //  Add the console logging provider to only log to the console
+
+// Configure Serilog
+// Log.Logger = new LoggerConfiguration()
+//     .MinimumLevel.Information()
+//     .WriteTo.Console()
+//     .WriteTo.File("logs/infromation-.txt", rollingInterval: RollingInterval.Day)
+//     .CreateLogger();
+
+// using apsettings
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
+// Add Serilog to the logging pipeline
+builder.Logging.AddSerilog();
+
+// to log general web api request
+builder.Host.UseSerilog();
 
 // JWT Authentication
 // It doesn’t validate tokens at this point — it just sets up the rules so that when a request comes in later,
@@ -68,13 +130,18 @@ if (app.Environment.IsDevelopment())
 //     Console.WriteLine(JsonSerializer.Serialize(header).ToString());
 //     await next(context);
 // });
-
+app.UseCors("AngularApp");
+app.UseExceptionHandler(); // Must add .AddProblemDetails()
 app.UseHttpsRedirection();
 app.MapControllers();
 app.MapLibraryEndpoint();
 
+// to log general web api request
+app.UseSerilogRequestLogging(); // notice the api response time: HTTP GET /v2/Login responded 200 in 63.7458 ms
+
 // middleware is singleton context, so define all the Scoped services in invoke mthod instead of constructor.
 app.UseLibraryAuthenticationMiddleware();
+app.UseLibraryExceptionHandlerMiddleware();
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();

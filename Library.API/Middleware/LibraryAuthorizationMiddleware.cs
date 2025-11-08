@@ -23,16 +23,22 @@ namespace Library.API.Middleware
         public async Task Invoke(HttpContext context, IJwtService jwtService)
         {
             _logger.LogInformation("inside middleware");
-            if (context.Request.Path.StartsWithSegments("/v2/Login"))
+            if (context.Request.Path.StartsWithSegments("/v2/Login") || context.Request.Path.StartsWithSegments("/swagger"))
             {
                 await _requestDelegate(context);
                 return;
             }
+            if (String.IsNullOrEmpty(context.Request.Headers["Authorization"]))
+            {
+                _logger.LogError("Authorization token not available!");
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                await context.Response.WriteAsync("Authorization token not available! Login and attach bearer token");
+                return;
+            }
             string authHeader = context.Request.Headers["Authorization"].FirstOrDefault().Split(" ")[1];
-            Console.WriteLine($"header token {authHeader}", authHeader);
             if (String.IsNullOrEmpty(authHeader))
             {
-                _logger.LogInformation("Invalid token!");
+                _logger.LogError("Invalid token!");
                 return;
             }
             if (jwtService.VerifyToken(authHeader))
