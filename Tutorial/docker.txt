@@ -21,6 +21,7 @@ When dynamic scaling and orchestration of applications are required, Docker cont
 Cloud-native deployments:
 Docker is a fundamental technology in cloud-native application development and deployment, enabling easy deployment to cloud platforms that support container services.
 
+
 Definition: 
 -----------
 Docker is an open-source platform designed to simplify the process of building, deploying, and running applications using containerization. 
@@ -32,7 +33,7 @@ In dockerfile we have to load all files and then run the command.
 
 
 
-how to know your application environemnt in docker run.
+how to know your application's environemnt in docker run.
 open a shell inside docker using: docker exec -it <container_id> sh. To get the id, run docker ps
 run echo $ASPNETCORE_ENVIRONMENT
 If nothing prints → it defaults to Production.

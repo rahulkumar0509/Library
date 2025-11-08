@@ -29,10 +29,10 @@ namespace Library.Repository
             modelBuilder.HasDefaultSchema("LibrarySchema");
             modelBuilder.Entity<Book>(entity =>
             {
-                // entity.Property(p => p.BookId)
-                    // .HasColumnName("falana")
-                    // .IsRequired()
-                    // .HasMaxLength(300);
+                 entity.Property(p => p.BookId)
+                    .HasColumnName("falana")
+                    .IsRequired()
+                    .HasMaxLength(300);
             });
             modelBuilder.Entity<BookAuthors>(entity =>
             {

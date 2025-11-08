@@ -22,6 +22,7 @@ Built-in conversion methods: Convert.ToString(myInt), Convert.ToDouble, Convert.
 
 To read: string userName = Console.ReadLine();
 
+
 String Methods: txt.ToUpper(), txt.ToLower(), string.Concat(firstName, lastName); string name = $"My full name is: {firstName} {lastName}"; myString.IndexOf("e"), myString.Substring(5);
 backslash escape character: \n: new line, \t: tab space , \b: back space,  string txt = "We are the so-called \"Vikings\" from the north.";  
 

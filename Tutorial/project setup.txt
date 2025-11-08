@@ -1,0 +1,13 @@
+1. create new API project command
+2. .csproj
+3. program.cs
+4. appsettings.JSON
+5. launchsettings.JSON property folder
+6. controller
+7. Minimal endpoints
+8. middleware
+9. Services
+10. Repository
+11. Sql 
+12. logs folder 
+13. Domain folder with DTOs
