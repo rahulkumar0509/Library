@@ -1,0 +1,15 @@
+what is the difference between eager Loading, Explicit Loading and Lazy loading?
+How does EF Core handle cascade delete behavior?
+What are shadow properties in EF Core?
+How does EF Core handle concurrency conflicts?
+What is the purpose of AsSplitQuery?
+How does EF Core translate LINQ expressions into SQL?
+What are global query filters and when are they used?
+What are owned types in EF Core?
+How do you execute raw SQL queries in EF core?
+How do you optimize EF Core queries for high-traffic read workloads?
+How do compiled queries improve performance In EF core?
+volatile How do you implement soft delete in ef core! Interlocked
+what is the difference between table per-Hierarchy, Table-per-Type and Table-per-Concrete-Type inheritance ?
+How do you apply migrations in production?
+How does connection pooling behave in EF Core?

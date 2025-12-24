@@ -23,7 +23,7 @@ Docker is a fundamental technology in cloud-native application development and d
 
 
 Definition: 
------------
+---------------
 Docker is an open-source platform designed to simplify the process of building, deploying, and running applications using containerization. 
 It allows developers to package an application and all its dependencies (code, runtime, system tools, libraries, and settings) into a standardized unit called a "Docker container." 
 

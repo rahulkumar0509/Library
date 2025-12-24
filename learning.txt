@@ -216,3 +216,6 @@ Reflection: It uses reflection to look for a public method named Invoke or Invok
 Method Binding: Once found, the framework creates a delegate (a type-safe function pointer) that points to this specific method. It also handles dependency injection for any other parameters in the method signature (e.g., services like ILogger).
 Pipeline Construction: The framework constructs the middleware pipeline by chaining these delegates together. Each Invoke method is passed a delegate to the next method in the chain, which it can call to pass the request along.
 This convention-based approach, rather than a formal interface, gives developers flexibility. You don't have to inherit from a specific base class, and you can inject any services you need directly into the method signature, which is a powerful feature of ASP.NET Core.
+
+
+https://medium.com/@bhargavkoya56/crafting-your-own-dependency-injection-container-in-c-a-developers-journey-bd255633dd5f

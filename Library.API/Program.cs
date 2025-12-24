@@ -14,6 +14,8 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var s_httpClient = new HttpClient(); // Api call to external service
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -145,4 +147,4 @@ app.UseLibraryExceptionHandlerMiddleware();
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
-app.Run();
+app.Run(); 

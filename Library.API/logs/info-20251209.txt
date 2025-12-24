@@ -1,0 +1,32 @@
+2025-12-09 01:06:32.666 +05:30 [INF] User profile is available. Using '/Users/rahul/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2025-12-09 01:06:32.702 +05:30 [INF] Creating key {ea8627b2-4ae2-4e74-a926-f0510e874018} with creation date 2025-12-08 19:36:32Z, activation date 2025-12-08 19:36:32Z, and expiration date 2026-03-08 19:36:32Z.
+2025-12-09 01:06:32.707 +05:30 [WRN] No XML encryptor configured. Key {ea8627b2-4ae2-4e74-a926-f0510e874018} may be persisted to storage in unencrypted form.
+2025-12-09 01:06:32.710 +05:30 [INF] Writing data to file '/Users/rahul/.aspnet/DataProtection-Keys/key-ea8627b2-4ae2-4e74-a926-f0510e874018.xml'.
+2025-12-09 01:06:32.759 +05:30 [INF] Now listening on: http://localhost:8080
+2025-12-09 01:06:32.760 +05:30 [INF] Now listening on: http://localhost:8081
+2025-12-09 01:06:32.761 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-09 01:06:32.761 +05:30 [INF] Hosting environment: Development
+2025-12-09 01:06:32.761 +05:30 [INF] Content root path: /Users/rahul/Projects/Library/Library.API
+2025-12-09 01:06:37.665 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8081/ - null null
+2025-12-09 01:06:37.687 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8081/ - 307 0 null 23.1093ms
+2025-12-09 01:07:11.081 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/ - null null
+2025-12-09 01:07:11.083 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/ - 307 0 null 1.8977ms
+2025-12-09 01:07:29.866 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/index.html - null null
+2025-12-09 01:07:29.907 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/index.html - 200 null text/html;charset=utf-8 40.6003ms
+2025-12-09 01:07:29.913 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/swagger-ui.css - null null
+2025-12-09 01:07:29.916 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/swagger-ui-bundle.js - null null
+2025-12-09 01:07:29.916 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/swagger-ui-standalone-preset.js - null null
+2025-12-09 01:07:29.922 +05:30 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-12-09 01:07:29.922 +05:30 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-12-09 01:07:29.922 +05:30 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-12-09 01:07:29.923 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 7.1833ms
+2025-12-09 01:07:29.923 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/swagger-ui.css - 200 152034 text/css 10.0741ms
+2025-12-09 01:07:29.923 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 7.188ms
+2025-12-09 01:07:30.005 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/favicon-32x32.png - null null
+2025-12-09 01:07:30.005 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/favicon-16x16.png - null null
+2025-12-09 01:07:30.006 +05:30 [INF] Sending file. Request path: '/favicon-16x16.png'. Physical path: 'N/A'
+2025-12-09 01:07:30.006 +05:30 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-12-09 01:07:30.006 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/favicon-16x16.png - 200 665 image/png 0.548ms
+2025-12-09 01:07:30.006 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/favicon-32x32.png - 200 628 image/png 0.8099ms
+2025-12-09 01:07:30.016 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:8080/swagger/v1/swagger.json - null null
+2025-12-09 01:07:30.069 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:8080/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 53.852ms

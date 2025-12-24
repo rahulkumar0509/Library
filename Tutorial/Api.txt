@@ -17,6 +17,8 @@
 15. 
 16. 
 17. API lifecycle 
+Health Check endpoint 
+Controller filter vs middleware 
 Minimal API
 Model and data annotation
 Dapper 

@@ -1,24 +1,179 @@
 1. What is C sharp
-C sharp is object priented programming language developed by microsoft to use for web, Api & desktop application development.
-It has Encapsulation, Inheritance, interface, class & object. 
+    C sharp is object oriented programming language developed by microsoft to use for web, Api & desktop application development.
+    It has Encapsulation, Inheritance, interface, class & object. 
 
-it uses namespace to define the package of a class. 
+    It is an object-oriented programming language created by Microsoft that runs on the .NET Framework.
+    The first version was released in year 2002. The latest version, C# 13, was released in November 2024.
+
+    it uses namespace to define the package of a class. 
 
 CLR:
-To run c sharp code we require CLR common language runtime virtual machine component of .net enviroment.
-Basically it provides the enviroement for dot net code to run smoothly and other services like thread Management, memory Management etc.
+    To run c sharp code we require CLR common language runtime virtual machine component of .net enviroment.
+    Basically it provides the enviroement for dot net code to run smoothly and other services like thread Management, memory Management etc.
 
-Inheritance:
-Inheritance is a mechanism in C# by which we can resuse the feature of one class into another. Basically we define one super class and one sub class.
-we have single level, multilevel, Hierarchical  and multiple Inheritance.
-multple inheriatnce can only be achieved by using interface. 
+CONST & READONLY
+------------------
+    const is limited to built-in value types (like int, bool, double, etc.), string, or a null reference. readonly can be used with any data type, 
+    including custom classes, structs, and arrays. 
+    Example use case: (decides at runtime)
+    Storing a database connection string that is read from a configuration file when the application starts. 
+    The value isn't known at compile time, making const unusable. 
 
-Class A: B{}, Class B: A {} Class C: A, Class B: A{} Class C: A{}, Inerafce A Interface B Class C: A,B {}
+    Const means variable is constant and can not be re assigned while readonly can be re asiigned in the constructor even if its already assigned in declaration.
+    Example:
+    readonly int age = 25; // can be assigned here
+    public MyClass(int a)
+    {
+        age = a;  // Can only be assigned in constructor
+    }
+    Constants can be declared within functions while readonly modifiers can be used with reference types.  
 
-Access Modifier: Private, Public, Protected, Internal (same assembly), 
+"is" and "as" operators in C#
+-----------------------------
+    The "is" operator is used to check if an object is of a specific type. It returns a boolean value (true or false).
+    Example:
+    object obj = "Hello, World!";
+    if (obj is string)
+    {       
+        Console.WriteLine("obj is a string.");
+    }       
+    The "as" operator is used to perform type conversion. It attempts to cast an object to a specified type and returns null if the conversion fails, instead of throwing an exception.
+    Example:
+    object obj = "Hello, World!";
+    string str = obj as string;     
+
+Difference between the Equality Operator (==) and Equals() Method in C#?
+-----------------------------
+    The Equality Operator (==) in C# is used to compare the values of two operands for equality. 
+    For value types, it checks if the values are the same, while for reference types, it checks if both references point to the same object in memory.
+    On the other hand, the Equals() method is a virtual method defined in the Object class that can be overridden by derived classes to provide custom equality logic. 
+    By default, the Equals() method behaves similarly to the == operator for reference types, checking for reference equality, but it can be overridden to compare the actual content of objects.
+    Example:
+
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Person))
+                return false;
+
+            Person other = (Person)obj;
+            return this.Name == other.Name && this.Age == other.Age;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode() ^ Age.GetHashCode();
+        }
+    }
+
+    // Usage
+    Person p1 = new Person { Name = "John", Age = 30 };
+    Person p2 = new Person { Name = "John", Age = 30 };
+    Console.WriteLine(p1.Equals(p2)); // true
+
+
+    int x = 10;
+    int y = 11;
+    x.Equals(y); // false
+
+String Vs StringeBuilder
+-----------------------------
+    By default String is immutable object which means if we changes the value of string object from the intial then it will create new memory in Heap area instead of just replacing the previous content.
+    To fix this we have StringBuilder which is dynamic object takes the memory as required.
+
+Variables: 
+-------------
+    int-4, long-8, float-4, double-8, string -2bytes per char, bool-1, char-2. Use const for constand variable. e.g. const int num = 19;
+
+casting: 
+---------------------
+    To convert a larger type to a smaller size type, we need explicit casting.
+    like double data = 8.74; int dataInt = (int) data;
+    Built-in conversion methods: Convert.ToString(myInt), Convert.ToDouble, Convert.ToInt64-for double, Convert.ToInt64
+
+    To read: string userName = Console.ReadLine();
+
+
+String Methods: 
+---------------------
+    txt.ToUpper(), txt.ToLower(), txt.Length, string.Concat(firstName, lastName); string name = $"My full name is: {firstName} {lastName}"; myString.IndexOf("e"), myString.Substring(5);
+    backslash escape character: \n: new line, \t: tab space , \b: back space,  string txt = "We are the so-called \"Vikings\" from the north.";  
+
+foreach loop: 
+---------------------
+    foreach (string i in cars) ; i is the element of array but index.
+    array: string[] cars = {"Volvo", "BMW", "Ford", "Mazda"}; 
+    Array.Sort(cars); cars.Max(), cars.Min(), cars, cars.GetLength(row_num) for multi dimensional array, Lenght for single
+
+What is Delegates
+---------------------
+    C# delegates are type-safe function pointers that allow methods to be treated as objects, enabling them to be passed as arguments, 
+    returned from other methods, or stored in variables. They provide a way to call methods dynamically and are fundamental for implementing 
+    event handlers, callbacks, and functional programming patterns like LINQ, allowing you to decouple the caller from the method being executed.
+
+    A delegate is a type that represents references to methods with a specific parameter list and return type.
+    When you instantiate a delegate, you can associate its instance with any method with a compatible signature and return type.
+    You can invoke (or call) the method through the delegate instance.
+    https://www.c-sharpcorner.com/blogs/delegates-with-real-time-example-in-c-sharp
+
+    public delegate int PerformCalculation(int x, int y);
+    class Calculator
+    {
+        public int Add(int x, int y)
+        {
+            return x + y;
+        }
+    }   
+
+ArrayList vs List<T>
+-----------------------------
+    ArrayList can store different data type object in same list while List<T> is generic and can store only one type of data.
+    ArrayList is non generic and List<T> is generic so List<T> is more type safe and faster than ArrayList.
+        ArrayList data = new ArrayList();
+        data.add(123);
+        data.add("hello);
+        data.add({"key":"value"});
+
+        data.remove("hello");
+        data.contains(123);
+        data.count;
+
+    To store different type of data in List<T> we can use List<object>. but its not recommended.
+    List is strongly typed and faster than ArrayList.
+
+What are extension methods in C#?
+------------------------------
+    Extension methods in C# allow you to add new methods to existing types without modifying their source code or creating a new derived type. 
+    They are defined as static methods in static classes, and the first parameter of the method specifies the type it extends, preceded by the 'this' keyword.
+    see minimal API example below.
+
+    public static void MapLibraryEndpoint(this WebApplication app) // extension method
+
+    public static class ApplicationBuilderExtensions
+    {
+    public static IApplicationBuilder UseLibraryAuthenticationMiddleware(this IApplicationBuilder applicationBuilder)
+            {
+                return applicationBuilder.UseMiddleware<LibraryAuthorizationMiddleware>();
+            }
+
+Object oriented Programming
+-----------------------------
+
+    Inheritance:
+        Inheritance is a mechanism in C# by which we can resuse the feature of one class into another. Basically we define one super class and one sub class.
+        we have single level, multilevel, Hierarchical  and multiple Inheritance.
+        multple inheriatnce can only be achieved by using interface. 
+
+        Class A: B{}, Class B: A {} Class C: A, Class B: A{} Class C: A{}, Inerafce A Interface B Class C: A,B {}
+
+        Access Modifier: Private, Public, Protected, Internal (same assembly), 
 
 Encapsulation is core concept of C# where we define the field and methods in such a way that the actual data is not exposed to the the public.
-Instead privde it indirectly via asome method. best example is getter setter.
+Instead provide it indirectly via some method. best example is getter setter.
 public int Name {get; set;}
 
 A structure is a collection of variables of different data types under a single unit. 
@@ -27,98 +182,477 @@ While a class have constructor and can be derived.
 Enumeration (enum) in C# is a special value type that defines a set of named constants. 
 enum month { jan, feb, mar, apr, may }
 
-Const & readonly
-Const means variable is constant and can not be re assigned while readonly can be re asiigned in the constructor even if its already assigned in declaration.
-readonly can not be assigned in any method
+
 
 JIT compiler process
-Just in time compiler is part of CLR common langauge runtime which manages the execution of dot net code regardless of language.
-C sharp compiler compiles the source code into intermediate language and then JIT converts this into machine code.
+    Just in time compiler is part of CLR common langauge runtime which manages the execution of dot net code regardless of language.
+    C sharp compiler compiles the source code into intermediate language and then JIT converts this into machine code.
 
-String Vs StringeBuilder
-By default String is immutable object which means if we changes the value of string object from the intial then it will create new memory in Heap area instead of just replacing the previous content.
-To fix this we have StringBuilder whichis dynamic object takes the memory as required.
 
 Garbage collection concept- its done automatically whenever object work is done then it will be deleted.
 
 Extention method:
-Extention method is used to bind a new method into existing class using 'this' keyword as argument of that method.
-public static void MapLibraryEndpoint(this WebApplication app) {
-    app.MapPost("", (data)=>{
+    Extention method is used to bind a new method into existing class using 'this' keyword as argument of that method.
+    public static void MapLibraryEndpoint(this WebApplication app) {
+        app.MapPost("", (data)=>{
 
-    })
-}
-Here WebApplication is existing class and MapLibraryEndpoint is new method which will be defined there.
+        })
+    }
+    Here WebApplication is existing class and MapLibraryEndpoint is new method which will be defined there.
 
 Partial CLass:
-With Partial you can define same class in multiple file and at the compile time it will be combined together.
-just use public partial class hello{}
+--------------------
+    With Partial you can define same class in multiple file and at the compile time it will be combined together.
+    just use public partial class hello{}
 
 Polymorphism:
-it emans you can define same method multiple time with different siganture but same name and ignore the return type.
-Method overloading is best example for this.
+    it emans you can define same method multiple time with different siganture but same name and ignore the return type.
+    Method overloading is best example for this.
 
 Managed vs Unamanaged code
-A code that is written to aimed to get the services of the managed runtime environment execution like CLR(Common Language Runtime) in .NET Framework is known as Managed Code. It is always implemented by the managed runtime environment instead of directly executed by the operating system.
+    A code that is written to aimed to get the services of the managed runtime environment execution like CLR(Common Language Runtime) in .NET Framework is known as Managed Code. 
+    It is always implemented by the managed runtime environment instead of directly executed by the operating system.
 
-Unamanged code directly runs on the computer operating systm. For example C# code where it uses pointer operation to direclty access the addressa dna value from os.
+    Unamanged code directly runs on the computer operating systm. For example C# code where it uses pointer operation to direclty access the addressa dna value from os.
 
-Multithreading: can runs two different methods of same class in different thread parallely. 
+Multithreading: 
+    can runs two different methods of same class in different thread parallely. 
 
 Sealed class & Sealed emthod:
-Sealed class means it can not be derived. 
-Sealed method can only only be used for overridden method in derived class. just use keyword sealed. 
+    Sealed class means it can not be derived. 
+    Sealed method can only only be used for overridden method in derived class. just use keyword sealed. 
 
 Virtual method:
-To oveeride a methodin derived class, the base class method must be defined as virtual. 
+    To oveeride a methodin derived class, the base class method must be defined as virtual. 
 
 Boxing & Unboxing
-Converting value type data to reference type is called Boxing. e.g., int age = 20; Object obj = age;
-Converting Reference type data to value type is called Unboxing. 
+    Converting value type data to reference type is called Boxing. e.g., int age = 20; Object obj = age;
+    Converting Reference type data to value type is called Unboxing. 
 
 Is and As operator
-the "is" operator to check the object type. 
-var speaker = new Speaker { Name="Gaurav Kumar Arora"};
-var data = speaker is Speaker // returns true;
-the "as" operator returns the data is object type is same;
-here it will return speaker obj having name attribute.
+    the "is" operator to check the object type. 
+    var speaker = new Speaker { Name="Gaurav Kumar Arora"};
+    var data = speaker is Speaker // returns true;
+    the "as" operator returns the data is object type is same;
+    here it will return speaker obj having name attribute.
 
 Nullable type
-put ? as siffix of data type to define the value can be null;
-int? age = null;
+    put ? as siffix of data type to define the value can be null;
+    int? age = null;
 
-Abstract Class
-Anstrack class can be defined by keyword abstract and can have abstarct and non abstarct methods. can have constructor which will called by derived class contructor.
-Can not instantiated the class directly.
+Abstract Class 
+    Anstrack class can be defined by keyword abstract and can have abstarct and non abstarct methods. can have constructor which will called by derived class contructor.
+    Can not instantiated the class directly.
 
-ArrayList data = new ArrayList();
-data.add(123);
-data.add("hello);
-data.add({"key":"value"});
+C# abstract class uses over interface
+-----------------------------
+    The primary advantage of an abstract class is its ability to provide a default implementation for some or all of its methods
+    In C#, you would use an abstract class over an interface primarily when you want to provide a common base implementation for a group of closely 
+    related classes, share state (fields), or add new functionality to the base without breaking existing derived classes. 
 
-data.remove("hello");
-data.contains(123);
-data.count;
+    If you add a new concrete(IMPLEMENTED) method to an abstract base class, existing derived classes automatically inherit the new behavior and do not break.
+    While with interface you have to touch all the derived classes to implement the new method.
+
+    Closely Related Classes ("is-a" Relationship): Abstract classes are best suited for defining the core identity of objects that are part of a clear, related hierarchy (e.g., a Dog is an Animal). 
+    Interfaces are better for defining a "capability" or "contract" for unrelated classes (e.g., a Dog and a Car can both be ISerializable).
+
+    Abstract classes are useful when you need a class for the purpose of inheritance and polymorphism, but it makes no sense to instantiate the class itself, only its subclasses. They are commonly used when you want to define a template for a group of subclasses that share some common implementation code, but you also want to guarantee that the objects of the superclass cannot be created.
+
+    For instance, let's say you need to create Dog, Cat, Hamster and Fish objects. They possess similar properties like color, size, and number of legs as well as 
+    behavior so you create an Animal superclass. However, what color is an Animal? How many legs does an Animal object have? In this case, it doesn't make much sense 
+    to instantiate an object of type Animal but rather only its subclasses.
+
+    Sharing Common Functionality and State: Use an abstract class when multiple derived classes (e.g., different payment processors like PayPalProcessor and 
+    StripeProcessor) need to share significant amounts of common code, fields (like API keys or base URLs), or properties (like DateCreated or a status flag).
 
 Generics
-Generics in C# are a way to create code that can be used with different data types. 
-This makes the code more versatile and reusable. Generics are declared using the <> symbol.
-IEnumerable<ModelName>
+    Generics in C# are a way to create code that can be used with different data types. 
+    This makes the code more versatile and reusable. Generics are declared using the <> symbol.
+    IEnumerable<ModelName>
+
+Type of classes:
+-----------------------------
+1. Static class: can not be instantiated and all methods must be static.
+2. Sealed class: can not be derived.
+3. Abstract class: can not be instantiated directly and can have abstract and non abstract methods.
+4. Partial class: can be defined in multiple files and combined at compile time.
 
 ignored topics:
 -----------------------------
 Events & Delegates
+
+Early Binding (Static Binding)
+--------------------
+    Early binding occurs when the method or property calls are resolved during compilation. 
+    The compiler has all necessary type information, allowing for validation, IntelliSense support, and performance optimizations. 
+
+    Animal animal = new Animal(); // Compiler knows 'animal' is of type Animal
+    animal.Speak(); // Method call resolved at compile time
+
+Late Binding (Dynamic Binding)
+--------------------------------
+    Late binding defers the resolution of method or property calls until runtime. 
+    In C#, this is primarily achieved using the dynamic keyword (introduced in C# 4.0) or Reflection. 
+    This approach is useful for scenarios involving objects from external libraries or plugin systems where type information isn't available during development. 
+
+    dynamic dynamicAnimal = new Animal(); // Compiler does not check the type where Animal is defined in external library
+    dynamicAnimal.Speak(); // Method call resolved at runtime
+
 
 late Binding:
 Refers to the resolution of method calls or property access at runtime, rather than at compile time.
  & early binding
 
 reflection
-When C# code is compiled, it's converted into an Intermediate Language (IL) and also generates metadata. 
-This metadata contains information about the types, members, and attributes defined in the assembly.
-Reflection in C# is a powerful mechanism that enables a program to inspect and manipulate its own metadata and code at runtime. 
-This means you can dynamically discover information about types, classes, methods, properties, fields, and events, and even invoke methods or access members without knowing them at compile time.
+    When C# code is compiled, it's converted into an Intermediate Language (IL) and also generates metadata. 
+    This metadata contains information about the types, members, and attributes defined in the assembly.
+    Reflection in C# is a powerful mechanism that enables a program to inspect and manipulate its own metadata and code at runtime. 
+    This means you can dynamically discover information about types, classes, methods, properties, fields, and events, and even invoke methods or access members without knowing them at compile time.
 
 lazy loading:
-Delays the initialization of an object or retrieval of data until it is actually needed.
-Typically involves using the Lazy<T> class or similar patterns (e.g., in Entity Framework, where related data is loaded only when accessed).
+    Delays the initialization of an object or retrieval of data until it is actually needed.
+    Typically involves using the Lazy<T> class or similar patterns (e.g., in Entity Framework, where related data is loaded only when accessed).
+
+method overriding: 
+    The method in the base class that is intended to be overridden must be declared with the virtual keyword. This signals that derived classes are allowed to provide their own implementation of this method.
+    public class Animal
+    {
+        public virtual void Speak()
+        {
+            Console.WriteLine("Animal makes a sound.");
+        }
+    }
+    The method in the derived class that provides a new implementation of the base class method must be declared with the override keyword. The override method must have the exact same signature (name, parameters, and return type) as the base class's virtual method.
+    public class Dog : Animal
+    {
+        public override void Speak()
+        {
+            Console.WriteLine("Dog barks: Woof!");
+        }
+    }
+
+The meaning of Encapsulation, is to make sure that "sensitive" data is hidden from users. To achieve this, you must:
+
+declare fields/variables as private
+provide public get and set methods, through properties, to access and update the value of a private field
+    A property is like a combination of a variable and a method, and it has two methods: a get and a set method:
+    class Person
+    {
+        private string name; // field
+
+        public string Name   // property
+        {
+            get { return name; }   // get method
+            set { name = value; }  // set method
+        }
+    }
+
+    shorthand:  public string Name { get; set; }
+
+What is use of provate constructor?
+    A private constructor is used to restrict the instantiation of a class from outside the class itself. 
+    It is commonly used in scenarios such as implementing the Singleton design pattern, where you want to ensure that only one instance of a class exists throughout the application. 
+    By making the constructor private, you prevent other classes from creating new instances, and you can provide a static method or property within the class to control access to the single instance.
+
+    how does the first instance get created in singleton pattern?
+    In the Singleton pattern, the first instance of the class is typically created within a static method or property of the class itself. 
+    This method checks if an instance already exists; if not, it creates the instance using the private constructor and then returns it. 
+
+    example:
+    public class Singleton
+    {
+        private static Singleton instance;  
+        private Singleton() 
+        {
+            // Private constructor to prevent instantiation from outside
+        }
+        public static Singleton() // 
+        {
+            if (instance == null)
+            {
+                instance = new Singleton(); // First instance created here
+            }
+            return instance;
+        }
+    }
+
+When is a static constructor called?
+    A static constructor is called automatically by the runtime once before the first instance of the class is created or any static members (fields, methods) are 
+    referenced, whichever happens first, to initialize static data or perform one-time setup. 
+    It's never called directly and you have no control over its exact timing, only that it's guaranteed to run before any static usage. 
+
+    what is the use of static constructor?
+    The static constructor is used to initialize static fields or perform actions that need to be done only once for the class, such as setting up static resources or configurations.
+    example:
+    public class MyClass
+    {
+        static MyClass()
+        {
+            // Static constructor to initialize static members
+            Console.WriteLine("Static constructor called.");
+        }   
+    }
+
+    can a none Static constructor initialize static members?
+    Yes, a non-static constructor can initialize static members, but it's not common practice. Static constructors are specifically designed for that purpose and are called only once, 
+    ensuring that static members are initialized before any instance of the class is created or any static members are accessed.
+
+
+How to create a date with a specific timezone?
+    DateTimeOffset dateTimeOffset = new DateTimeOffset(targetDateTime, offset);
+
+What is the purpose of the method ToLookup?
+Explain deferred execution in LINQ
+    Deferred execution in LINQ means that a query is not executed immediately when it is declared or created. Instead, the query's execution is delayed until
+    its results are actually needed or requested, typically during enumeration. 
+
+    When you define a LINQ query using standard query operators like Where, Select, or OrderBy, the code doesn't retrieve or process the data right away. 
+    The query variable merely stores the commands or an execution plan describing how to get the data. 
+    The actual execution is triggered only when you start iterating over the query variable, most commonly with a foreach loop or by calling methods that 
+    force immediate results. 
+
+    For Immediate execution use ToList(), ToArray(), Count(), First(), etc.
+
+
+Asynchnronous programming in C#
+----------------------------------------
+    By default application runs synchronously, meaning each operation must complete before the next one starts.
+    so when we have long running operations like file access, network calls, database queries etc it will block the main thread and application will be unresponsive.
+    In that case Main thread will be blocked and the application will be unresponsive.
+
+    To solve this we have to use asynchronous programming.
+    for that we have the define the method modifier as Async and use await keyword before calling the long running method.
+    so, with await keyword the control will be returned to the caller method until the long running method is completed.
+
+    now, the main thread will return to Thread pool and can process other requests in the meantime.
+    once the long running method is completed, a new worked thread will be assigned to continue the execution from where it was left off.
+
+    So, Basically its called concurrency where multiple tasks are being processed at the same time without blocking the main thread.
+
+    Keep in mind that it is not improving the performance. 
+
+    The compiler creates a state machine behind the scenes to manage the sequence of operations and continuations in an asynchronous method, 
+    keeping track of the current point of execution across await boundaries. 
+
+Parallelism in C#
+------------------------
+    Parallelism in C# refers to the ability to execute multiple tasks simultaneously, often on different threads or cores. 
+    It's used to improve performance by dividing work into smaller parts that can be processed concurrently.
+
+    We use the Task Parallel Library (TPL) in C# to achieve parallelism.
+    --- Example of Parallel.For
+    using System;
+    using System.Threading.Tasks;       
+    class Program
+    {
+        static void Main()
+        {
+            // Define the range for parallel processing
+            int start = 0;
+            int end = 10;
+
+            // Use Parallel.For to execute iterations in parallel
+            Parallel.For(start, end, i =>
+            {
+                // Simulate some work with a delay
+                Console.WriteLine($"Processing item {i} on thread {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+                System.Threading.Thread.Sleep(100); // Simulate work
+            });
+
+            Console.WriteLine("All items processed.");
+        }
+    }
+
+
+Anonymous method 
+-------------------------
+    Anonymous methods are a way to define inline methods without a name. They are often used with delegates to create quick, one-off methods for event handling or callbacks.
+    e.g., // Anonymous method to add find even numbers
+    Predicate<int> isEven = delegate(int x) {
+        return x % 2 == 0;
+    };
+
+Lambda expression
+-------------------------
+    Lambda expressions are a concise way to represent anonymous methods using a special syntax.
+    They are often used in LINQ queries and for defining inline functions.
+    e.g., // Lambda expression to add two numbers
+    Func<int, int, int> add = (x, y) => x + y;
+
+What is the difference between ref, in and out paramerers.
+    ref (Read/Write, Bi-directional)
+        Purpose: 
+            Pass a variable by reference, allowing the method to both read its initial value and modify it.
+        Initialization: 
+            The variable must be initialized before being passed to the method.
+        Method Requirement: 
+            No requirement to reassign; the method can use or change the existing value.
+        Use Case: 
+            When you need a method to potentially change the original variable's value (e.g., swap(ref a, ref b)). 
+
+    out (Output-Only, Uni-directional)
+        Purpose: 
+            Get data out of a method; signals that the method will provide the value.
+        Initialization: 
+            The variable does not need to be initialized before passing; the value is discarded.
+        Method Requirement: 
+            The method must assign a value to the out parameter before it returns.
+        Use Case: 
+            Returning multiple values from a method (e.g., TryParse). 
+
+    in (Read-Only, Uni-directional)
+        Purpose: 
+            Pass a variable by reference for read-only access within the method.
+        Initialization: 
+            The variable must be initialized before being passed.
+        Method Requirement: 
+            The method cannot modify the parameter's value, preventing accidental changes.
+        Use Case: 
+            Passing large structs or objects by reference without copying them, ensuring they aren't altered (read-only performance boost). 
+
+Explain how Async Streams work
+
+
+
+
+
+
+What are Channels in C#?
+    -- wait...
+Name thread safe collections
+How to perform a lock for asynchronous code?
+Name all the ways for creating a new thread
+How to execute multiple async tasks at once.
+What is the difference between Auto and Manual reset events?
+Difference between volatile and Interlocked
+Difference between Task(.).Run andTaskFactory(.).StartNew
+Explain method overloading and overriding
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Delegates and events are fundamental C# constructs that implement the observer design pattern, allowing a class (the publisher) to notify other interested classes (the subscribers) when something important happens, without needing to know who those subscribers are specifically. 
+Here is how they work with a real-time example of a shopping website. 
+1. Delegates
+A delegate acts as a type-safe function pointer—it is essentially a variable that holds a reference to a method with a specific signature (return type and parameters). 
+Analogy: The Courier Service Contract
+Imagine a shopping website's OrderProcessor that needs to perform a specific action after a purchase, but that action might change (e.g., sometimes send an email, sometimes send an SMS).
+The delegate defines the contract of the method that needs to be called.
+The OrderProcessor holds a variable of that delegate type.
+Other components provide the actual methods that match the contract. 
+C# Example:
+csharp
+// 1. Define the Delegate (The Contract)
+// Methods assigned to this delegate must take an 'int' (order ID) and return 'void'.
+public delegate void OrderNotificationHandler(int orderId);
+
+public class OrderProcessor
+{
+    // 2. A variable to hold the reference to a function (The Courier Contact List)
+    public OrderNotificationHandler OnOrderProcessed;
+
+    public void ProcessOrder(int orderId, decimal totalAmount)
+    {
+        Console.WriteLine($"Order {orderId} processed for total: {totalAmount}");
+
+        // 3. Invoke the delegate (Dispatch the notification to all assigned methods)
+        if (OnOrderProcessed != null)
+        {
+            OnOrderProcessed(orderId);
+        }
+    }
+}
+Use code with caution.
+
+2. Events
+Events are built on top of delegates and provide a safer, more structured way for publishers to notify subscribers. The key difference is that events can only be invoked by the class that declared them, preventing outside classes from triggering the event accidentally. 
+Analogy: The "Order Shipped" Notification System
+In a shopping website, when an item is shipped, various systems need to react: the inventory system needs to update stock, the marketing team needs to log the shipment, and the customer needs an email. The ShipmentService publishes an event that others can subscribe to. 
+The event keyword restricts who can raise the notification.
+Subscribers use += to attach their specific reaction methods to the event list. 
+C# Example:
+csharp
+// (Reusing the delegate definition from above, or using the built-in 'EventHandler' pattern)
+
+public class ShipmentService // Publisher (Only this class can raise the event)
+{
+    // 1. Define the Event using the delegate type
+    public event OrderNotificationHandler OrderShipped;
+
+    public void ShipItem(int orderId)
+    {
+        Console.WriteLine($"Shipping order {orderId}...");
+        
+        // 2. Raise the event to notify all subscribers
+        OnOrderShipped(orderId);
+    }
+
+    // A helper method to safely invoke the event
+    protected virtual void OnOrderShipped(int orderId)
+    {
+        // Use the null-conditional operator '?.' for thread-safe invocation
+        OrderShipped?.Invoke(orderId);
+    }
+}
+
+// Separate classes subscribe to the event
+public class EmailService // Subscriber 1
+{
+    public void SendShippingConfirmation(int orderId)
+    {
+        Console.WriteLine($"-> EMAIL SERVICE: Sending confirmation for order {orderId}.");
+    }
+}
+
+public class InventoryService // Subscriber 2
+{
+    public void UpdateInventoryStock(int orderId)
+    {
+        Console.WriteLine($"-> INVENTORY SERVICE: Updating stock levels for order {orderId}.");
+    }
+}
+Use code with caution.
+
+Real-Time Example Usage
+Here is how these pieces connect in the main application logic:
+csharp
+class Program
+{
+    static void Main()
+    {
+        var emailer = new EmailService();
+        var inventory = new InventoryService();
+        var shipper = new ShipmentService();
+
+        // **SUBSCRIPTION**: Attach methods to the event list using +=
+        shipper.OrderShipped += emailer.SendShippingConfirmation;
+        shipper.OrderShipped += inventory.UpdateInventoryStock;
+
+        // When the publisher performs its action, all subscribers are notified automatically:
+        shipper.ShipItem(42); 
+
+        // Output:
+        // Shipping order 42...
+        // -> EMAIL SERVICE: Sending confirmation for order 42.
+        // -> INVENTORY SERVICE: Updating stock levels for order 42.
+    }
+}

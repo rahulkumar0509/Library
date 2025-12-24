@@ -9,58 +9,19 @@
     From Dot net 5 it was named as Dot net instead of dot net framework because now is unified platform inclusinf dot net core, dot net framework and xamrin.
     Now its dot net 9 with more cross platform and cloud support for development.
 
-Language C#
---------------
-It is an object-oriented programming language created by Microsoft that runs on the .NET Framework.
-The first version was released in year 2002. The latest version, C# 13, was released in November 2024.
 
-Variables: int-4, long-8, float-4, double-8, string -2bytes per char, bool-1, char-2. Use const for constand variable. e.g. const int num = 19;
-
-To convert a larger type to a smaller size type, we need explicit casting.
-like double data = 8.74; int dataInt = (int) data;
-Built-in conversion methods: Convert.ToString(myInt), Convert.ToDouble, Convert.ToInt64-for double, Convert.ToInt64
-
-To read: string userName = Console.ReadLine();
-
-
-String Methods: txt.ToUpper(), txt.ToLower(), string.Concat(firstName, lastName); string name = $"My full name is: {firstName} {lastName}"; myString.IndexOf("e"), myString.Substring(5);
-backslash escape character: \n: new line, \t: tab space , \b: back space,  string txt = "We are the so-called \"Vikings\" from the north.";  
-
-foreach loop: foreach (string i in cars) ; i is the element of array but index.
-array: string[] cars = {"Volvo", "BMW", "Ford", "Mazda"}; Array.Sort(cars); cars.Max(), cars.Min(), cars, cars.GetLength(row_num) for multi dimensional array, Lenght for single
-method overriding: 
-    The method in the base class that is intended to be overridden must be declared with the virtual keyword. This signals that derived classes are allowed to provide their own implementation of this method.
-    public class Animal
-    {
-        public virtual void Speak()
-        {
-            Console.WriteLine("Animal makes a sound.");
-        }
-    }
-    The method in the derived class that provides a new implementation of the base class method must be declared with the override keyword. The override method must have the exact same signature (name, parameters, and return type) as the base class's virtual method.
-    public class Dog : Animal
-    {
-        public override void Speak()
-        {
-            Console.WriteLine("Dog barks: Woof!");
-        }
-    }
-
-The meaning of Encapsulation, is to make sure that "sensitive" data is hidden from users. To achieve this, you must:
-
-declare fields/variables as private
-provide public get and set methods, through properties, to access and update the value of a private field
-    A property is like a combination of a variable and a method, and it has two methods: a get and a set method:
-    class Person
-    {
-        private string name; // field
-
-        public string Name   // property
-        {
-            get { return name; }   // get method
-            set { name = value; }  // set method
-        }
-    }
-
-    shorthand:  public string Name { get; set; }
-    
+Explain in detail how routing works internally in ASP.NET Core.
+What is middleware, how does the pipeline execute, and how can you short-circuit it.
+How can a Scoped service be used inside a Singleton safely?
+Explain appsettings.json configuration layering and precedence order.
+How does IOptionsMonitor, lOptionsSnapshot, and lOptions differ?
+How do you validate configuration and what are the different approaches
+Why are Minimal APls faster than Controllers?
+How does JWT authentication + Refresh Token rotation work end-to-end
+How do you implement a permissions-based authorization system(resource-based auth)?
+How does Output Caching work, and how do you invalidate cached entries?
+How to add api versioning in existing API if youre not allowed to change the api url.
+How do you log request/response bodies safely without leaking sensitive data.
+How do you safely stop a BackgroundService and handle gracerul shutdown?
+How to return a file from API Endpoint with chunks enabled?
+What is Method Injection in Controller and how does it differ from constructor injection?

@@ -8,7 +8,7 @@ Create SCHEMA LibrarySchema; -- run this single line alone
 CREATE Table LibrarySchema.Books(
     BookId Int Identity(1000,1) Primary Key,
     Title Varchar(255),
-    ISBN Varchar(13),
+    ISBN Varchar(13) NOT NULL UNIQUE,
     PublicationYear Int,
     Genre VARCHAR(50)
 );
