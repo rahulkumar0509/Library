@@ -72,7 +72,12 @@ builder.Services.AddControllers();
 
 builder.Services.AddProblemDetails(); // It works as fallback plan for UseExceptionHandler so it is mandatory. When you call builder.Services.AddProblemDetails(), the framework adds its own default IExceptionHandler implementation to the dependency injection container. This handler is a built-in component of the ASP.NET Core framework designed to automatically generate RFC 9457-compliant error responses. You don't need to manually create or configure these services; they are part of the framework's internal plumbing for standardized error handling.
 builder.Services.AddExceptionHandler<LibraryExceptionHandler>();
+
+// DbContext registration
 builder.Services.AddDbContext<LibraryDbContext>(option=>option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// In-memory caching
+builder.Services.AddMemoryCache();
 
 // Logging
 builder.Logging.ClearProviders(); // Clear any default logging providers
@@ -132,7 +137,7 @@ if (app.Environment.IsDevelopment())
 //     Console.WriteLine(JsonSerializer.Serialize(header).ToString());
 //     await next(context);
 // });
-app.UseCors("AngularApp");
+// app.UseCors("AngularApp");
 app.UseExceptionHandler(); // Must add .AddProblemDetails()
 app.UseHttpsRedirection();
 app.MapControllers();
@@ -142,9 +147,9 @@ app.MapLibraryEndpoint();
 app.UseSerilogRequestLogging(); // notice the api response time: HTTP GET /v2/Login responded 200 in 63.7458 ms
 
 // middleware is singleton context, so define all the Scoped services in invoke mthod instead of constructor.
-app.UseLibraryAuthenticationMiddleware();
+// app.UseLibraryAuthenticationMiddleware();
 app.UseLibraryExceptionHandlerMiddleware();
 // Authentication & Authorization
 app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthorization();
 app.Run(); 

@@ -1,0 +1,264 @@
+1. Language
+-------------
+    1. C# Basics
+    --------------
+        1. Language definition & overview.
+        2. CLR
+        3. compiler & running environments
+        4. Primitive & Non-primitive data types
+        5. Loops, Conditions, Functions, Methods
+        6. List & ArrayList, Generic Collections
+        7. Garbage Collections
+        8. Task & Thread 
+        9. CONST, Readonly, Is , As operator
+        10. == vs .Equals() Methods
+        11. String vs StringBuilder 
+        12. Casting
+        13. Boxing & Unboxing
+        14. Managed vs Unmanaged Code
+        15. Early vs Late binding
+        16. VAr, dynamic, object
+        17. Preprocessor
+        18. Dispose vs Finalize
+        19. nameof operator
+    2. C# OOP
+    -----------
+        1. Class & Objects
+        --------------------
+            1. Partial class
+            2. Methods
+            3. Constructor
+                1. Private Constructor & its uses
+                2. Static constructor & its uses
+                3. Copy constructor - provides deep copy. takes existing obj as argument
+            4. Abstract class
+            5. Access Modifier
+        2. Static
+        -----------
+            1. Static class
+            2. Static member
+            3. Static methods
+        3. Interface
+
+        4. Inheritance
+        ----------------
+            1. Multilevel Inheritance
+            2. Single level
+            3. Method Overloading
+            4. Method Overriding
+            5. Sealed class
+            6. override methods
+        5. Encapsulation
+        6. Abstraction
+        7. Extension methods
+        8. 
+    3. C# Console application
+    --------------------------
+        1. ref, In & out operator
+    4. Asynchronous programming
+    -----------------------------
+        1. why to use?
+        2. Multiple async handling
+        3. Task.Start vs Task.Run()
+        4. Async Await 
+    5. MultiThreading 
+    ------------------
+        1. Define Thread
+        2. Multiple threading
+    6. Delegates & Events
+
+2. Framework
+-----------------------------------
+    1. API 
+    --------
+        1. MVC 
+        -------
+            1. Http method verbs
+            2. Http Status code
+            3. Controller definition
+            4. Register & Map controller
+            5. Route
+            6. Helper methods: OK(), NotFound(), Conflict(), BadRequest(), Redirect()
+        2. Minimal API
+        ---------------
+            1. Definition & registration 
+        3. Services
+        ------------
+            1. Lifetime
+            2. registration
+        4. Design pattern
+        ------------------
+            1. Creational Pattern
+                1. Singleton
+                2. Factory method
+                3. Builder pattern
+            2. Structural Patten
+                1. Adapter 
+                2. Repository
+                3. Decorator, facade, Proxy 
+            3. Behavioral pattern
+                1. Chain of responsibility 
+            
+            4. Unit of work 
+
+            5. Gang of 4  - https://www.geeksforgeeks.org/system-design/gang-of-four-gof-design-patterns/
+            6. clean architecture c#
+            https://www.youtube.com/watch?v=LL6h3zVYz8A&list=PLJhxHp6j1l-8_kjEL2hVJDs0_4eJbHtWH&index=3  
+
+        5. API lifecycle
+        6. Logger
+        ----------
+            1. ILogger
+            2. SeriLog
+        7. Swagger (Open API)
+            1. Definition & registration
+            2. Add Authentication token
+        8. Health check API
+            1. Definition & registration
+        9. CORS policy
+        10. Models
+        -----------
+            1. DTO 
+            2. Annotation 
+            3. Validation
+        11. AppSettings
+        12. LaunchSettings
+        13. .csproj & .sln file 
+        14. Query vs Path Parameter 
+        15. 3rd party API call  .. httpClient .. optimize 
+        16. Standardize Error Response - ProblemDetails
+
+    2. Entity Framework
+    -------------------------
+        1. DbContext setup
+        2. OnModelCreating
+        3. AddAsync, FindAsync, Remove, SavechangesAsync, ExecuteUpdate, Update, SetValues
+        4. Migrations
+        5. 
+
+    3. Dapper
+    
+    4. Authentication & Authorization
+    ---------------------------------
+        1. OAuth 2.0
+        2. Token Types
+            1. Access Token
+            2. Refresh Token
+            3. ID Token
+        3. Token Formats
+            1. Bearer Token
+            2. JWT Token
+            3. API Keys
+            4. Authorization Codes
+        4. Access Token, Refresh Token 
+        5. Definition & registration
+    5. Batch processing
+        handle the exception... 
+    6. LINQ
+    ---------
+        1. IEnumerable vs IQueryable
+        2. Take(), Skip(). ToList(), 
+        https://www.tutorialsteacher.com/linq
+    7. Middleware
+    ---------------
+        1. definition
+        2. Custom Middleware
+        3. Global Exception Middleware
+        4. Rate limiting
+    8. Exception Filters
+    9. Dependency Injection
+        1. Property Injection
+        2. Constructor Injection
+        3. Method Injection
+        4. Define your own Dependency Injection
+    10. SOLID principle
+    11. ADO .Net
+    12. Fluent Validation
+
+3. SQL
+--------------------
+    1. CRUD
+        SELECT * FROM LIBRARYSCHEMA.BOOKS WHERE BOOK_ID = 100 ORDER BY PRICE ASC, PIBLICATIONDATE DESC;
+        INSERT INTO LIBRARYSCHEMA.BOOKS (TITLE, PRICE, AUTHOR, PUBLICATIONDATE) VALUES ("KITE STORIES", 9999, "RAHUL KUMAR", 2026);
+        UPDATE LIBRARYSCHEMA.BOOKS SET PRICE = 99999 WHERE AUTHOR = "RAHUL KUMAR";
+        DELETE FROM LIBRARYSCHEMA.BOOKS where Title = "Hello";
+        CREATE TABLE LIBRARYSCHEMA.books (
+            BookId int Identity(1000,1),
+            Title Nvarchar(256) unique not null,
+            AuthorId int Identity(2000,1),
+            Constraint PK_Book_BookId primary key (BookId),
+            constraint FK_Author_AuthorId Foreign key (AuthorId) REFERENCES Author(AuthorId)
+        );
+    2. JOINS
+        6 types of joins.
+    3. Stored Procedure
+    4. Optimization
+    5. Constraint
+    6. Trigger
+    7. Database Indexing
+    8. Functions
+    9. View 
+    10. GroupBy, Like, Aggregate
+    11. Temporary Table @, @@, CTE 
+
+4. Deployment
+----------------------
+    1. Build & Publish
+    2. Deploy to azure
+        1. AppServices // similar like VM but azure handles everything
+        2. Static Webapp // Github, pipeline 
+        3. Static BLOB storage // 
+        4. Database Storage
+    3. Docker
+    4. CI/CD pipeline
+        1. Github Actions
+        2. Azure devops pipeline
+    5. Kubernetes
+    6. Github Actions
+    7. IIS
+
+5. System Design
+-----------------------
+    1. Microservices -- Current https://learn.microsoft.com/en-in/aspnet/core/fundamentals/servers/yarp/yarp-overview?view=aspnetcore-10.0
+    2. REDIS
+        1. Caching the Database 
+        what kind of data should be cached? https://learn.microsoft.com/en-us/aspnet/core/performance/caching/overview?view=aspnetcore-10.0
+
+    3. Database 
+    4. Polling
+    5. Event architechcture
+    6. SignalR
+    7. Websockets
+    8. Message Queue, Pub/Sub.
+    9. Lazy loading
+    10. High Traffic & Spontaneous request 
+    11. security in dot net application
+        1. SQL Injection and fix.
+    12. Database optimization 
+    13. CQRS pattern:
+        Why Read Queries are Cheaper than Writes
+            A read query is less resource-intensive because it only retrieves data, whereas a write query must actively change the state of the database. 
+
+            Indexing Overhead: Every time you write data, the database must also update all related indexes, which multiplies the work for a single command. 
+                                Reads use these indexes to find data instantly without additional processing.
+            Locking & Contention: Writes require exclusive locks, which block other processes from accessing that data to ensure integrity. 
+                                Read operations typically use shared locks or none at all (depending on isolation levels), allowing many users to read the same data simultaneously without waiting.
+            Caching & I/O: Most databases can fulfill popular reads entirely from RAM (Buffer Pool). A write must eventually reach persistent storage (SSD/Disk) to be considered durable, 
+                                which is orders of magnitude slower than reading from memory.
+        
+        Read and write DB will not same table definition & data:
+            The data in your read database is a projection of the write database, not a mirror image.
+                Subset of Data: The Read DB often only stores the fields needed for the UI. For example, the Write DB might store sensitive user audit logs, 
+                                while the Read DB only stores the public profile information.
+                Pre-Calculated Values: If you need to show a "Total Spent" for a user, the Write DB stores individual orders. 
+                                    The Read DB might store a pre-calculated TotalSpent value that is updated every time a new order event occurs, making the read instant. 
+
+        For read you can use No-Sql or Redis database for faster execution.
+        while write DB we can use PostgRES SQL.
+
+    How is postgres fater then sql server?
+6. Unit Testing
+-----------------------
+- basics 
+
+https://learn.microsoft.com/en-us/dotnet/csharp/

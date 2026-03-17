@@ -1,0 +1,72 @@
+what is the difference between eager Loading, Explicit Loading and Lazy loading?
+How does EF Core handle cascade delete behavior?
+What are shadow properties in EF Core?
+How does EF Core handle concurrency conflicts?
+What is the purpose of AsSplitQuery?
+How does EF Core translate LINQ expressions into SQL?
+What are global query filters and when are they used?
+What are owned types in EF Core?
+How do you execute raw SQL queries in EF core?
+How do you optimize EF Core queries for high-traffic read workloads?
+How do compiled queries improve performance In EF core?
+volatile How do you implement soft delete in ef core! Interlocked
+what is the difference between table per-Hierarchy, Table-per-Type and Table-per-Concrete-Type inheritance ?
+How do you apply migrations in production?
+    continue: 
+    https://www.youtube.com/watch?v=90_6J5tnwkw
+
+    EF core migration:
+    ----------------------------
+    First thing first we need to define the Data Model using entity framework while defining the database context.
+    So, in DbContext.cs we have to define how the entity(c# model) is related to the database table like table name, primary key. 
+
+    To do this we can override the OnModelCreating method, 
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder){
+        modelBuilder.Entity<Book>(builder=>{
+            builder.ToTable("Books", tableBuilder=>{
+                tableBuilder.HasCheckConstraint(
+                    "CK_Id_Greater",
+                    sql: $"{nameof(Book.Id) > 0}"
+                );
+            });
+            builder.HasKey(p=> p.Id);
+            builder.Property(p=>p.Title).HasMaxLength(256);
+        });
+    }
+
+    then make sure you have EntityFrameworkCore.Design and EntityFrameworkCore.Tool along with efcore.sqlserver. 
+    and add dotnet-ef tools and run
+    dotnet ef migrations add migration_name
+
+    It will create Migration class file which will override Up and Down method of Migrations class where UP will create the table, index, constraint and 
+    Down will delete all the tables. 
+
+    -- next step --
+    Now if developer adds or update the table column in the Entity model then we must have to run the mugration again.
+
+    dotnet ef migrations newname.
+    It will again create the migration class but will only the new change. 
+    Also notice each migration file is prefixed with timestamp. 
+
+    -------------Apply migration in database-------
+    use command: 
+    Update-Database -Context MyContextName
+    dotnet ef database update <MigrationName> --context contextname
+
+    -----------------Revert Migration-------------
+    dotnet ef database update 0
+    Update-Database 0
+
+    -----------------Generate SQL Script--------------
+    dotnet ef migrations script 
+    Script-Migration
+
+
+How does connection pooling behave in EF Core?
+PUT vs PATCH
+    PUT may lost some data if complete object is not provided because it tries to replace the complete row with the given object.
+    PATCH performs partial update and would change only the given data points from object. 
+Connected vs Disconnected Entity: 
+    The information coming from your web form is considered disconnected. 
+    If you are fetching information from another table within the same request where you are performing the update, that information is connected.

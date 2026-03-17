@@ -13,8 +13,8 @@ CLR:
 
 CONST & READONLY
 ------------------
-    const is limited to built-in value types (like int, bool, double, etc.), string, or a null reference. readonly can be used with any data type, 
-    including custom classes, structs, and arrays. 
+    const is limited to built-in value types (like int, bool, double, etc.), string, or a null reference. 
+    readonly can be used with any data type, including custom classes, structs, and arrays. 
     Example use case: (decides at runtime)
     Storing a database connection string that is read from a configuration file when the application starts. 
     The value isn't known at compile time, making const unusable. 
@@ -87,7 +87,7 @@ String Vs StringeBuilder
 
 Variables: 
 -------------
-    int-4, long-8, float-4, double-8, string -2bytes per char, bool-1, char-2. Use const for constand variable. e.g. const int num = 19;
+    int-4, float-4, long-8, double-8, string 2bytes per char, bool-1, char-2. Use const for constand variable. e.g. const int num = 19;
 
 casting: 
 ---------------------
@@ -161,7 +161,7 @@ What are extension methods in C#?
             }
 
 Object oriented Programming
------------------------------
+-------------------------------
 
     Inheritance:
         Inheritance is a mechanism in C# by which we can resuse the feature of one class into another. Basically we define one super class and one sub class.
@@ -256,7 +256,8 @@ C# abstract class uses over interface
     Closely Related Classes ("is-a" Relationship): Abstract classes are best suited for defining the core identity of objects that are part of a clear, related hierarchy (e.g., a Dog is an Animal). 
     Interfaces are better for defining a "capability" or "contract" for unrelated classes (e.g., a Dog and a Car can both be ISerializable).
 
-    Abstract classes are useful when you need a class for the purpose of inheritance and polymorphism, but it makes no sense to instantiate the class itself, only its subclasses. They are commonly used when you want to define a template for a group of subclasses that share some common implementation code, but you also want to guarantee that the objects of the superclass cannot be created.
+    Abstract classes are useful when you need a class for the purpose of inheritance and polymorphism, but it makes no sense to instantiate the class itself, only its subclasses. 
+    They are commonly used when you want to define a template for a group of subclasses that share some common implementation code, but you also want to guarantee that the objects of the superclass cannot be created.
 
     For instance, let's say you need to create Dog, Cat, Hamster and Fish objects. They possess similar properties like color, size, and number of legs as well as 
     behavior so you create an Animal superclass. However, what color is an Animal? How many legs does an Animal object have? In this case, it doesn't make much sense 
@@ -413,6 +414,21 @@ Explain deferred execution in LINQ
 
     For Immediate execution use ToList(), ToArray(), Count(), First(), etc.
 
+Dispose vs Finalize method in c#
+-------------------------------------
+Dispose() is for explicit, deterministic cleanup of unmanaged resources by the developer, while Finalize (implemented via a destructor) is an implicit, non-deterministic safety net called by the garbage collector (GC)
+
+Dispose():
+-----------
+Explicitly called by the developer or automatically by a using statement.
+Deterministic; resources are released immediately when called.
+Releases both managed and unmanaged resources in a timely manner.
+
+Finalize():
+-----------
+Automatically called by the Garbage Collector (GC).
+Non-deterministic; the timing is unpredictable and depends on the GC's schedule.
+Releases only unmanaged resources as a last resort.
 
 Asynchnronous programming in C#
 ----------------------------------------

@@ -38,6 +38,10 @@ namespace Library.Repository
             {
                 entity.HasNoKey();
             });
+            modelBuilder.Entity<Book>(builder =>
+            {
+                builder.Property(p=>p.GenreNew);
+            });
         }
 
     }

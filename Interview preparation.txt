@@ -24,10 +24,7 @@
 4. How to access and use the HttpContext object within a controller. 
     var requestMethod = HttpContext.Request.Method;
 
-5. What is LINQ (Language Integrated Query)? Explain the difference between IQueryable and IEnumerable interfaces. 
-    see linq.txt
 
-6. Explain asynchronous programming, its importance, and how to use await correctly. 
 7. Multithreading vs. Asynchronicity:
 8. Explain the SOLID principles and how they lead to better software design
     S - Single responsibility principles which means ther should be single object of the class.
@@ -73,4 +70,14 @@ String is an immutable type, meaning its contents cannot be changed once created
 
 Kestrel vs IIS
 --------------------
-Kestrel:Purpose: Kestrel is a lightweight, cross-platform web server developed by Microsoft. It is designed to be used as the default web server for ASP.NET Core applications. Characteristics: Cross-Platform: Kestrel is cross-platform and can run on Windows, Linux, and macOS. Lightweight: It is a lightweight and efficient web server that is optimized for hosting ASP.NET Core applications. Integration: While Kestrel is often used in conjunction with other web servers, such as IIS or Nginx, it can also be used as a standalone server. IIS (Internet Information Services):Purpose: IIS is a full-featured web server developed by Microsoft and is primarily used for hosting traditional ASP.NET applications, as well as other types of web applications. Characteristics: Windows-Centric: IIS is closely tied to the Windows operating system and is the default web server for Windows servers. Feature-Rich: It provides a wide range of features, including support for various web technologies, application pools, security features, and more. Integration: IIS can be used in conjunction with other web servers, such as Kestrel, to provide additional features like load balancing, reverse proxying, and SSL termination.
+Kestrel:Purpose: Kestrel is a lightweight, cross-platform web server developed by Microsoft.
+ It is designed to be used as the default web server for ASP.NET Core applications. 
+ Characteristics: 
+ Cross-Platform: Kestrel is cross-platform and can run on Windows, Linux, and macOS. 
+ Lightweight: It is a lightweight and efficient web server that is optimized for hosting ASP.NET Core applications. 
+ Integration: While Kestrel is often used in conjunction with other web servers, such as IIS or Nginx, it can also be used as a standalone server. 
+ IIS (Internet Information Services):Purpose: IIS is a full-featured web server developed by Microsoft and is primarily used for hosting traditional ASP.NET applications, as well as other types of web applications. 
+ Characteristics: 
+ Windows-Centric: IIS is closely tied to the Windows operating system and is the default web server for Windows servers. 
+ Feature-Rich: It provides a wide range of features, including support for various web technologies, application pools, security features, and more. 
+ Integration: IIS can be used in conjunction with other web servers, such as Kestrel, to provide additional features like load balancing, reverse proxying, and SSL termination.

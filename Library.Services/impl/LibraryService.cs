@@ -113,6 +113,9 @@ namespace Library.Services.Impl
         public int ReturnBook(BorrowBook returnBook)
         {
             var book = _bookRepository.GetBookByDetails(returnBook.BookIsbn, returnBook.BookTitle);
+            Task task = new Task(()=>Console.WriteLine("hello"));
+            task.Start();
+            Task.Run(()=>Console.WriteLine("Hii"));
             if (returnBook.MemberId > 0 && book.BookId > 0)
             {
                 var returned = _loanRepository.ReturnBook(returnBook.MemberId, book.BookId);

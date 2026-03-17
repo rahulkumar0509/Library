@@ -1,0 +1,37 @@
+why to use azure app service over vm
+Can I access azure app service machine like vm?
+can I install sql server on azure app service.? 
+Azure authentication service: 
+    Azure AD supports multiple authentication methods, including:
+    Password-based authentication.
+    Multi-Factor Authentication (MFA)
+    Passwordless sign-in (Microsoft Authenticator, FIDO2 keys)
+    Certificate-based authentication.
+    Single Sign-On (SSO)
+
+
+Azure Functions
+Azure container Apps
+
+Azure web application firewall.
+
+1. Compute & Hosting 
+Azure App Service: The standard PaaS for hosting web apps, APIs, and mobile backends. It supports .NET natively, offering auto-scaling, high availability, and easy integration with DevOps pipelines.
+Azure Container Apps (ACA) / AKS: For microservices or containerized .NET applications, ACA offers a serverless container environment, while Azure Kubernetes Service (AKS) is used for complex, orchestrated container workloads.
+Azure Functions: Used for event-driven, serverless computing to run background tasks, processing, or lightweight APIs without managing servers. 
+2. Data & Storage
+Azure SQL Database: A fully managed SQL Server database that offers high availability, automated backups, and patching.
+Azure Cosmos DB: A NoSQL database designed for low latency and global distribution, ideal for high-scale, JSON-based document storage.
+Azure Blob Storage: Highly scalable storage for unstructured data such as images, videos, and logs.
+Azure Cache for Redis: An in-memory data store used for caching data to improve performance and response times. 
+3. Security & Identity
+Azure Key Vault: Essential for securely storing and accessing sensitive information like application secrets, database connection strings, and certificates.
+Microsoft Entra ID (formerly Azure Active Directory): Used for managing user identities, authentication, and securing access to applications and Azure resources. 
+4. Monitoring & Management
+Azure Application Insights (part of Azure Monitor): Crucial for production monitoring, providing Application Performance Management (APM) to track telemetry, errors, and performance bottlenecks.
+Azure Monitor: Used for comprehensive monitoring of metrics, logs, and diagnostic data across all Azure resources. 
+5. Messaging & Integration
+Azure Service Bus: A fully managed enterprise message broker used for decoupling microservices and enabling high-reliability messaging.
+Azure SignalR Service: Used for adding real-time functionality (pushing content to clients) to .NET applications. 
+6. DevOps & Deployment
+Azure DevOps / GitHub Actions: Used for continuous integration and continuous deployment (CI/CD) pipelines to deploy .NET applications to Azure. 

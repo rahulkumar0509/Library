@@ -20,7 +20,7 @@ namespace Library.API.Middleware
             _requestDelegate = next;
         }
 
-        public async Task Invoke(HttpContext context, IJwtService jwtService)
+        public async Task checkMiddle(HttpContext context, IJwtService jwtService)
         {
             _logger.LogInformation("inside middleware");
             if (context.Request.Path.StartsWithSegments("/v2/Login") || context.Request.Path.StartsWithSegments("/swagger"))

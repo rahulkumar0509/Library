@@ -1,0 +1,239 @@
+Caching is a technique to store the frequently accessed data in memory or external system to make sure data is easily available instead of fetching from database.
+Caching can significantly improves the performance of an application by reducing the load on the database. 
+Caching works best with data that changes infrequently and is expensive to generate. Caching makes a copy of data that can be returned much faster than from the source.
+
+In modern .NET 10 (2026) architecture, caching should ideally be handled in the Service Layer or via a Cached Repository Decorator.
+Your Service calls an interface (e.g., IProductRepository). At runtime, Dependency Injection provides the CachedProductRepository, which checks the cache first. 
+If the data is missing, it calls the real ProductRepository.
+
+We have different kind of cahcing techniques:
+    1. In-Memory caching
+    ---------------------
+    with this technique the data will be stored in server memory and its beneficial when there is single server. 
+    In-memory caching uses server memory to store cached data. This type of caching is suitable for a single server or multiple servers using session affinity. 
+    Session affinity is also known as sticky sessions. Session affinity means that the requests from a client are always routed to the same server for processing.
+
+    builder.Services.AddMemoryCache();
+
+    in services:
+    -------------
+        IMemoryCache _memcache;
+
+        var user = await _memcache.GetOrCreateAsync("userInfo", async entry=>{
+            entry.SlidingExpiration = TimeSpan.FromMinute(5);
+            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
+            await return repo.GetUsers();
+        })
+
+        methods:
+        ---------------
+        _memcache.Clear() // to clear all keys.
+        TryGetValue(key, out value);
+        Remove(key);
+        .Set<T>(key, value, option)
+        .Get<t>(key)
+
+    2. Distributed cache
+        A distributed cache pools the RAM of multiple networked computers into a single, shared, in-memory data store, allowing applications to store 
+        and quickly retrieve frequently accessed data across servers for improved performance, scalability, and reliability, rather than relying on 
+        a single machine's memory. It works by spreading data across nodes in a cluster, enabling horizontal scaling and fault tolerance, 
+        as the failure of one node doesn't bring down the entire cache. 
+
+        We may have postgres, cosmo db also as distributed cache. 
+
+        1. REDIS cache 
+        -------------------------
+        Redis is service which provides distributed caching technique for the application.
+        Through this you can cache all the necessary information in separate service which can be shared among multiple application service.
+
+        for this we need to install "Microsoft.Extensions.Caching.StackExchangeRedis"
+
+        *********** Using Redis as a decorator service is a highly recommended design pattern for distributed systems.******************
+        ********************************* it is considered the gold standard for Clean Architecture. *********************************
+
+        in program.cs
+        ------------------
+            builder.Services.AddStackExchangedRedisCache(redisOption=>{
+                redisOption.Configuration = builder.Configuration.GetConnectionString("Redis");
+            })
+        in service
+        -------------
+            private IUserRepository decorator;
+            private IDistributedCache cache;
+
+            public User GetUserById(int id){
+                User user = await cache.GetStringAsync<User>(id);
+                if(user == null){
+                    User newUser = await decorator.GetUser(id);
+                    if(user is null){
+                        return user;
+                    }
+                    await cache.SetStringAsync(id, JsonConvert.Serialize(newUser), CancellationToken);
+                    return user;
+                }
+                user = JsonConvert.DeserializeObject<User>(user);
+                return user;
+            }
+
+        Deploying Redis in Azure is done through the managed service called Azure Cache for Redis (based on open-source Redis) or Azure Managed Redis 
+        (based on Redis Enterprise software). Both offer fully managed, in-memory data stores that you can provision via the Azure portal, Azure CLI, 
+        PowerShell
+
+        System design questions around Redis:
+        --------------------------------------
+
+
+    3. Hybrid cache
+        https://learn.microsoft.com/en-us/aspnet/core/performance/caching/hybrid?view=aspnetcore-10.0
+
+        Hybrid cache is an abtract class with default implementation that handles the fetching and setting up the cache.
+
+        Hybrid cache has the following features:
+            1. Unified API
+                A single API to handle in-process and out-of-process caching.
+                Hybrid cache stores the cache data in memory as primary resource and if IDistributedCache is available thenit will be considered as secondary
+                cache memory. With both option it provides the speed of In-memry cache and durability fo distributed cache. 
+            
+            2. Stamepede protection
+                Cache Stamepede happens when frequently used cached data is revoked and too many concurrent request are fetching the same information
+                and trying to set the same cache at same time. 
+                HybridCache combines all concurrent operations and ensure all request for a given response wait for the first task to cache the response first.
+
+                behind the scene, how it happens? 
+
+        Cache storage
+            By default HybridCache uses MemoryCache for its primary cache storage. Cache entries are stored in-process, 
+            so each server has a separate cache that is lost whenever the server process is restarted. 
+            For secondary out-of-process storage, such as Redis, SQL Server, or Postgres, HybridCache uses the configured IDistributedCache 
+            implementation, if any. But even without an IDistributedCacheimplementation, the HybridCache service still provides in-process caching 
+            and stampede protection. 
+
+        Implementations:
+        --------------------
+        dotnet add package Microsoft.Extensions.caching.Hybrid
+
+        program.cs
+        ----------------
+            builder.Services.AddHybridCache();
+
+            // Hybrid cache service provides a GetOrCreateAsync method with two overloads. 
+            1. taking key 
+                return await _cache.GetOrCreateAsync(
+                    $"{name}-{id}", // Unique key to the cache entry
+                    async cancel => await GetDataFromTheSourceAsync(name, id, cancel),
+                    cancellationToken: token
+                );
+            
+            2. return await _cache.GetOrCreateAsync(
+                    $"{name}-{id}", // Unique key to the cache entry
+                    (name, id, obj: this),
+                    static async (state, token) =>
+                    await state.obj.GetDataFromTheSourceAsync(state.name, state.id, token),
+                    cancellationToken: token
+                );
+        The method uses the key to try to retrieve the object from the primary cache. 
+        If the item isn't found in the primary cache (a cache miss), it then checks the secondary cache if one is configured. 
+        If it doesn't find the data there (another cache miss), it calls the factory method to get the object from the data source. 
+        It then stores the object in both primary and secondary caches. The factory method is never called if the object is found in the primary or 
+        secondary cache (a cache hit). 
+        
+        The HybridCache service ensures that only one concurrent caller for a given key calls the factory method, and all other callers wait for the 
+        result of that call. The CancellationToken passed to GetOrCreateAsync represents the combined cancellation of all concurrent callers.
+
+        Example:
+        ------------
+            program.cs
+            ---------------
+                // 1. Add Redis (L2)
+                builder.Services.AddStackExchangeRedisCache(options => {
+                    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+                });
+
+                // 2. Add HybridCache (L1 + L2 coordination)
+                builder.Services.AddHybridCache(options => {
+                    options.DefaultEntryOptions = new HybridCacheEntryOptions {
+                        Expiration = TimeSpan.FromMinutes(30),
+                        LocalCacheExpiration = TimeSpan.FromMinutes(5) // L1 expires faster than L2
+                    };
+                });
+            
+            Service.cs
+            ------------------
+                public async Task<Product> GetProductAsync(int id, HybridCache cache, MyDbContext db)
+                {
+                    return await cache.GetOrCreateAsync(
+                        $"product_{id}", 
+                        async token => await db.Products.FindAsync(id, token)
+                    );
+                }
+
+
+    4. HTTP Response Caching
+
+    5. Output caching
+
+    6. Decorator Service:
+    -----------------------
+    A decorated service in C# refers to a software design pattern, known as the Decorator pattern, where a service (an object) is wrapped by one or 
+    more special wrapper objects to dynamically add new behaviors or responsibilities without modifying its original code. 
+    it is an example of open/closed principle. 
+
+    the standard way to implement a decorator for a distributed service (like a user repository) in .NET is to have both the service and the decorator implement the same interface. 
+    The decorator then wraps the core service to add cross-cutting concerns like logging or caching.
+        Decorated services are particularly useful for adding non-core business logic functionalities, such as: 
+            Logging:    Adding logging statements before and after a service method is called.
+            Caching:    Storing results of a service call to improve performance and reduce calls to a database or external API.
+            Validation:     Ensuring business rules are met before the core logic executes.
+            Auditing and Monitoring:    Tracking service usage and performance metrics.
+            Retry Policies:     Implementing logic to retry operations in case of transient failures. 
+
+    Here we have Decorator Service and Decorated Service(Existing service) like UserRepository Service 
+
+    So, Decorated service will be some Repository service where we are actually fetching the data from database. 
+    And Decorator service is another class which will implement the same interface but with some extra features.
+
+        Decorated: UserRepository class : IUserRepository
+        Decorator: UserCache class : IUserRepository
+
+        public UserCache: IUserRepository{
+            private readonly IUserRepository _decorator;
+            private readonly IDistributedCache<UserCache> _distributedCache;
+
+            public UserCache(IUserRepository repo, IDistributedCache cache){
+
+            }
+            
+            public getUserId(int id){
+                // find from cache and return 
+                // _distributedCache.getStringAsync<User>(id);
+                // else
+                return _decorator.getUserId(id);
+            }
+        }
+
+        Registration in program.cs
+        ------------------------------
+            Manual registration(Factory Method)
+            -------------------------------------
+                // Register the core implementation by its concrete type
+                builder.Services.AddScoped<UserRepository>();
+
+                // Register the interface to resolve to the decorator
+                builder.Services.AddScoped<IUserRepository>(provider=>{
+                    var baseService = provider.GetRequiredService<UserCache>();
+                    var cacheService = provider.GetRequiredService<IDistributedCache<UserCache>>();
+                    return new UserCache(baseService, cacheService);
+                })
+
+            using Scrutor Library
+            -----------------------
+
+                builder.Service.AddScoped<IUserRepository, UserRepository>();
+                builder.Service.Decorate<IUserRepository, UserCache>();
+
+        Direct Request: Requesting IUserRepository returns the Decorator.
+        Decorator's Constructor: The decorator receives the Base Service as its innerService.
+        IEnumerable Request: If you request IEnumerable<IUserRepository>, the container will return both the base service and the decorator in a list. 
+
+
+

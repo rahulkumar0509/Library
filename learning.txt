@@ -174,6 +174,7 @@ HAVING COUNT(DISTINCT B.Genre) > 1;
 
 
 what is the framework we used for dependcy injection in dot net core? like kernal, autocrat, inject. design your own dependency injection.
+    - it uses built-in dependency injection container and this container is represented by interface IserviceCollection & IServiceProvider.
 without invoke method what will happen to middleware? where this onvoke is defined and how its getting used.
 what framework is their for dependency injection ? what things should be consider to creaste my own dependency injection
 Behavioural vs creational Vs Repository pattern and which one falls under what? 
@@ -182,6 +183,19 @@ step by step approach to design an application foe very high traffic and spotane
         -Microservices Architecture, Serverless Architecture, Event driven Architecture. 
 What is the cross cutting aspects in dot net? - Middleware, dependency Injection, Decorators, Authentication * authorization , logging, exception handling, cahcing, validation. 
 Task.start vs Task.run Asynchronous programming. 
+    Task.Run(()=>{Console.WriteLine("running tasks")});
+    It creates and starts the task immediately by queuing it to the default TaskScheduler (which uses the thread pool) in a single operation.
+    It is the standard and safest approach for general-purpose parallel or asynchronous operations.
+
+    Task.Start()
+    Creating a Task with its constructor and then calling .Start() requires manual control over the task's lifecycle.
+    var task = new Task(()=>{Console.WriteLine("running new task")});
+    task.Start();
+    The constructor instantiates the task in the Created state, but does not execute it until .Start() is explicitly called. This separation allows for conditional execution or managing a set of tasks before running them.
+
+    The difference between these two methods is that Task.Run is a static method that both instantiates and runs a task, whereas Task.Start is an instance method, which you run on an existing Task instance.
+    So if there's a reason you need to separate the instantiation of the task from the starting of the task (for example if you don't want to run it yet) then use new Task() with and then start it later with .Start(), otherwise just use Task.Run to do both in one call.
+
 how to handle the exception for the batch processor? 
 why not to use exception filter instead of middleware. what is the benfit of middleware?
 

@@ -1,4 +1,4 @@
-A stored procedure is a prepared SQL code which cab be saved to reuse the sql code when needed. 
+A stored procedure is a prepared SQL code which can be saved to reuse the sql code when needed. 
 So, if you have an SQL query that you write over and over again, save it as a stored procedure and then just call it to execute it. 
 Stored procedures are used to speed up database processing because they run on the server side.
 

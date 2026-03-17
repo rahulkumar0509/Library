@@ -1,0 +1,71 @@
+Microservices are used to build the large application into small independent, scalable application.
+Through this each application can be build in different technologies, can be deployed separately as per new development. 
+It allow small teams to own specific services, deploy updates independently, and scale only what's needed, boosting productivity and responsiveness to market changes. 
+
+Implement the "database per Microservices" pattern where each service has its own isolated data store.
+
+So, first of all we have to logically divide the application as per domain driven design.
+make sure each api call another service api to get the data rather than querying the service's database diirectly.
+
+Architecture like:
+Domain Driven Design 
+Event driven architecture
+Clear architecture.
+
+We are going to use YARP for API gateway. 
+We need to create a separate service for API gateway.
+for that install : dotnet add package YARP.RecursiveProxy
+
+in program.cs
+------------------
+
+builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("YARP"));
+
+app.MapReverseProxy();
+
+in appsettings.Json
+--------------------
+"YARP": {
+    "Routes": {
+        "ClusterId": "LibraryCluster",
+        "Match": {
+            "Path": "/Library"
+        },
+        "Transforms" : [
+            {
+                "PathSet": "/"
+            }
+        ]
+    },
+    "Clusters": {
+        "LibraryCluster": {
+            "LoadBalanacingPolicy": "RoundRobin",
+            "Destinations": {
+                "Library": {
+                    "Address": "https://localhost:4000"
+                },
+                "FitTrack": {
+                    "Address": "https://localhost:5000"
+                }
+            }
+        }
+    }
+}
+
+Communication Between services
+---------------------------------
+use REST API for synchronous call using httpClient 
+and use KAFKA or RabbitMq or azure bus for asynchronous call between the servers.
+
+Service Discovery
+------------------
+Service discovery in microservices is the automatic process allowing services to find and communicate with each other dynamically, without hardcoded locations, 
+using a central Service Registry (like Eureka or Consul) that tracks each service's network address (IP/port), enabling flexible scaling and resilient communication
+in a constantly changing distributed system. Services register themselves with the registry, and clients query it to find available instances, with the registry 
+often using health checks and load balancing to ensure reliable connections. 
+
+Circuit Breaker pattern
+------------------------
+
+Service Mesh
+---------------

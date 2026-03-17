@@ -3,6 +3,27 @@
 3. order by group by
 4. aggreaget functions, Max, Min, methods 
 5. joins
+    There are 6 type of joins:
+        1. Left outer join
+            SELECT all rows from left/1st table and matching rows from 2nd table.
+            SELECT * FROM Book as b LEFT JOIN AUTHOR as a ON b.authorId = a.authorId;
+        2. right after join
+            all rows from right
+        3. full outer join
+            this will return all the records of both table. Matching records will show the columns togethere from both table 
+            and from unmatched records it will show b=null for those columns.
+            select b.title, a.name from books as b full join authors as a on a.authorId = b.authorId;
+        4. inner join 
+            will return only the matched records.
+            select b.title , b.price , a.name from books as b inner join authors as a on a.authorId = b.authorid;
+        5. self join 
+            here same table with different alias will be used to create the join.
+            SELECT e.EmployeeName AS Employee, m.EmployeeName AS Manager FROM Employees e JOIN Employees m ON e.ManagerID = m.EmployeeID;
+        6. cross join 
+            A cross join, also known as a Cartesian join, returns a result set that combines each row from the first table with every row from the second table. It does not require a join condition in the ON clause. 
+            Scenario: Generate all possible combinations of products and colors from two separate tables. 
+            SELECT p.ProductName, c.ColorName FROM Products p CROSS JOIN Colors c;
+            
 6. stored procedure 
 7. Unions
 8. optimize query

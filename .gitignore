@@ -3,7 +3,7 @@ Library.API/bin/Debug/net8.0/
 Library.API/obj/
 Library.API/obj/*.*
 Library.API/bin/Debug/net8.0/Library.deps.json
-
+Library.API/logs/*.*
 .fake
 Library.API/obj/Debug/net8.0/ref/Library.dll
 Library.API/obj/Debug/net8.0/Library.dll

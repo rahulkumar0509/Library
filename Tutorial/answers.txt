@@ -1,0 +1,563 @@
+1. Language
+-------------
+    1. C# Basics
+    --------------
+        1. Language definition & overview.
+            C# is a high level object oriendted programming language developed by Microsoft.
+            It supports Interface, Inheritance, Class & oBjects. 
+            We can compile single c# sharp file using csc abc.cs which will .exe executable file. And then run abc.exe in command prompt.
+
+            In dot net framework, we can directly use dotnet build , dotnet run, dotnet restore, dotnet new console -n name, dotnet new webapp -n name
+            The latest version of C# is C# 14, which was released in November 2025 alongside the .NET 10 platform. 
+
+        2. CLR
+            Common Language runtime:
+            It is a virtual machine component which provides the envrionment to run the dot net applications.
+            It manages the components like memory management, garbage collector, excepotion handling and provides Just in time compiler for compilation.
+            When we compile the c# source code it created a Microsoft Intermediate language which is generally stored in .dll or .exe file. 
+            And when the program runs, the JIT compiler translates the common intermediate language into machine code which will be run by cpu on operating system.
+
+        3. compiler & running environments
+        4. Primitive & Non-primitive data types
+            primitive data types: int, int32, int64, bool 1 byte, char 2byte, float 4 byte, double 8 byte, long 8 byte - known as value types.
+            Non primitve: String, Array, Object, List, ArrayList, Tuple, Classes, - known as reference types.
+
+        5. Loops, Conditions, Methods
+
+            int[] numbers = {1,2,3,4,5}
+            for(int i=0; i<10; i++){}
+            foreach(var book in Books){}
+            while(a>10){}
+            do{
+                Console.WriteLine("hello");
+            } while(a>10)
+
+            break; continue;
+
+            Conditions:
+            ----------------
+            if(a>10) else{}
+
+            swicth(a){
+                case 10:
+                    Console.WriteLine();
+                    break;
+                case 20:
+                    Console.WriteLine();
+                    break;
+                default:
+                    Console.WriteLine();
+                    break;
+            }
+
+            Ternary:
+            a > 10 ? sayHello() : sayHi();
+
+            Methods:
+            ---------------
+            public IEnumerable<Book> GetBooks() {}
+
+            IEnumerable<Books> books = GetBooks();
+
+        6. List & ArrayList, Generic Collections - 
+
+            Generic collectionc                             vs              Non-Generic
+            List,                                                           ArrayList
+            HashSet,   uniquer key value pair                               HashTable
+            Stack,     LIFO
+            Queue,  FIFO
+            Dictionary      key value pair and fast retrieval.
+
+            List is a generic collections of single type data.
+            List<string> names = new List<string>() {'rahul', 'kumar'}
+            names.Add('pankaj');
+            names.Remove('rahul');
+            List[0];
+            for(int i=0; i<names.Count; i++){
+                names[i]
+            }
+            foreach(string name in names){
+                name//
+            }
+            names.Clear() // remove everything
+            names.RemoveAt(index);
+            names.Sort() // ascending order;
+            names.Contains('rahul')
+
+            An ArrayList in C# is non generic collection of object which can grow or shrink when we add or remove the elements.
+            In modern dot net it is recommended to use type safe List<T>.
+
+            ArrayList arList = new ArrayList();
+            asList.Add(100);
+            arList.Add('japan');
+            arList.Add(true);
+            arList.Remove(100); .Clear() .Count .Insert(0, 'China')
+            arList.RemoveAt(0);
+            arList.Contains(100); // true
+
+            forEach (var data in arList){ data} or index based for loop
+
+        7. Garbage Collections
+            Garabge collection is handled automatically in C#. 
+            Garbage collector calls the Finalize to clear the unamanged code.
+            and developer can also clear the managed & unmanaged code by calling Dispose methos.
+            In general, we use using() method to clear the resource just after use. 
+
+        8. Task & Thread 
+            Task.Run(()=>{Console.WriteLine("running tasks")});
+            It creates and starts the task immediately by queuing it to the default TaskScheduler (which uses the thread pool) in a single operation.
+            It is the standard and safest approach for general-purpose parallel or asynchronous operations.
+
+            Task.Start()
+            Creating a Task with its constructor and then calling .Start() requires manual control over the task's lifecycle.
+            var task = new Task(()=>{Console.WriteLine("running new task")});
+            task.Start();
+            The constructor instantiates the task in the Created state, but does not execute it until .Start() is explicitly called. This separation allows for conditional execution or managing a set of tasks before running them.
+
+            The difference between these two methods is that Task.Run is a static method that both instantiates and runs a task, whereas Task.Start is an instance method, which you run on an existing Task instance.
+            So if there's a reason you need to separate the instantiation of the task from the starting of the task (for example if you don't want to run it yet) then use new Task() with and then start it later with .Start(), otherwise just use Task.Run to do both in one call.
+
+            Thread:
+
+        9. CONST, Readonly, Is , As operator
+            readonly data can be re initialized in constructor. and it can be apply only for class member. 
+        10. == vs .Equals() Methods
+            .Equals will check the object reference in case of reference.
+            .in case of value type it will be checking the actual data. 
+            . 
+        11. String vs StringBuilder 
+        12. Casting
+        13. Boxing & Unboxing
+        14. Managed vs Unmanaged Code
+            Managed code are handled by managed runtime which is CLR in c# where memory allocation, grabage collection everything is handled by CLR.
+            A code that is written to aimed to get the services of the managed runtime environment execution like CLR(Common Language Runtime) in .NET Framework is known as Managed Code. 
+            It is always implemented by the managed runtime environment instead of directly executed by the operating system.
+
+            Unamanged code directly runs on the computer operating systm. For example C# code where it uses pointer operation to direclty access the addressa dna value from os.
+
+        15. Early vs Late binding
+        16. VAr, dynamic, object
+        17. Preprocessor
+        18. Dispose vs Finalize
+        19. Reflection 
+        20. can we define method as dynamic in c#
+        21. nameof operator
+            The nameof operator in C# is a compile-time feature that obtains the name of a variable, type, or member as a string literal.
+            string myVariable = "some value";
+            Logger.Log($"Error: The variable '{nameof(myVariable)}' is null."); // "myVariable"
+
+
+    2. C# OOP
+    -----------
+        1. Class & Objects
+        --------------------
+            1. Partial class
+                We can define a class as partial which means we can redefine the same class in different file with different feature and after copilation both classes will be merged together.
+                Use partial keyword to have this.
+                public partial class Dinosaur{
+                    int Legs = {get; set;}
+                    string features = {get; set;}
+                }
+                public partial class Dinosaur{
+                    int size = {get; set;}
+                    string food = {get; set;}
+                }
+                best use case is to define the class as partial for multiple time where the its implementing different interface every time.
+            2. Methods
+                public/private/protected string/Object method_name(T arg1, T arg2){return T}
+                T value = method_name(arg1, arg2);
+            3. Constructor
+                1. Private Constructor & its uses 
+                    Private constructor makes sure that this constructor should not be accessible outside of this class which means we can not create an object.
+                    but we can call it from static method or another construcotr initializer.
+
+                    private static Book book;
+                    private Book(){}
+                    public static BookInstance(){
+                        book = new Book();
+                    }
+                    public BookInstance(string name) : this(){
+
+                    }
+                    Best use case is: Singleton object pattern.
+
+                    But we can access private constructor outside if the class using Reflection.
+
+
+                2. Static constructor & its uses
+                    Static constructor is used to intialize the static member of class.
+
+                    A static constructor is called automatically to initialize the class before the first instance is created or any static members are referenced.
+                    It can not be called by other class.
+
+                    And static constructo are called only once per application which means everytime it will point to same data.
+                    so once you change the data to one place it will reflect everywhere.
+                    Static member belong to the class instead of instnce so it can not have different 
+
+                    that's why we use object as it creates different instance of same class and we can manage different data every time as per the use.
+
+
+                3. Copy constructor - provides deep copy. takes existing obj as argument
+                    It is a regular parametrized constructor which takes argument as existing instance of same class.
+                    public Book(Book existingBook){
+                        name = existingBook.name;
+                    }
+                    Book book = new Book('1947');
+                    Book newBook = new Book(book);
+                    book and newbook having same info but both are pointing to different memory location which means changing one object will not change other.
+
+                    This is called deep copy and can be done manually where you copy each property one by one in another class.
+                    Copy constructor make sure "object copy" is happening in the same class so in future if you add new property then no need to change everywhere and just change the copy constructor.
+
+            4. Abstract class
+                Abstract class can have abstarct and non abstarct methods which means you can define some basic method which describes the class for all kind of objects.
+                and keep some abstract method which is only declared and can be implemented later. 
+                We can not create the object of abstarct class directly but we can create the instance of subclass which technically access all the properties fo abstract class.
+                
+                Safety: Making the class abstract prevents anyone from accidentally creating a generic, non-functional object. 
+                Mandatory Implementation: If you mark a method as abstract, every subclass must provide its own version, or it won't compile. 
+                    This ensures that essential functionality (like calculateSalary() for an Employee) is never forgotten.
+                Through this you can achieve inheritance as well.
+                Separation of Concerns: It clearly distinguishes between what an object must do (abstract methods) and how it provides common functionality (concrete methods).
+
+            5. Access Modifier
+                public : everywhere
+                private: same class
+                protected: in same and child class.
+                internal: accessible in same assembly.
+                private protected: all derived class within same assembly.
+                protected internal": except non derived different assembly.
+
+                In C#, an interface itself can have either public or internal accessibility, but its members (methods, properties, events) are always public by default. 
+
+        2. Static
+        -----------
+            1. Static class
+                can access the class directly without creating an instance of the class.
+                Static class can access the sttic member as we know all the static members are assigned a single instance and would be sharing the same memory location throught the application.
+                It can not access non static member.
+                why to use: when we wanted to make sure there is only one state shared in the application. Like global;y available data. 
+                To create a Library or utility you can use satic class so no need to create instance to access any feature.
+                Extension method shoudl be defined as static method so it is accesible at top level class. so you add more methods to the class. 
+            2. Static member
+            3. Static methods:  You cannot use virtual, abstract, or override with static.
+
+        3. Interface
+            It is  a contract that forces the other classes to implement all the methods. 
+            It provides a layer of abstarction for other classes.
+            It helps you to implement different version of same method which will be useful for those classes.
+
+            Using Interface we can declare methods which can be implemented in different class. 
+            Technically it holds the blue print of all features. 
+            through interface we achieve multiple inheritance.
+            
+        4. Inheritance
+        ----------------
+        use base keywird to access the parent class. base() // will call base constructor. base.name // will access base class name property.
+        In C#, fields are private by default.
+            1. Multilevel Inheritance
+            class Fruit{protected string name; public Fruit(){}}
+            class Apple: Fruit{
+                public Apple(string n){
+                    this.name = n;
+                }
+            }
+            class abc{
+                static void main(){
+                    Apple a = new Apple('Grreen Apple');
+                }
+            }
+            2. Single level
+            3. Method Overloading
+                same method name but different signature basically the argument type or no of arguments. chsnging the return type is not valid case of method overloading.
+                Overloading get decided at run time (polymorphism) by checking the argument.
+                It happens in the same class and base class as well.
+                    protected string getName(string n){}
+                    public string getName(int n){}
+            4. Method Overriding
+                it requires 'virtual' keyword in parentr class method and 'override' keyword in subclass. 
+                It requires the same signature and different Implementation in sub class.
+
+                public static string virtual AddNumbers(int a, int b)
+                public static string override AddNumbers(int c, int d)
+
+            5. Sealed class
+                Sealed class can not be extended further
+
+            6. Methdod hiding:
+                If you use the same method with signature in parent and child class then compiler will hide the parent class method and will ask you to use 'new' keyword in front of method name.
+                This is called method hiding.
+                Most of the cases we use override only instead of new. because with this, it iwll not replace the parent class emthod with child one instead it will simply hide the parent method.
+                But while calling the method if you store it in a parent clkass type variable then it will still call the parent's hidden method.
+                Parent A = new Child();
+                A.show() // will give parent method in case of 'new' and child method in case of 'override'.
+
+                Best use case is while creating Library use new to make sure you alwasy define you own Implementation in the library.
+                It si compile time and not polymorphism.   
+        5. Encapsulation
+            Encapsulation is a technique which says to hide the actual data to not be accessed outside from the class.
+            Better define the methods to fetch or set the data within the class.
+            example: setter/getter method.
+
+        6. Abstraction
+            Abstract class and interface.
+
+        7. Extension methods
+            must be static and add (this Class instance)
+        8. Is-A vs. Has-A Relationship
+            When We Inherit one class from another class and use the parent class features. The Relationship between the classes is called as IS-A Relationship.
+            Subclass is Parent class or Dog is an Animal.
+
+            When we use one class as part of another class in form of property or initialize in constructor.This is called Has-A Relationship.
+            public class Library{
+                private Book book; // Using Book Class. // This is Has A relation. Library has a book.
+            }
+            When both classes are independent it shows weaker relationship when using one class into another. This is called Aggregation. E.g Library and Book. Item & inventory.
+            When one classe can not exist without another then it shows a stronger relations and called as Composition. E.g. Car & Engine. Shopping cart & product item.
+
+    3. C# Console application
+    --------------------------
+        1. ref, In & out operator
+            ref is a pass by reference.
+            In is unidirectional.
+
+    4. Asynchronous programming
+    -----------------------------
+        1. why to use?
+            By default the c# program is synchronous but we may have some tasks which is dependent on external factor and may take little more time to be completed. 
+            The problem is that, the main thread will be blocked until the task gets complete because of the synchronous behavior. 
+            and due to this the application will be freezed so we need asynchronous process which will release the main thread to complete the other tasks.
+
+        2. Multiple async handling
+            put all the asynchronous task in separate Task and use Task.WhenAll(T1, t2, T3).
+            
+                // 1. Start all asynchronous tasks concurrently
+                Task<UserData> userTask = FetchUserDataAsync();
+                Task<ConfigData> configTask = LoadConfigurationAsync();
+                Task<List<Product>> productsTask = GetProductListAsync();
+
+                // 2. Await all of them to complete simultaneously
+                await Task.WhenAll(userTask, configTask, productsTask);
+
+                // 3. Process results once all tasks are finished
+                stopwatch.Stop();
+                Console.WriteLine($"All tasks completed in {stopwatch.ElapsedMilliseconds} ms.");
+
+                UserData user = await userTask;
+                ConfigData config = await configTask;
+                List<Product> products = await productsTask
+                
+        3. Task.Start vs Task.Run()
+            Task a = new Task(()=>{}); // when you created the task it is in Created stated and not run yet.
+            a.start() // it is two step process and task will be running only when you hit a.Start()
+
+            Task.Run() // starts the task instantly and we do need to manually handle the Task.
+
+        4. Async Await 
+            sometime when asynchronous task is there and its taking time so the main thread will be released and on next line if the code is dependent on the result of the async task then 
+            it amy break the code because the result might be null until the response comes.
+            so in that case, we should use await keyword alongside async to make sure next line of code will be executed only after the response comes.
+            async should be in front of the method and await should be on front of the line.
+
+    5. MultiThreading 
+    ------------------
+        1. Define Thread
+            Thread t = new Thread(new ThreadStart(mymethod));
+            t.Start();
+            t.sleep(10000);
+            t.join(); // wait for the thread to be completed.
+
+            thread provides the option to run the program parallely. Thread is sequence of instrcution which is run by CPU core.
+            one CPU core can handle multiple thread by switching them. 
+            Thread actua;;y improves the efficicencey of the CPU core.
+            
+            A C# application's default execution is managed by a single main thread created by the Common Language Runtime (CLR) at startup
+                The .NET thread pool is an automatically managed pool of worker threads. It is not used for the initial execution of the Main() method. Instead, it is utilized when you explicitly queue work to it, or when using mechanisms like:
+                    1. Asynchronous methods using async and await keywords (when a continuation is scheduled)
+                    2. Task Parallel Library (TPL) methods (e.g., Task.Run())
+
+        2. Multiple threading   
+            we can use Thread class to create new thread for every methods. like above example 
+            Also we can use Task Parallel library and Task class to achieve parallelism,.
+                await Task.Run(()=>{
+                    // do the task
+
+                })
+            
+            for multiple tasks, 
+                var tasks = new[] { Task.Run(() => DoWork1()), Task.Run(() => DoWork2()) };
+                Task.WaitAll(tasks);
+
+    6. Concurrency vs. Parallelism: 
+        Concurrency means tasks can run in overlapping time periods (managed by rapid context switching), while true parallelism means tasks are running on different 
+        CPU cores simultaneously. C# multithreading enables both.
+
+    7. Delegates & Events
+
+
+
+2. Framework
+-----------------------------------
+    1. API 
+    --------
+        1. MVC 
+        -------
+            1. Http method verbs
+            2. Http Status code
+            3. Controller definition
+            4. Register & Map controller
+            5. Route
+            6. Helper methods: OK(), NotFound(), Conflict(), BadRequest(), Redirect()
+        2. Minimal API
+        ---------------
+            1. Definition & registration
+        3. Services
+        ------------
+            1. Lifetime
+            2. registration
+        4. Design pattern
+        ------------------
+            1. Creational Pattern
+                1. Singleton
+                2. Factory method
+                3. Builder pattern
+            2. Structural Patten
+                1. Adapter 
+                2. Repository
+                3. Decorator, facade, Proxy 
+            3. Behavioral pattern
+                1. Chain of responsibility 
+            4. Gang of 4  - https://www.geeksforgeeks.org/system-design/gang-of-four-gof-design-patterns/
+            5. clean architecture c#
+            https://www.youtube.com/watch?v=LL6h3zVYz8A&list=PLJhxHp6j1l-8_kjEL2hVJDs0_4eJbHtWH&index=3  
+
+        5. API lifecycle
+        6. Logger
+        ----------
+            1. ILogger
+            2. SeriLog
+        7. Swagger (Open API)
+            1. Definition & registration
+            2. Add Authentication token
+        8. Health check API
+            1. Definition & registration
+        9. CORS policy
+        10. Models
+        -----------
+            1. DTO 
+            2. Annotation 
+            3. Validation
+        11. AppSettings
+        12. LaunchSettings
+        13. .csproj & .sln file 
+        14. Query vs Path Parameter 
+        15. 3rd party API call  .. httpClient
+        16. Standardize Error Response - ProblemDetails
+    2. Entity Framework
+    ---------------------
+        1. DbContext setup
+        2. OnModelCreating
+        3. AddAsync, FindAsync, Remove, SavechangesAsync, ExecuteUpdate, Update, SetValues, >where, select, 
+    3. Dapper
+            How does Dapper handle transactions across multiple queries?
+            How can you optimize Dapper queries for large datasets?
+            How does Dapper handle parameterized queries with dynamic SQL?
+            Discuss Dapper's support for caching query results.
+            Can you explain Dapper's support for database connection retries?
+            Discuss the advantages of using Dapper over Entity Framework.
+            Stored procedure in dapper 
+            Lazy loading in dapper
+            parametrized query in dapper, sql injection safe
+    4. Authentication & Authorization
+    ---------------------------------
+        1. OAuth 2.0
+        2. Token Types
+            1. Access Token
+            2. Refresh Token
+            3. ID Token
+        3. Token Formats
+            1. Bearer Token
+            2. JWT Token
+            3. API Keys
+            4. Authorization Codes
+        4. Definition & registration
+    5. Batch processing
+    6. LINQ
+    ---------
+        1. IEnumerable vs IQueryable
+        2. Take(), Skip(). ToList(), 
+        https://www.tutorialsteacher.com/linq
+    7. Middleware
+    ---------------
+        1. definition
+        2. Custom Middleware
+        3. Global Exception Middleware
+        4. Rate limiting
+    8. Exception Filters
+    9. Dependency Injection
+        1. Property Injection
+        2. Constructor Injection
+        3. Method Injection
+        4. Define your own Dependency Injection
+    10. SOLID principle
+
+    11. ADO .Net
+
+    12. Fluent Validation
+        -- current https://www.youtube.com/watch?v=vaDDB7BpEgQ&t=175s
+    13. Common Error message format, ProbpemDetails 
+
+3. SQL
+--------------------
+    1. CRUD
+    2. JOINS
+    3. Stored Procedure
+    4. Optimization
+    5. Constraint
+    6. Trigger
+    7. Database Indexing
+    8. Functions
+    9. View 
+    10. GroupBy, Like, Aggregate
+    11. Temporary Table @, @@, CTE 
+
+4. Deployment
+----------------------
+    1. Build & Publish
+    2. Deploy to azure
+        1. AppServices // similar like VM but azure handles everything
+        2. Static Webapp // Github, pipeline 
+        3. Static BLOB storage // 
+        4. Database Storage
+    3. Docker
+    4. CI/CD pipeline
+        1. Github Actions
+        2. Azure devops pipeline
+    5. Kubernetes
+    6. Github Actions
+    7. IIS
+
+5. System Design
+-----------------------
+    1. Microservices -- https://learn.microsoft.com/en-in/aspnet/core/fundamentals/servers/yarp/yarp-overview?view=aspnetcore-10.0
+    2. REDIS
+        1. Caching the Database  -- Current 
+        what kind of data should be cached? https://learn.microsoft.com/en-us/aspnet/core/performance/caching/overview?view=aspnetcore-10.0
+
+    3. Database 
+    4. Polling
+    5. Event architechcture
+    6. SignalR
+    7. Websockets
+    8. Message Queue, Pub/Sub
+    9. Lazy loading
+    10. High Traffic & Spontaneous request 
+    11. security in dot net application
+        1. SQL Injection and fix.
+    12. Database optimization 
+
+6. Unit Testing
+-----------------------
+- basics 
+
+https://learn.microsoft.com/en-us/dotnet/csharp/
