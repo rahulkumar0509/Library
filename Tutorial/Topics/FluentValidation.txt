@@ -1,0 +1,50 @@
+Fluent validation is an open source library for dot net to build the strongly type validation rules.
+It separates the validation logic from business Models.
+
+Attribute validation keeps the validation rules tightly coupled with Business Models.
+Attribute validation is good for simple validation. For complex validation like cheking the database if email id exists before creating new user, Attribute validation will not work.
+
+Attribute validation can provide property like 
+
+[MaxLength(30, ErrorMessage="must not cross 30 chars.")]
+[Required(ErrorMessage="name is mandatory.")]
+[passwordValidator]
+public string Name {get; set;}
+
+public class passwordValidator: ValidationAttribute // extend ValidationAttibute class
+ {
+    protected override ValidationResult IsValid(object valid, ValidationContext validationContext){
+        var password = value.ToString();
+        if(value.StartsWith("pass")){
+            return new ValidationResult("password should not start with pass");
+        }
+        return ValidationResult.Success;
+    }
+ }
+
+https://docs.fluentvalidation.net/en/latest/configuring.html
+
+
+ Now fluent validation code:
+ ----------------------------------
+ we need FluentValidation.AspNetCore library package and one more.
+
+ We need to define validation in the same dto model.
+
+public class UserValidator: AbstractValidation<userDto>{
+    public UserValidator(UserService userService){
+        RuleFor(x=>x.Name).NotEmpty().WithMessage("not empty").EmailMessage().WithMessage("Email format issue").MustAsync(userService.checkEmailIdExists).WithMessage("Email id already exists");
+        RuleForEach(x.Orders).NotNull().WithMessage("order {CollectionIndex} is required!");
+    }
+}
+
+In-Built validators
+----------------------
+NotNull(), NotEmpty(), NotEqual("hello") RuleFor(x=>x.firstName).NotEqual(x=>x.lastname)
+.Equal(), .Length(1, 10), .maximumLength(100), MinimumLength(), LessThan(), GreaterThan(), 
+Predicate: .MustAsync(), .Match("regular expression"), .EmailAddress(), .CreditCard(), 
+.ExclusiveBetween(100,200), .InclusiveBetween(300,400)
+
+Use one validator into another.
+-----------------------------------
+RuleFor(x=>x.Id).setValidator(new UserValidator()).WithMessage("")

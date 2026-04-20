@@ -3,7 +3,7 @@ namespace Library.Repository{
     public interface IBookRepository
     {
         public int AddBook(Book book);
-        bool isDeleted {get;}
+        // bool isDeleted {get;}
         Task DeleteBookAsync(int id);
         public IEnumerable<Book> FetchBook();
         public Book GetBookByDetails(string ISBN, string Title);

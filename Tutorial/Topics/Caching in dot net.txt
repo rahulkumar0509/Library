@@ -6,7 +6,7 @@ In modern .NET 10 (2026) architecture, caching should ideally be handled in the 
 Your Service calls an interface (e.g., IProductRepository). At runtime, Dependency Injection provides the CachedProductRepository, which checks the cache first. 
 If the data is missing, it calls the real ProductRepository.
 
-We have different kind of cahcing techniques:
+We have different kind of caching techniques:
     1. In-Memory caching
     ---------------------
     with this technique the data will be stored in server memory and its beneficial when there is single server. 
@@ -234,6 +234,3 @@ We have different kind of cahcing techniques:
         Direct Request: Requesting IUserRepository returns the Decorator.
         Decorator's Constructor: The decorator receives the Base Service as its innerService.
         IEnumerable Request: If you request IEnumerable<IUserRepository>, the container will return both the base service and the decorator in a list. 
-
-
-

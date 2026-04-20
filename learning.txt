@@ -197,8 +197,9 @@ Task.start vs Task.run Asynchronous programming.
     So if there's a reason you need to separate the instantiation of the task from the starting of the task (for example if you don't want to run it yet) then use new Task() with and then start it later with .Start(), otherwise just use Task.Run to do both in one call.
 
 how to handle the exception for the batch processor? 
-why not to use exception filter instead of middleware. what is the benfit of middleware?
 
+why not to use exception filter instead of middleware. what is the benfit of middleware?
+-----------------------------------------------------------------------------------------------
 The Repository pattern primarily falls under the category of a Structural Design Pattern.
 It is considered structural because it focuses on how classes and objects are composed to form larger structures, specifically by providing an abstraction layer over the data access logic. This abstraction decouples the domain layer (business logic) from the data persistence layer, making the system more modular, maintainable, and testable.
 While its core classification is structural, the Repository pattern can also be viewed as having elements or relationships with other categories:

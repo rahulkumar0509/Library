@@ -79,6 +79,10 @@
             4. Register & Map controller
             5. Route
             6. Helper methods: OK(), NotFound(), Conflict(), BadRequest(), Redirect()
+            7. Failed to load https port while opening the url in browser
+                - move the https profile to top in launchsettings.json
+            8. production certificate.
+
         2. Minimal API
         ---------------
             1. Definition & registration 
@@ -140,24 +144,37 @@
     
     4. Authentication & Authorization
     ---------------------------------
-        1. OAuth 2.0
+        1. OAuth 2.0 vs OAuth 1.0 // use built in Identoty provider like Microsoft, Google etc.
+            By strict definition, the OAuth 2.0 framework provides only two primary tokens: Access Tokens and Refresh Tokens.
+            Here we get Access & Refresh Token. 
+            Refresh token are stored in Server to cancel then token when logouts. And stored in UI so it can refresh the new access token in every interval.
+            Both needs to be sent as Authorization: Bearer token 
+            Access token stored in UI and server can decryot using secretKey. In Ui, stire in cookie as HttpOnly true 
         2. Token Types
-            1. Access Token
-            2. Refresh Token
-            3. ID Token
+            1. Access Token 
+                // For Authorization, used by API server.
+                When your app needs data from a server (like fetching a list of orders), it uses the Access Token.
+            2. Refresh Token - part of OAuth2.0 
+
+            3. ID Token - part of OIDC OpenID connect
+                // For Authentication, used by client side, contains name, email, issuer.
+                While you often receive an ID Token during this process, it actually belongs to the OpenID Connect (OIDC) layer, 
+                which sits on top of OAuth 2.0 to provide user identity. 
+                Your app receives the ID Token, decodes it (it’s just a JSON object), and uses the data to set up the UI.
+
         3. Token Formats
-            1. Bearer Token
-            2. JWT Token
-            3. API Keys
-            4. Authorization Codes
-        4. Access Token, Refresh Token 
-        5. Definition & registration
+            1. Bearer Token: It says who is owning the token. JWT and API key can be sent as Bearer 
+            2. JWT Token: it is format of token which holdd data, have 1. issuer 2. payload 3. Signature 
+            3. API Keys: it is long lived string key which does nto expire until revoked. usually used to access public API or server-to-server communication.
+            4. Authorization Codes: In OAuth2.0 process: After a user logs in, the server sends this code to your app. Your app then immediately exchanges this code for an Access Token and a Refresh Token.
+        4. OIDC : opene id connect : OpenID Connect or OIDC is an identity protocol that utilizes the authorization and authentication mechanisms of OAuth 2.0. 
     5. Batch processing
         handle the exception... 
     6. LINQ
     ---------
         1. IEnumerable vs IQueryable
         2. Take(), Skip(). ToList(), 
+        .First() , .FirstOrDefault(), .AnyAsync(), .Where(), .FindAsync(), .SingleOrDefault(), .Select(), .OrderBy(), .Count(), .Skip(), .Take(), .Include()
         https://www.tutorialsteacher.com/linq
     7. Middleware
     ---------------
@@ -200,6 +217,7 @@
     9. View 
     10. GroupBy, Like, Aggregate
     11. Temporary Table @, @@, CTE 
+    12. CURSOR
 
 4. Deployment
 ----------------------
@@ -235,6 +253,12 @@
     11. security in dot net application
         1. SQL Injection and fix.
     12. Database optimization 
+        1. Indexing
+        2. Query optimization 
+        3. Database scaling
+            - Vertical - Add more CPU & RAM
+            - Horizontal: Add more database Server. 
+        4. Backup & disaster Management
     13. CQRS pattern:
         Why Read Queries are Cheaper than Writes
             A read query is less resource-intensive because it only retrieves data, whereas a write query must actively change the state of the database. 

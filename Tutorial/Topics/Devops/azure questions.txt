@@ -10,7 +10,7 @@ Azure authentication service:
     Single Sign-On (SSO)
 
 
-Azure Functions
+Azure Functions ?????????????
 Azure container Apps
 
 Azure web application firewall.
@@ -35,3 +35,5 @@ Azure Service Bus: A fully managed enterprise message broker used for decoupling
 Azure SignalR Service: Used for adding real-time functionality (pushing content to clients) to .NET applications. 
 6. DevOps & Deployment
 Azure DevOps / GitHub Actions: Used for continuous integration and continuous deployment (CI/CD) pipelines to deploy .NET applications to Azure. 
+7. Azure Kubernetes Service.   
+

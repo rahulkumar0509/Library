@@ -1,0 +1,60 @@
+------------------Dotnet Application Code--------------
+1. dotnet publish -c Release -o /output/
+    -   Library.dll  // IL code imtermediate language code. // source code 
+    -   Library Library.exe // executable file
+    -   appsettings.json
+    -   Library.deps.json // deoendence package
+
+2. CI/CD 
+    1. Github Action
+    2. Azure devops
+    3. Jenkins - open source 
+
+    *.yaml
+    --------------------
+    dotnet Build
+    dotnet publish 
+
+3. Container/Image 
+    1. docker 
+        - dotnet runtime
+        - dotnet sdk 
+            - dotnet buiuld
+            - dotnet publish 
+
+    docker run -t "Library"
+    - create an image which will run on docker Hub, Azure container registery.
+
+    2. docker compose // multiple image interaction
+        - image 1 for Application 
+        - image 2 for SQL Server
+
+4. Source code - Github, Azure Repository 
+5. Azure VM - Application Image, SQL Server Image. // Infrastructure as a service. Azure VM, EC2 
+    - multiple container/images for different microservice can be run together in a same VM.
+    - but we should use orchestration tool like docker swarm or kubernetes.
+    - learn how to use azure kubernetes services.
+    - Load balancer is handling VMs while Kubernetese handles containers. One pods can have multiple container. 
+
+    Docker HUb: Its like agithub but for Images(Container).
+
+6. Paas : Platform as a service:
+    Azure cloud, AWS, GCP
+    - Azure Services:
+        1. Azure AppService.
+        2. Azure SQL Database 
+        2. Azure Functions 
+        4. Azure Cosmos DB. can use Mongo DB, Cassandra // basically all no sql DB, 
+        5. Azure Service Bus // 
+        6. Azure cognitive service 
+
+7. Azure API Management (includes API Gateway, OAuth2.0 & JWT, Azure Entra Id)
+    Azure Gateway
+8.  Azure Keyvault 
+9.  Azure WebJob 
+10. Azure storage Blob
+11. Azure container services(AKs)
+12. Azure Cache for Redis
+13. Azure SignalR Service
+14. Azure communication service 
+15. pdf/xml/report generates library

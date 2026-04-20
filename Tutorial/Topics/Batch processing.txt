@@ -1,0 +1,142 @@
+This is a classic "Enterprise Grade" pattern. To handle 1,000 records with individual row-level error logging and retry logic, we use a combination of C# (Dapper) for the orchestration and SQL (Stored Procedure) for the heavy lifting.
+
+Step 1: SQL Server Setup
+--------------------------------------
+We need three things: the Target Table, an Error Log Table, and the User-Defined Table Type (UDTT).
+
+SQL
+-- 1. The Main Table
+CREATE TABLE Products (
+    ProductId INT PRIMARY KEY IDENTITY(1,1),
+    SKU NVARCHAR(50) UNIQUE, -- Constraint to trigger potential errors
+    Name NVARCHAR(100),
+    Price DECIMAL(18,2)
+);
+
+-- 2. The Error Log Table
+CREATE TABLE ProductImportErrors (
+    ErrorId INT PRIMARY KEY IDENTITY(1,1),
+    SKU NVARCHAR(50),
+    ErrorMessage NVARCHAR(MAX),
+    ErrorTime DATETIME DEFAULT GETDATE()
+);
+
+-- 3. The Table Type (TVP)
+CREATE TYPE ProductTableType AS TABLE (
+    SKU NVARCHAR(50),
+    Name NVARCHAR(100),
+    Price DECIMAL(18,2)
+);
+
+Step 2: The Stored Procedure (Row-by-Row Logging)
+--------------------------------------------------------------
+In SQL Server, if one row in a bulk INSERT fails, the whole batch fails. To log specific errors while allowing others to succeed, we use a Cursor inside the Stored Procedure.
+
+SQL
+CREATE PROCEDURE usp_InsertProductsWithLogging
+    @ProductBatch ProductTableType READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @SKU NVARCHAR(50), @Name NVARCHAR(100), @Price DECIMAL(18,2);
+
+    -- Cursor to process each row individually from the TVP
+    DECLARE product_cursor CURSOR FOR 
+    SELECT SKU, Name, Price FROM @ProductBatch;
+
+    OPEN product_cursor;
+    FETCH NEXT FROM product_cursor INTO @SKU, @Name, @Price;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        BEGIN TRY
+            INSERT INTO Products (SKU, Name, Price)
+            VALUES (@SKU, @Name, @Price);
+        END TRY
+        BEGIN CATCH
+            -- Log the specific row failure
+            INSERT INTO ProductImportErrors (SKU, ErrorMessage)
+            VALUES (@SKU, ERROR_MESSAGE());
+        END CATCH
+
+        FETCH NEXT FROM product_cursor INTO @SKU, @Name, @Price;
+    END
+
+    CLOSE product_cursor;
+    DEALLOCATE product_cursor;
+END
+
+Step 3: C# Implementation with Retry Logic
+--------------------------------------------------------
+We use Polly (the industry-standard library) to handle Transient Retries (like database deadlocks or network hiccups) before the data even hits the error-handling logic in the Stored Procedure.
+
+C#
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Polly;
+using System.Data;
+
+public class ProductService
+{
+    private readonly string _connString = "Your_Connection_String";
+
+    public async Task ProcessBatchAsync(List<Product> products)
+    {
+        // 1. Convert List to DataTable for TVP
+        var table = new DataTable();
+        table.Columns.Add("SKU", typeof(string));
+        table.Columns.Add("Name", typeof(string));
+        table.Columns.Add("Price", typeof(decimal));
+
+        foreach (var p in products)
+            table.Rows.Add(p.Sku, p.Name, p.Price);
+
+        // 2. Define Retry Policy for Transient Errors (e.g., Deadlocks)
+        var retryPolicy = Policy
+            .Handle<SqlException>(ex => ex.Number == 1205) // 1205 = Deadlock
+            .WaitAndRetryAsync(3, i => TimeSpan.FromSeconds(Math.Pow(2, i)), 
+                (ex, time) => Console.WriteLine($"Transient error. Retrying in {time}..."));
+
+        // 3. Execute
+        await retryPolicy.ExecuteAsync(async () =>
+        {
+            using var connection = new SqlConnection(_connString);
+            
+            await connection.ExecuteAsync(
+                "usp_InsertProductsWithLogging",
+                new { ProductBatch = table.AsTableValuedParameter("ProductTableType") },
+                commandType: CommandType.StoredProcedure
+            );
+        });
+    }
+}
+
+
+
+Why this is the "Best" Way
+--------------------------------------
+Network Efficiency: You send all 1,000 records in one single trip to the database.
+Resilience: The Polly Retry Policy handles infrastructure failures (the "outside" errors).
+Data Integrity: The SQL TRY...CATCH handles data-specific failures (the "inside" errors) like duplicate SKUs or invalid formats.
+Audit Trail: By using an ErrorLog table, your Web API can immediately return a success message while your background processes (or admins) check the error table for "bad data" reports.
+
+What about Exception Handling in the API?
+-------------------------------------------------
+If the entire database is down, the retryPolicy will eventually throw an exception. You should catch this in your Controller:
+
+C#
+[HttpPost("bulk-insert")]
+public async Task<IActionResult> BulkInsert(List<Product> products)
+{
+    try 
+    {
+        await _service.ProcessBatchAsync(products);
+        return Ok("Batch processed. Check the Error Log table for skipped records.");
+    }
+    catch (Exception ex)
+    {
+        // This only hits if the retry policy fails or the DB is unreachable
+        return StatusCode(500, $"Critical System Error: {ex.Message}");
+    }
+}

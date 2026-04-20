@@ -1,0 +1,60 @@
+Step 1: Create test project. It should be new dotnet project under same solution.
+
+Folder structure: 
+    Library 
+        -> Library.API
+            ->Library.csproj
+        -> Library.Tests
+            ->Library.Tests.csproj
+
+Step 2: Create new project: dotnet new xunit -o Library.Tests
+
+Step 3: Add API project reference:
+    dotnet add reference ../Library.API/Library.csproj
+
+Step 4: Add test project reference in solution file:
+    dotnet sln add reference Library.Tests/Library.Tests.csproj
+
+Step 5: Add Entity framework package for mocking
+    dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version=same as API
+    dotnet add package Microsoft.EntityFrameworkCore.InMemory --version=same // this is for creating db context in memory.
+
+Step 6: Create folder and test file
+   Library.Tests
+        -> service
+            -> BookServiceTest.cs
+Step 7: In .cs file , define dbcontext from InMemory
+    in class, define getDbContext method.
+
+
+    private UserContext GetDbContext() // to Get Entity framework database context
+        {
+            var options = new DbContextOptionsBuilder<UserContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()) // Unique name per test
+                .Options;
+
+            return new UserContext(options); // this will create new dbcontext in memory
+        }
+
+        [Fact] // indicates test methods
+        private async Task IsEmailIdUnique_shouldCheckUniqueEmail_ReturnBoolean()
+        {
+            // ARRANGE
+            var context = GetDbContext();
+            var user = new ShoppingUserModel {Name="rahul kumar", Email = "rahul@gmail.com", Password = "abc", Phone = "98767"};
+            context.ShoppingUser.Add(user);
+            context.SaveChanges();
+            var testEmail = "pankaj@gmail.com";
+            var service = new UserService(context, null, null);
+
+
+            // ACT
+            CancellationToken ct = new CancellationToken();
+            var result1 = await service.IsEmailIdUnique(testEmail, ct);
+            var result2 = await service.IsEmailIdUnique("rahul@gmail.com", ct);
+
+            //ASSERT
+            // result.Should().NotB
+            result1.Should().Be(true);
+            result2.Should().Be(false);
+        }

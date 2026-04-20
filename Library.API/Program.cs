@@ -70,7 +70,9 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 // Controller registration
 builder.Services.AddControllers();
 
-builder.Services.AddProblemDetails(); // It works as fallback plan for UseExceptionHandler so it is mandatory. When you call builder.Services.AddProblemDetails(), the framework adds its own default IExceptionHandler implementation to the dependency injection container. This handler is a built-in component of the ASP.NET Core framework designed to automatically generate RFC 9457-compliant error responses. You don't need to manually create or configure these services; they are part of the framework's internal plumbing for standardized error handling.
+builder.Services.AddProblemDetails(); // It works as fallback plan for UseExceptionHandler so it is mandatory. When you call builder.Services.AddProblemDetails(), the framework adds its own default IExceptionHandler implementation to the dependency injection container. 
+// This handler is a built-in component of the ASP.NET Core framework designed to automatically generate RFC 9457-compliant error responses. You don't need to manually create or configure these services; 
+// they are part of the framework's internal plumbing for standardized error handling.
 builder.Services.AddExceptionHandler<LibraryExceptionHandler>();
 
 // DbContext registration
