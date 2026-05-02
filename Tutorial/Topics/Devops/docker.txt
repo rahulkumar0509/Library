@@ -77,3 +77,65 @@ Use connection string with container name:
 
 
 Here, Docker’s internal DNS resolves sqlserver → SQL Server container.
+
+=======================================================Docker for microservices====================================================================================================
+
+1. Create Dockerfile
+2. Get Dotnet sdk and build runtime.
+3. FROM mcr.microsoft.com/dotnet/sdk as base 
+4. FROM mcr.microsoft.com/dotnet/build as build
+
+WORKDIR /
+
+5. Copy sln and all csproj files and then install the packages.
+COPY ["Libray.sln", "./"]
+COPY ["src/Library.API/*.csproj", "src/Library.API/"]
+
+RUN dotnet restore "Library.API/Library.csproj"
+
+6. copy rest files and build.
+COPY . .
+
+WORKDIR src/Library.API
+RUN dotnet publish -c Release -o /app/publish 
+
+FROM base as final
+WORKDIR /app
+
+COPY --from=build "/app/publish" .
+
+ENTRYPOINT ["dotnet", "Library.dll"]
+
+7. Create docker image
+docker build -t library . 
+docker run -e ASPNETCORE_ENVIRONMENT=Development -p 8080:8080 library
+
+docker images
+docker containers ls
+
+8. to check the container: docker run --rm -it --entrypoint /bin/sh order:latest and then ls -r 
+
+
+-----------------------create multiple images?? docker-compose.yml------------------------
+
+services:
+  library:
+    image: library
+    ports:
+      - "8080:8080"
+    environemnt:
+      - ASPNETCORE_ENVIRONMENT = Development
+
+  library1:
+    image: library
+    ports:
+      - "8081:8080"
+    environemnt:
+      - ASPNETCORE_ENVIRONMENT = Development
+
+  library2:
+    image: library
+    ports: 
+      - "8082:8080"
+    environemnt:
+      - ASPNETCORE_ENVIRONMENT = Development

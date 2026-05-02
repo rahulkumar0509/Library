@@ -1,0 +1,14 @@
+CaseWorthy is a comprehensive case management and social service software platform designed for non-profit and government agencies to collect, manage, and report on client data. It streamlines tracking for services like housing, veterans' affairs, and victim services, allowing organizations to automate workflows, ensure compliance, and measure outcomes using a secure, customizable dashboard
+
+CaseWorthy transforms non-profits, merging program data and operations, and amplifying service providers' impact through technology.
+
+
+We are using Microservice architechcture for QueryBuilder, FormBuilder which allows to create dynamic form. 
+CLientInsights = azure fabric
+
+clean architechcture
+typed httpClient for communicate
+Redis for caching
+Serilog for logging
+Controller based API 
+Minimal API 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Endpoints
 {
-    [Authorize]
+    [Authorize("admin")]
     [ApiController]
     [EnableCors("AngularApp")]
     public class LibraryController : ControllerBase

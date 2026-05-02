@@ -67,5 +67,6 @@ often using health checks and load balancing to ensure reliable connections.
 Circuit Breaker pattern
 ------------------------
 
+
 Service Mesh
 ---------------

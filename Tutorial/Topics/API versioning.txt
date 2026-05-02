@@ -1,0 +1,29 @@
+We need below 2 package:
+
+    1. Asp.Versioning.Mvc package
+    2. Asp.Versioning.Mvc.ApiExplorer // for Swagger
+
+in program.cs
+    -----------------
+    builder.Services.AddVersioning(option=>{
+        option.DefaulApiVersion = new ApiVersion(1);
+        option.ReportApiversion = true;
+        option.AssumeDefaultApiVersionWhenUnspecified = true;
+        option.ApiVersionReader = new UrlSegmentApiVersionReader();
+    }).AddMvc().AddApiExplorer(option=>{
+        option.GroupNameFormat = "'v'V";
+        options.SubstituteApiVersionInUrl = true;
+    })
+
+In controller=
+----------------------
+[ApiVersion(1, Deprectaed = true)]
+[ApiVersion(2)]
+[ApiController]
+[Route("Api/v{version:ApiVersion})]
+public class UserController: ControllerBase{
+
+    [MapToApiVersion(2)]
+    [HttpGet("")]
+    pubic IActionResult GetUsers(){}
+}

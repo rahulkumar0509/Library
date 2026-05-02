@@ -174,14 +174,21 @@ HAVING COUNT(DISTINCT B.Genre) > 1;
 
 
 what is the framework we used for dependcy injection in dot net core? like kernal, autocrat, inject. design your own dependency injection.
+
     - it uses built-in dependency injection container and this container is represented by interface IserviceCollection & IServiceProvider.
+    
 without invoke method what will happen to middleware? where this onvoke is defined and how its getting used.
 what framework is their for dependency injection ? what things should be consider to creaste my own dependency injection
 Behavioural vs creational Vs Repository pattern and which one falls under what? 
 repository patterns comes under which category
+
 step by step approach to design an application foe very high traffic and spotaneous request. what Architecture should we use?
-        -Microservices Architecture, Serverless Architecture, Event driven Architecture. 
-What is the cross cutting aspects in dot net? - Middleware, dependency Injection, Decorators, Authentication * authorization , logging, exception handling, cahcing, validation. 
+        -Microservices Architecture, 
+        Serverless Architecture, 
+        Event driven Architecture. 
+What is the cross cutting aspects in dot net? 
+- Middleware, dependency Injection, Decorators, Authentication * authorization , logging, exception handling, cahcing, validation. 
+
 Task.start vs Task.run Asynchronous programming. 
     Task.Run(()=>{Console.WriteLine("running tasks")});
     It creates and starts the task immediately by queuing it to the default TaskScheduler (which uses the thread pool) in a single operation.
@@ -191,6 +198,7 @@ Task.start vs Task.run Asynchronous programming.
     Creating a Task with its constructor and then calling .Start() requires manual control over the task's lifecycle.
     var task = new Task(()=>{Console.WriteLine("running new task")});
     task.Start();
+
     The constructor instantiates the task in the Created state, but does not execute it until .Start() is explicitly called. This separation allows for conditional execution or managing a set of tasks before running them.
 
     The difference between these two methods is that Task.Run is a static method that both instantiates and runs a task, whereas Task.Start is an instance method, which you run on an existing Task instance.
@@ -203,6 +211,7 @@ why not to use exception filter instead of middleware. what is the benfit of mid
 The Repository pattern primarily falls under the category of a Structural Design Pattern.
 It is considered structural because it focuses on how classes and objects are composed to form larger structures, specifically by providing an abstraction layer over the data access logic. This abstraction decouples the domain layer (business logic) from the data persistence layer, making the system more modular, maintainable, and testable.
 While its core classification is structural, the Repository pattern can also be viewed as having elements or relationships with other categories:
+
 Facade (Structural): It acts as a facade to the data layer, simplifying the interface for accessing and manipulating domain objects.
 Factory (Creational): In some implementations, repositories might involve creating new instances of domain objects, thereby incorporating aspects of a factory pattern.
 Iterator (Behavioral): Repositories often provide collection-like interfaces for iterating through and accessing domain objects, which can be seen as a specific application of the Iterator pattern.
@@ -210,14 +219,17 @@ Iterator (Behavioral): Repositories often provide collection-like interfaces for
 
 While both exception filters and exception middleware handle exceptions in ASP.NET Core, middleware is generally preferred for global exception handling due to its broader scope and benefits:
 Why not use exception filters instead of middleware for global handling:
+
 Limited Scope: Exception filters are part of the MVC pipeline and only catch exceptions that occur within controller actions, action filters, or result filters. They cannot handle exceptions that occur earlier in the request pipeline, such as in other middleware components (e.g., routing, authentication).
 Less Centralized: Using multiple exception filters for different controllers or actions can lead to scattered and less centralized exception handling logic, making it harder to maintain and ensure consistent error responses across the application.
 No Access to Non-MVC Constructs: Exception filters have access to ActionContext and MVC-specific constructs, but they don't readily provide access to the full HttpContext and other non-MVC related services available to middleware.
+
 Benefits of using exception middleware:
 Global Scope: Middleware operates at a higher level in the request pipeline and can catch all unhandled exceptions that occur anywhere in the application, including those outside the MVC pipeline. This provides a truly global and centralized error handling mechanism.
 Centralized Logic: Exception middleware allows for a single, consistent place to implement application-wide error handling logic, including logging, custom error responses, and integration with monitoring tools.
 Full HttpContext Access: Middleware has full access to the HttpContext, enabling more comprehensive error reporting and the ability to modify the response in various ways, such as setting status codes or returning custom error pages/JSON.
 Flexibility: Middleware is more flexible for complex scenarios, such as re-executing the request in an alternate pipeline (e.g., displaying a generic error page) or handling different types of exceptions with specific logic.
+
 When to use exception filters:
 While middleware is generally preferred for global handling, exception filters are still valuable for specific scenarios:
 Action/Controller Specific Handling: When you need to handle exceptions in a very specific way for a particular action or controller, and this handling requires access to MVC-specific context like ModelState or IActionResults.

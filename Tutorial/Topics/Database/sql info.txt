@@ -9,6 +9,7 @@
             SELECT * FROM Book as b LEFT JOIN AUTHOR as a ON b.authorId = a.authorId;
         2. right after join
             all rows from right
+            select * from book as b right join author as a ON n.id = a.id;
         3. full outer join
             this will return all the records of both table. Matching records will show the columns togethere from both table 
             and from unmatched records it will show b=null for those columns.
@@ -25,7 +26,7 @@
             SELECT p.ProductName, c.ColorName FROM Products p CROSS JOIN Colors c;
             
 6. stored procedure 
-7. Unions
+7. Unions : returns combinations of two table in resultant table column. select statement should have same no column and type.
 8. optimize query
 9. Primary key, foreign key
 
@@ -82,3 +83,7 @@ Select City, Country From Supplier
 Union 
 Select City, Country From Customer
 Order By City;
+
+3rd highest Salary
+=======================
+SELECT PRICE FROM ( SELECT PRICE, DENSE_RANK() OVER (ORDER BY PRICE DESC) AS PRICERANK FROM ProductSchema.Product) AS PRICETABLE WHERE PRICERANK = 5;

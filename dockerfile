@@ -37,3 +37,10 @@ ENTRYPOINT [ "dotnet", "Library.dll"]
 
 # now run docker build -t libraryapi .
 # then run docker run -e ASPNETCORE_ENVIRONMENT=Development -p 8080:8080 libraryapi
+# to check the container: docker run --rm -it --entrypoint /bin/sh order:latest and then ls -r
+
+# while running docker, if issue with sql server connection issue
+# most probably the connection string where we have defined server =localhost
+# change it to Server=host.docker.internal,1221;
+
+# or better create your docker network and connect sql to there.

@@ -129,6 +129,8 @@ What is Delegates
         }
     }   
 
+    (option=>{}) // labda exression
+
 ArrayList vs List<T>
 -----------------------------
     ArrayList can store different data type object in same list while List<T> is generic and can store only one type of data.
@@ -350,7 +352,7 @@ provide public get and set methods, through properties, to access and update the
 
     shorthand:  public string Name { get; set; }
 
-What is use of provate constructor?
+What is use of private constructor?
     A private constructor is used to restrict the instantiation of a class from outside the class itself. 
     It is commonly used in scenarios such as implementing the Singleton design pattern, where you want to ensure that only one instance of a class exists throughout the application. 
     By making the constructor private, you prevent other classes from creating new instances, and you can provide a static method or property within the class to control access to the single instance.

@@ -1,0 +1,73 @@
+When we want to fetch information from multiple table where those tables are related to each other.
+We can define the relationship between table in followinf manner:
+    1. One to One relationship
+    2. One to Many relationship
+    3. Many to many relationship
+
+Lets consider we have User, Product, ProductDetails and Order Table.
+
+1. One to One:
+    We have one ProductDetails belong to one Product. 
+    Select p.Name, p.Price, pd.Description, pd.size FROM [Product] as p JOIN [ProductDetails] AS pd ON p.Id = pd.ProductId;
+
+    Product => Id should be primary key
+    ProductDetails => ProductDetailsId(Primary key), ProductId (Foreign unique Key) 
+
+2. One to Many:
+    We have one Order have Many Products.
+    Select o.Id, o.Date, p.Name, p.Price FROM [Order] AS o JOIN [Product] AS p ON o.Id = p.OrderId where o.Id = 101;
+
+    High performance => filter the first table first. Actually SQL server simplifies both version and then run.
+    Select [t].[Id], [t].[Date], [t].[Name], [p].[Name], [p].[Price] FROM (
+        SELECT [o].[Id], [o].[Date], [o].[Name] FROM [Order] AS [o] WHERE [o].[Id] = 101
+    ) AS [t] LEFT JOIN [Product] AS [p] ON [t].[Id] = [p].[OrderId];
+
+3. Many to Many:
+    We need Junction table for this.
+    CREATE TABLE ProductsCategory (ProductId varchar(MAX) Primary key, CatgoryId VARCHAR() PRIMARY KEY, 
+    CONSTRAINT FK_Product FOREIGN KEY (ProductId) REFERENCES Product(ProductId)
+    CONSTRAINT FK_Category FOREIGN KEY (Categoryid) REFERENCES Category(CategoryId));
+
+    To query result:
+    SELECT P.Name, P.Price, C.Name FROM Prouct AS P 
+    JOIN ProductsCategory AS pc ON P.id = pc.ProductId
+    JOIN Category AS C ON C.Id = pc.CategoryId
+    WHERE P.Id = 123;
+
+In Entity Framework
+================================================================
+Product.cs Entity class
+    1. ProductId
+    2. Name
+    3. Price
+    4. virtual ICollection<Categories> // define REFERENCES
+
+Category.cs Entity
+    1. CategoryId
+    2. Name
+    3. virtual ICollection<Product> // define REFERENCES
+
+In DbContext
+    protected Override OnModelCreating(ModelBuilder builder){
+        builder.Entity<Product>()
+        .HasMany(p=>p.Categories)
+        .WithMany(c=>c.Products)
+        .UsingEntity(j=>j.ToTable("ProductCategory"));
+
+        builder.Entity<Product>()
+        .HasOne(p=>p.Brand)
+        .HasMany(b=>b.ProductList)
+        .HasForeignKey(b=>b.BrandId)
+    }
+
+In Repository class // Also Eager loading..
+    return _productDb.Products.Include(p=>p.Categories).Include(b=>b.Brand)
+            .Select(p=> new ResponseDto {
+                Name = p.Name, 
+                Categories = p.Categories.Select(c=>c.Name).ToList()
+                BrandName = p.Brand.Name
+            })
+            .FirstOrDefault(p=>p.Id==productId);
+
+While creating new product, dont pass Brand, keep it optional.
+

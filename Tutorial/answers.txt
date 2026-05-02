@@ -355,7 +355,7 @@
 
         4. Async Await 
             sometime when asynchronous task is there and its taking time so the main thread will be released and on next line if the code is dependent on the result of the async task then 
-            it amy break the code because the result might be null until the response comes.
+            it may break the code because the result might be null until the response comes.
             so in that case, we should use await keyword alongside async to make sure next line of code will be executed only after the response comes.
             async should be in front of the method and await should be on front of the line.
 
@@ -402,8 +402,8 @@
     --------
         1. MVC 
         -------
-            1. Http method verbs
-            2. Http Status code
+            1. Http method verbs: HTTPGET, POST, PUT, DELETE, PATCH
+            2. Http Status code: 200 success, 201, 204, 302 found, 304 not modified, 400 bad request, 401 unauthorized, 403 forbidden, 404 not found, 405 method not allowed, 409 conflict, 429 too many request, 500 internal server , 503 forbidden 
             3. Controller definition
             4. Register & Map controller
             5. Route
@@ -427,6 +427,7 @@
                 3. Decorator, facade, Proxy 
             3. Behavioral pattern
                 1. Chain of responsibility 
+                2. unit of work
             4. Gang of 4  - https://www.geeksforgeeks.org/system-design/gang-of-four-gof-design-patterns/
             5. clean architecture c#
             https://www.youtube.com/watch?v=LL6h3zVYz8A&list=PLJhxHp6j1l-8_kjEL2hVJDs0_4eJbHtWH&index=3  
@@ -500,25 +501,32 @@
         3. Method Injection
         4. Define your own Dependency Injection
     10. SOLID principle
+        single reponsibility principle
+        open closed principle - inheritance.
+        l - liskov principle : parent class object should be replacebale by child class object, 
+        i - interface seggregateion
+        d - Dependency inversion // Dependency injection, lifetime. 
 
     11. ADO .Net
 
     12. Fluent Validation
         -- current https://www.youtube.com/watch?v=vaDDB7BpEgQ&t=175s
+        AbstractValidator implements. 
+
     13. Common Error message format, ProbpemDetails 
 
 3. SQL
 --------------------
-    1. CRUD
-    2. JOINS
+    1. CRUD 
+    2. JOINS // select b.title, a.name from Book as b outer join author as a ON b.id == a.id;
     3. Stored Procedure
-    4. Optimization
-    5. Constraint
+    4. Optimization // create index for most used columns in where, order by clause. Select columns. Use Where early in sql. 
+    5. Constraint // pk, fk, 
     6. Trigger
-    7. Database Indexing
-    8. Functions
+    7. Database Indexing// create index indexName on table(col1, col2); // can be used automatically 
+    8. Functions // min, max, 
     9. View 
-    10. GroupBy, Like, Aggregate
+    10. GroupBy, Like, Aggregate // group by works with aggregate function Max, Min, Count, 
     11. Temporary Table @, @@, CTE 
 
 4. Deployment
@@ -533,13 +541,17 @@
     4. CI/CD pipeline
         1. Github Actions
         2. Azure devops pipeline
-    5. Kubernetes
+    5. Kubernetes AKS: 
     6. Github Actions
     7. IIS
 
 5. System Design
 -----------------------
-    1. Microservices -- https://learn.microsoft.com/en-in/aspnet/core/fundamentals/servers/yarp/yarp-overview?view=aspnetcore-10.0
+    1. Microservices -- https://learn.microsoft.com/en-in/aspnet/core/fundamentals/servers/yarp/yarp-overview?view=aspnetcore-10.0 
+        polly - retry, circuit breaker : stiops the service when multiple failure. 
+        communication 
+        clean architecture
+        custom dependency injection (this IServiceCollection service)
     2. REDIS
         1. Caching the Database  -- Current 
         what kind of data should be cached? https://learn.microsoft.com/en-us/aspnet/core/performance/caching/overview?view=aspnetcore-10.0
@@ -550,14 +562,44 @@
     6. SignalR
     7. Websockets
     8. Message Queue, Pub/Sub
-    9. Lazy loading
-    10. High Traffic & Spontaneous request 
+    9. Lazy loading :
+        Lazy loading, need .proxies library. need to define table relation OnModelCreating in db context, 
+            it will not load data until the property is accessed.
+            Order order = context.Order(id);
+
+            foreach(var item in order.Items){ // connected to items table
+                    // item.Product.Name    // connected to Porduct table
+            }
+
+        Eagerly loading:
+            to fetch multiple related table, we can use .Include and everything will be loaded in memory from single query.
+            context.Orders.Include(o=>o.Items).ThenInclude(i=>i.Product).FirstOrDefault();
+
+
+    10. High Traffic & Spontaneous request :
+        AutoScaling: add more cpu and ram from azure app service.
+        Horizontal scaling: add more server. 
+        Use AppService managed server.
+        use  azure container registery for docker images., azure sql database, 
+        Cahcing - REDIS
+        microservice clean architecture.
+        curcuit breaker.
+        rate limiting. 
+
     11. security in dot net application
-        1. SQL Injection and fix.
+        1. SQL Injection and fix. dont use string concatenation in sql better use parametrized. 
+        2. dont use raw sql in Entity farmework. 
+        3. use linq.
     12. Database optimization 
+        create index nameIndex on user(name);
 
 6. Unit Testing
 -----------------------
 - basics 
+AAA: arrange act assert,
+IMemoryDbcontaxtOptionBuilder
+
+data.Should().Be(30)
+data.should().NotBeEmpty(null)
 
 https://learn.microsoft.com/en-us/dotnet/csharp/

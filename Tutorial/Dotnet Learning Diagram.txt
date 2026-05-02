@@ -102,8 +102,8 @@
                 3. Decorator, facade, Proxy 
             3. Behavioral pattern
                 1. Chain of responsibility 
-            
-            4. Unit of work 
+                2. Strategy pattern: IPaymentStratehy => IGpay and ICreditCard will implement the interface.
+                3. Unit of work
 
             5. Gang of 4  - https://www.geeksforgeeks.org/system-design/gang-of-four-gof-design-patterns/
             6. clean architecture c#
@@ -136,14 +136,14 @@
     -------------------------
         1. DbContext setup
         2. OnModelCreating
-        3. AddAsync, FindAsync, Remove, SavechangesAsync, ExecuteUpdate, Update, SetValues
+        3. AddAsync, FindAsync, Remove, SavechangesAsync, ExecuteUpdate, Update, SetValues, AnyAsync, FirstOrDefault
         4. Migrations
         5. 
 
     3. Dapper
     
     4. Authentication & Authorization
-    ---------------------------------
+    ------------------------------------
         1. OAuth 2.0 vs OAuth 1.0 // use built in Identoty provider like Microsoft, Google etc.
             By strict definition, the OAuth 2.0 framework provides only two primary tokens: Access Tokens and Refresh Tokens.
             Here we get Access & Refresh Token. 
@@ -237,6 +237,8 @@
 
 5. System Design
 -----------------------
+    Vertical Slice Architecture - basically folder structure should be per feature.
+    Top Level Statements in C# ??
     1. Microservices -- Current https://learn.microsoft.com/en-in/aspnet/core/fundamentals/servers/yarp/yarp-overview?view=aspnetcore-10.0
     2. REDIS
         1. Caching the Database 
