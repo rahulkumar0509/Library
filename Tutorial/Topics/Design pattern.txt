@@ -1,0 +1,129 @@
+Design pattern helps you to design how the building blocks of Application will be connected.
+Gang of 4 is basically 4 scientists have defined 23 design pattern whican can be grouped into 3 category.
+1. Creational
+    It defines how the object of class will be created.
+    1. Singleton
+        In Singleton pattern, there will be only one object created per class and will be shared the same inctance everywhere.
+        1. Logging 
+        2. Configuration managers
+        To make singleton we should use private constructor with static method to create the first instance using new keyword
+        and return the same instance every time. 
+
+    2. Factory pattern:
+        In Factory pattern, object are created in specialized class. Instead of using the new keyword directly in any class
+        we request the factory class to provide the object.
+        Suppose we have payment service which handles UPI payment, credit card, debit card.
+        so Payment service should not directly create the different payment method class and call the pay.
+        Instead Controller will call the PaymentFactory class which returns IPayment instance.
+        PaymentFactory will have GetPaymentService => type == 'UPI' then new UpiPaymentService();
+        UpiPaymentService implements IPaymentService having void pay() method.
+        
+        For this we need Interface for the actual task, like IPaymentService.
+        Different Concrete class like UpiPayment, CreditCardPayment implementing interface IPaymentService
+        Single Factory class which returns the new objects based on type using if else or switch case.
+        Single factory violates the open closed principle and does nto adhere solid principle
+        Separate factory for each service like CreditPaymentFactroy, UpiPaymentFactory
+        For this define IPaymentFactory interface which will be implemented by above concrete class.
+        Each factory will return the actual payment service class. 
+
+        To decide which factory to call, 
+        Use AddKeyedTransient<IPaymentFactory, UpiPaymentFactory>("upi");
+        AddKeyedTransient<IPaymentFactory, CreditCardPaymentFactory>("cc");
+        in method:
+            makePayment([FromKeyedService("upi") IPaymentFactory UpiPayment])
+        
+        When object creation is little complex and involves multiple checks then better to define factory for separation of concerns.
+
+    3. Dependency Injection:
+        It is not from goF pattern.
+
+2. Structural
+    It defines how the classes and objects are related and bound together.
+    1. Adapter pattern:
+        When two interfaces are not compatible to work together we can create a Adapter Class which bridges the agp between both.
+        The Adapter Design Pattern is a structural pattern that allows two incompatible interfaces to work together.
+
+        Suppose We have one Legacy class which process data in xml format and our modern class is using json format.
+        So, instead of changing the Legacy or Modern class better we can create an Adapter class which contains the Legacy class.
+        Adapter class will have Legacy class instance and it will call the legacy class method and fecth the data,.
+        Now the xml data will be converted into json format and returned the same.
+
+        From uses, 
+        create the Legacy class object and pass it to the Adapter class to create the object.
+        Now call the Adapter class method to get json data. 
+        so using legacy class we didnt change the system and just converting the result into required formatr.
+        Here its Has-A relationship and an example of Open-closed principle.
+
+        Best for legacy or 3rd party Api call. 
+
+    2. Facade Pattern
+        Facade means fake big door or fake face to hide the multiple things behind.
+        The facade design pattern provides a simple, unified interface to comlex multiple classes.
+
+        For e.g., 
+        Facade class => Class OrderFacade{
+            private Inventory inv;
+            private Payment pay;
+            private Notification notify;
+            private ShippingService ship;
+
+            PlaceOrder(int id, int amount){
+                inv.checkInventory(id);
+                pay.Charge(amount);
+                notify.SendMessage(id);
+                ship.Deliver(id);
+            }
+        }
+
+        OrderFacade order = new OrderFacade();
+        order.PlaceOrder(009, 1500);
+
+        next time you want to change the payment Methdod just change the facade class.
+    3. Repository pattern
+        not gang of four pattern.
+                
+3. Behavioural
+    1. Strategy pattern 
+        To build the Strategy pattern, you need exactly three components:
+        
+        The Strategy Interface: 
+        Defines the action.
+        Concrete Strategies: 
+        Classes that implement the interface with different behaviors.
+        
+        The Context: 
+        The class that uses the strategy and can switch between them at runtime.
+
+        public class ShoppingCart
+        {
+            private IPaymentStrategy _paymentStrategy;
+
+            // Inject the initial strategy via constructor
+            public ShoppingCart(IPaymentStrategy paymentStrategy)
+            {
+                _paymentStrategy = paymentStrategy;
+            }
+
+            // Allow changing the strategy dynamically at runtime
+            public void SetPaymentStrategy(IPaymentStrategy paymentStrategy)
+            {
+                _paymentStrategy = paymentStrategy;
+            }
+
+            public void Checkout(decimal totalAmount)
+            {
+                // Delegates the work to the current strategy
+                _paymentStrategy.ProcessPayment(totalAmount);
+            }
+        }
+
+
+    2. Unit of work pattern 
+    
+        Entity framework:
+            It keeps track of every change made to your entities during a single session.
+            When you call SaveChangesAsync(), it wraps all those changes into a single database transaction.
+            NOW we create customr unit of work interface so 
+            If you use the Repository pattern, a UoW class helps you share a single DbContext instance across multiple repositories so they can all commit as one.
+
+

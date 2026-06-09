@@ -21,6 +21,7 @@
         17. Preprocessor
         18. Dispose vs Finalize
         19. nameof operator
+        20. HashSet & Dictionary generic collection, 
     2. C# OOP
     -----------
         1. Class & Objects
@@ -51,7 +52,7 @@
         5. Encapsulation
         6. Abstraction
         7. Extension methods
-        8. 
+        8. method hiding new keyword
     3. C# Console application
     --------------------------
         1. ref, In & out operator
@@ -111,7 +112,7 @@
 
         5. API lifecycle
         6. Logger
-        ----------
+        -------------
             1. ILogger
             2. SeriLog
         7. Swagger (Open API)
@@ -144,6 +145,8 @@
     
     4. Authentication & Authorization
     ------------------------------------
+        To verify check: Signature, Issuer, and audience.
+
         1. OAuth 2.0 vs OAuth 1.0 // use built in Identoty provider like Microsoft, Google etc.
             By strict definition, the OAuth 2.0 framework provides only two primary tokens: Access Tokens and Refresh Tokens.
             Here we get Access & Refresh Token. 
@@ -176,6 +179,7 @@
         2. Take(), Skip(). ToList(), 
         .First() , .FirstOrDefault(), .AnyAsync(), .Where(), .FindAsync(), .SingleOrDefault(), .Select(), .OrderBy(), .Count(), .Skip(), .Take(), .Include()
         https://www.tutorialsteacher.com/linq
+        
     7. Middleware
     ---------------
         1. definition

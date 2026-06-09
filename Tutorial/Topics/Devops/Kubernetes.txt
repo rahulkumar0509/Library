@@ -1,0 +1,31 @@
+Why Kubernetes?
+===================================
+
+How VM vs. Kubernetes Compares🚀 Scaling and Load BalancingOn a VM (Manual): 
+You must manually configure an external reverse proxy (like Nginx) to route traffic across the different ports. 
+If one instance crashes, you have to write custom scripts to restart it.
+
+In Kubernetes: 
+A single configuration file handles everything. 
+K8s automatically creates a Service to load balance traffic across your pods and automatically restarts any pod that fails.
+🛠️ Resource ManagementOn a VM (Manual): 
+One runaway instance can consume 100% of the VM's CPU or memory, starving and crashing the other 3 instances.
+In Kubernetes: You can set strict CPU and memory limits per pod. One failing pod cannot steal resources from the others.
+🔄 Updates and DeploymentOn a VM (Manual): 
+To update the app, you must manually stop, replace, and restart each of the 4 instances, which often causes downtime.
+In Kubernetes: 
+K8s performs Rolling Updates. It replaces pods one by one, ensuring zero downtime for your users.
+
+When to Choose Each ApproachChoose the VM Approach If:
+You want to save money: 
+Kubernetes requires multiple VMs just to run its own background management software (the control plane), which is expensive.
+The project is small: 
+For a hobby project or a low-traffic app, a single VM running a few instances managed by a tool like PM2 or Docker Compose is much faster to set up.
+
+Choose the Kubernetes Approach If:
+You need high availability: 
+You want the system to heal itself automatically when things break.
+Your traffic fluctuates: 
+K8s can automatically spin up a 5th or 6th pod during peak hours and destroy them when traffic drops.
+You have a team: 
+Standardising deployment via container images prevents the "it works on my machine" problem across different developers.

@@ -2,7 +2,6 @@ using System.Data;
 using Dapper;
 using Library.Domain;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace Library.Repository.Impl{
     public class BookRepository : IBookRepository
     {

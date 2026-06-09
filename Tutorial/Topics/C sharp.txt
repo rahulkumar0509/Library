@@ -1,3 +1,20 @@
+Explain in detail how routing works internally in ASP.NET Core.
+What is middleware, how does the pipeline execute, and how can you short-circuit it.
+How can a Scoped service be used inside a Singleton safely?
+Explain appsettings.json configuration layering and precedence order.
+How does IOptionsMonitor, lOptionsSnapshot, and lOptions differ?
+How do you validate configuration and what are the different approaches
+Why are Minimal APls faster than Controllers?
+How does JWT authentication + Refresh Token rotation work end-to-end
+How do you implement a permissions-based authorization system(resource-based auth)?
+How does Output Caching work, and how do you invalidate cached entries?
+How to add api versioning in existing API if youre not allowed to change the api url.
+How do you log request/response bodies safely without leaking sensitive data.
+How do you safely stop a BackgroundService and handle gracerul shutdown?
+How to return a file from API Endpoint with chunks enabled?
+What is Method Injection in Controller and how does it differ from constructor injection?
+
+
 1. What is C sharp
     C sharp is object oriented programming language developed by microsoft to use for web, Api & desktop application development.
     It has Encapsulation, Inheritance, interface, class & object. 

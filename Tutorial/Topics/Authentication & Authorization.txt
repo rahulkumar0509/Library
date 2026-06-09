@@ -1,3 +1,22 @@
+Authentication flow
+====================================
+We are using Azure Entra ID for the user 
+
+
+Primary Token Types by Purpose
+Access Tokens: The most common type of token, used to access protected resources on an API. They are generally short-lived (e.g., one hour) and must be included in the Authorization: Bearer HTTP header with every request.
+Refresh Tokens: Long-lived tokens used to obtain new, valid access tokens after the current one expires, without requiring the user to log in again with their credentials. They are kept securely by the client and redeemed with the authorization server.
+ID Tokens: Used in OpenID Connect (OIDC), these are JSON Web Tokens (JWTs) that contain information about the user's identity, such as their username and email. The application uses this information to personalize the user experience, but they should not be used to directly access APIs. 
+
+Common Token Formats and Schemes
+Bearer Tokens: This is a general class of token where access is granted to whoever possesses the token ("the bearer"). Access tokens and ID tokens are typically implemented as bearer tokens and require transmission over HTTPS for security.
+JSON Web Tokens (JWTs): A specific, open-standard format for creating tokens that securely transmit information as a JSON object. They are digitally signed, making them self-contained and verifiable by the API without needing to constantly check a central database, which improves scalability for microservices. JWTs are often used as the format for both access and ID tokens.
+API Keys: While often mentioned alongside tokens, an API key is a simple, unique string used primarily to identify the calling application and monitor usage, rather than an end-user's session. They are typically long-lived and offer less granular security compared to token-based systems like OAuth 2.0.
+Authorization Codes: A short-lived, single-use token used as an intermediary during the initial login flow (e.g., in OAuth 2.0's Authorization Code flow). They are exchanged for actual access and refresh tokens at the backend, which prevents sensitive tokens from being exposed in a user's browser history or URL logs. 
+
+
+OAuth2.0
+
 Core Building Blocks of OAuth2.0
 1. Roles (Actors)
 

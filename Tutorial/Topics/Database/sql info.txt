@@ -87,3 +87,14 @@ Order By City;
 3rd highest Salary
 =======================
 SELECT PRICE FROM ( SELECT PRICE, DENSE_RANK() OVER (ORDER BY PRICE DESC) AS PRICERANK FROM ProductSchema.Product) AS PRICETABLE WHERE PRICERANK = 5;
+
+one to many
+many to one 
+many to many 
+
+Window function 
+
+https://skphd.medium.com/advanced-sql-interview-questions-and-answers-307a5333d02e
+
+Rank, Dense Rank
+CTE 

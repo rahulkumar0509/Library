@@ -1,0 +1,140 @@
+┌────────────────────┐
+                        │ Identity Provider  │
+                        │ Azure AD/Auth0     │
+                        └─────────┬──────────┘
+                                  │ JWT
+                                  ▼
+
+USER
+  │
+  ▼
+┌──────────────┐
+│ WAF / DDoS   │
+│ Protection   │
+└──────┬───────┘
+       ▼
+┌──────────────┐
+│ Load Balancer│
+└──────┬───────┘
+       ▼
+┌──────────────────────────┐
+│ API Gateway              │
+│ - JWT Validation         │
+│ - Rate Limiting          │
+│ - Routing                │
+│ - Caching                │
+│ - Circuit Breaker        │
+└──────┬───────────────────┘
+       │
+       ├──────────────────────────────┐
+       ▼                              ▼
+
+┌───────────────────┐       ┌──────────────────┐
+│ Product Aggregator│       │ Search Service   │
+│ / BFF             │       │ Autocomplete     │
+└────────┬──────────┘       └────────┬─────────┘
+         │                           │
+         │                           ▼
+         │                ┌─────────────────────┐
+         │                │ ElasticSearch /     │
+         │                │ Azure AI Search     │
+         │                └─────────────────────┘
+         │
+         ▼
+──────────────────────────────────────────────────
+         Internal Microservices
+──────────────────────────────────────────────────
+
+ ┌────────────────┐
+ │ Product Service│
+ └──────┬─────────┘
+        │
+        ├──────────► Redis Cache
+        │
+        ├──────────► Product NoSQL DB
+        │               ├─ Primary
+        │               └─ Read Replica
+        │
+        └──────────► Azure Blob Storage
+                          │
+                          ▼
+                        CDN
+                          │
+                          ▼
+                        USER
+
+ ┌──────────────────┐
+ │ Inventory Service│
+ └────────┬─────────┘
+          │
+          └────────► Inventory DB
+
+ ┌──────────────────┐
+ │ Review Service   │
+ └────────┬─────────┘
+          │
+          └────────► Review DB
+
+ ┌──────────────────────┐
+ │ Recommendation Svc   │
+ └────────┬─────────────┘
+          │
+          └────────► Recommendation DB
+
+
+──────────────────────────────────────────────────
+            Event Driven Architecture
+──────────────────────────────────────────────────
+
+Services
+   │
+   ▼
+┌──────────────────────────────┐
+│ RabbitMQ / Azure Service Bus │
+└──────────────┬───────────────┘
+               │
+               ├── ProductUpdatedEvent
+               ├── InventoryChangedEvent
+               ├── ReviewAddedEvent
+               └── ProductViewedEvent
+
+
+──────────────────────────────────────────────────
+             Shared Platform Services
+──────────────────────────────────────────────────
+
+┌──────────────────────┐
+│ Config Service       │
+│ Feature Flags        │
+└──────────────────────┘
+
+┌──────────────────────┐
+│ Azure Key Vault      │
+│ Secrets/Certificates │
+└──────────────────────┘
+
+┌──────────────────────────┐
+│ Observability Platform   │
+│ - Logs                   │
+│ - Metrics                │
+│ - Traces                 │
+│ - Dashboards             │
+│ - Alerts                 │
+│ Datadog + Grafana        │
+└──────────────────────────┘
+
+
+──────────────────────────────────────────────────
+           Infrastructure / DevOps Layer
+──────────────────────────────────────────────────
+
+┌─────────────────────────────┐
+│ Docker + Kubernetes (AKS)  │
+│ Ingress Controller         │
+│ Auto Scaling               │
+└─────────────────────────────┘
+
+┌─────────────────────────────┐
+│ CI/CD Pipeline              │
+│ GitHub Actions/Azure DevOps │
+└─────────────────────────────┘

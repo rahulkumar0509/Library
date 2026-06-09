@@ -47,7 +47,6 @@ Step 7: In .cs file , define dbcontext from InMemory
             var testEmail = "pankaj@gmail.com";
             var service = new UserService(context, null, null);
 
-
             // ACT
             CancellationToken ct = new CancellationToken();
             var result1 = await service.IsEmailIdUnique(testEmail, ct);

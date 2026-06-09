@@ -66,6 +66,7 @@
             HashSet,   uniquer key value pair                               HashTable
             Stack,     LIFO
             Queue,  FIFO
+            Priority Queue
             Dictionary      key value pair and fast retrieval.
 
             List is a generic collections of single type data.
@@ -126,6 +127,9 @@
             .in case of value type it will be checking the actual data. 
             . 
         11. String vs StringBuilder 
+            string always create new memory location for every new data. it is immutable.
+            stringBuilder always use same memory location. 
+
         12. Casting
         13. Boxing & Unboxing
         14. Managed vs Unmanaged Code
@@ -136,11 +140,18 @@
             Unamanged code directly runs on the computer operating systm. For example C# code where it uses pointer operation to direclty access the addressa dna value from os.
 
         15. Early vs Late binding
+            Early - compile time
+            Late - runtime . use dynamic keyword as type is unknown at compile time.
         16. VAr, dynamic, object
         17. Preprocessor
         18. Dispose vs Finalize
+            Dispose is called manually by the programmer to instantly clear unmanaged resources, while Finalize is called automatically by the Garbage Collector (GC) as a fallback mechanism before an object is destroyed.
         19. Reflection 
-        20. can we define method as dynamic in c#
+            Used to find the custom middleware: 1. Requestdelegate in contructuor argument, Invoke or InvokeAsyn Method have HttpContext.
+            Used to register services in DI container. 
+            Any runtime binding
+        20. can we define method as dynamic in c# 
+            yes
         21. nameof operator
             The nameof operator in C# is a compile-time feature that obtains the name of a variable, type, or member as a string literal.
             string myVariable = "some value";
@@ -359,6 +370,16 @@
             so in that case, we should use await keyword alongside async to make sure next line of code will be executed only after the response comes.
             async should be in front of the method and await should be on front of the line.
 
+            async Task
+            User userId = await fetchUserAsync(); // 5
+            User productId = await fetchProductAsync(userId); // 3
+            User order = await fetchOrderAsync(productId); // 10,
+
+            18.     10 
+            
+
+
+
     5. MultiThreading 
     ------------------
         1. Define Thread
@@ -414,6 +435,9 @@
         3. Services
         ------------
             1. Lifetime
+                Scoped: per request validity. Database operation. 
+                Transient: per class or method. Stock market data. Email service 
+                Singleton: Logging, Cache
             2. registration
         4. Design pattern
         ------------------
@@ -430,13 +454,34 @@
                 2. unit of work
             4. Gang of 4  - https://www.geeksforgeeks.org/system-design/gang-of-four-gof-design-patterns/
             5. clean architecture c#
+                Presentation
+                Application
+                Core
+                Infrastructure.
             https://www.youtube.com/watch?v=LL6h3zVYz8A&list=PLJhxHp6j1l-8_kjEL2hVJDs0_4eJbHtWH&index=3  
 
         5. API lifecycle
+            1. Exception handler Middleware
+            2. HSTS middleware : use in production to make sure all http request redirect to https. validate SSL certificate.
+            3. Static file if MVC
+            4. Routing
+            5. Authentication
+            6. Authorization
+            CORS 
+            7. Controller bidning
+            8. Model binging
+            9. Action Method: httpGet, httpPost
+            10. Service 
+            11. Repository
+            12. Database then result.
+
+            App.Run() // short circuit 
+
         6. Logger
         ----------
             1. ILogger
             2. SeriLog
+            3. Azure applicatrion insughts
         7. Swagger (Open API)
             1. Definition & registration
             2. Add Authentication token
@@ -448,18 +493,22 @@
             1. DTO 
             2. Annotation 
             3. Validation
+            4. Fluent Validation
         11. AppSettings
         12. LaunchSettings
         13. .csproj & .sln file 
         14. Query vs Path Parameter 
         15. 3rd party API call  .. httpClient
         16. Standardize Error Response - ProblemDetails
+
     2. Entity Framework
     ---------------------
         1. DbContext setup
         2. OnModelCreating
         3. AddAsync, FindAsync, Remove, SavechangesAsync, ExecuteUpdate, Update, SetValues, >where, select, 
+        4. GroupJoin , Join, Include, Proxies,  
     3. Dapper
+    =======================
             How does Dapper handle transactions across multiple queries?
             How can you optimize Dapper queries for large datasets?
             How does Dapper handle parameterized queries with dynamic SQL?
@@ -469,6 +518,7 @@
             Stored procedure in dapper 
             Lazy loading in dapper
             parametrized query in dapper, sql injection safe
+
     4. Authentication & Authorization
     ---------------------------------
         1. OAuth 2.0
@@ -519,6 +569,36 @@
 --------------------
     1. CRUD 
     2. JOINS // select b.title, a.name from Book as b outer join author as a ON b.id == a.id;
+
+        var rightJoinQuery = context.Departments // 1. Start with the RIGHT table
+            .GroupJoin(
+                context.Employees,               // 2. Pass the LEFT table
+                dept => dept.Id,                 // 3. Right table key selector
+                emp => emp.DepartmentId,         // 4. Left table key selector
+                (dept, empGroup) => new          // 5. Result selector (Right entity + matching Left group)
+                { 
+                    Dept = dept, 
+                    EmpGroup = empGroup 
+                })
+            .SelectMany(
+                x => x.EmpGroup.DefaultIfEmpty(),// 6. Flatten the group (keeps Right even if Left is empty)
+                (x, subEmp) => new               // 7. Project final flat object
+                {
+                    DepartmentName = x.Dept.Name,
+                    EmployeeName = subEmp != null ? subEmp.Name : null
+                });
+
+            var innerJoinQuery = context.Employees
+                .Join(
+                    context.Departments,
+                    emp => emp.DepartmentId,    // Left table key
+                    dept => dept.Id,            // Right table key
+                    (emp, dept) => new          // Direct access to individual objects
+                    {
+                        EmployeeName = emp.Name,
+                        DepartmentName = dept.Name
+                    });
+
     3. Stored Procedure
     4. Optimization // create index for most used columns in where, order by clause. Select columns. Use Where early in sql. 
     5. Constraint // pk, fk, 
@@ -527,7 +607,30 @@
     8. Functions // min, max, 
     9. View 
     10. GroupBy, Like, Aggregate // group by works with aggregate function Max, Min, Count, 
+        var sortedGroups = context.Employees
+        .GroupBy(emp => emp.DepartmentId)
+        .Select(group => new
+        {
+            DepartmentId = group.Key,
+            EmpCount = group.Count()
+        })
+        .OrderByDescending(g => g.EmpCount) // Sort groups by count (highest first)
+        .ToList();
+
     11. Temporary Table @, @@, CTE 
+    12. Rank vs DenseRanks : Rank provides same rank for same data and next data will have +1 rank.
+        DenseRank provide same rank for same data but do not skip rank for next data.
+        E.g., 90, 80, 80, 70
+        Rank: 1, 2, 2, 4
+        DenseRank: 1, 2, 2, 3
+            SELECT employee_id, name, salary
+            FROM (
+                SELECT employee_id, name, salary,
+                    DENSE_RANK() OVER (ORDER BY salary DESC) AS salary_rank
+                FROM Employees
+            ) as SubQuery
+            WHERE salary_rank = 3;
+
 
 4. Deployment
 ----------------------
@@ -592,6 +695,11 @@
         3. use linq.
     12. Database optimization 
         create index nameIndex on user(name);
+        Sharding technique
+        Partition technique
+        Where should be used first before any manipulation.
+        Read replica DB
+        Primary DB
 
 6. Unit Testing
 -----------------------

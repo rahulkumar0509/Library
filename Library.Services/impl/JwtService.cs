@@ -37,8 +37,8 @@ namespace Library.Services.Impl
                     TokenType = "Bearer",
                     Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.UtcNow.AddMinutes(30),
-                    Issuer = _config.GetSection("JWT").GetSection("Issuer").Value,
-                    Audience = _config.GetSection("JWT").GetSection("Audience").Value,
+                    Issuer = _issuer,
+                    Audience = _audience,
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenSecretKey), SecurityAlgorithms.HmacSha256Signature)
                 };
 
@@ -59,7 +59,7 @@ namespace Library.Services.Impl
             { 
                 ValidIssuer = _config["JWT:Issuer"],
                 ValidAudience = _config["JWT:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenSecret))
             };
             SecurityToken ValidatedToken;
             try

@@ -1,3 +1,15 @@
+
+what is sql dataset. 
+Q: in sql dataset where no of columns is not fix then how to enter the records
+A: Store Data as JSON o
+A: The EAV model is a classic relational design for data with an unknown or large number of attributes
+A: If you must add actual physical columns to a table as they appear, you can use Dynamic SQL.
+Use a script to check if a column exists. If it doesn't, use an ALTER TABLE statement to add it before performing the INSERT.
+A: No Sql 
+
+
+
+
 1. Describe dependency injection, its benefits, and different scopes in ASP.NET Core. 
     Dependecny Injection is a design pattern used to inject a service into class. It can be achieved by constructor injection, property injection or method injection.
     DI is a core part of framework. It provides loose coupling making them independent and easy to modfiy and maintain. 

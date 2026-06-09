@@ -83,7 +83,7 @@ Here, Docker’s internal DNS resolves sqlserver → SQL Server container.
 1. Create Dockerfile
 2. Get Dotnet sdk and build runtime.
 3. FROM mcr.microsoft.com/dotnet/sdk as base 
-4. FROM mcr.microsoft.com/dotnet/build as build
+4. FROM mcr.microsoft.com/dotnet/build as build 
 
 WORKDIR /
 

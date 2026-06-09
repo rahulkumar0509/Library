@@ -1,0 +1,129 @@
+Core Concepts:
+============================
+1. String
+
+2. Array
+
+3. List
+
+4. ArrayList
+
+5. Stack
+
+6. Queue
+
+7. Priority Queue
+
+8. Searching Binary Search
+
+9. Sorting Merge Sort
+
+10. Dictionary & HashTable
+
+11. HashSet // store single unique value
+
+12. Two Pointer & Sliding Window
+
+13. Tree LinkedList
+
+14. Greedy 
+
+
+
+
+
+Priority queue
+Queue
+Stack 
+Dictionary
+Leetcode 239, 347, 862, 1438, 2653, 438, 643, 1838, 20, 32
+Leetcode 1, 200, 146, 3, 42, 56, 200, 33, 121, 239, 
+
+Leetcode 239
+====================
+Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Return max number in Sliding window`
+Output: [3,3,5,5,6,7]
+
+Leetcode 496
+=====================
+Input: nums1 = [4,1,2], nums2 = [1,3,4,2]
+find next greater element of nums1 element from nums2 matching element
+Output: [-1,3,-1]
+
+Leetcode 121
+====================
+Find the profit from buying and selling stocks.
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+
+Stack
+=====================
+Stack data = new Stack<string>();
+data.Push("Apple");
+data.Push("Orange");
+data.Push("Banana");
+data.Pop(); // LIFO Banana
+
+foreach(string fruit in data){
+    Console.WriteLine(fruit); //  Orange, Apple
+    // it will loop from top to bottom, means last in will print first.
+}
+
+To print from Bottom to top
+string[] arr = data.ToArray();
+for(let i=Length-1; i>=0; i--){
+    Console.WriteLine(arr[i]);
+}
+
+String methods
+==================================================================
+string name = "Rahul Kumar";
+
+1. Split into string array
+    name.Split(" "); // ["Rahul", "Kumar"]
+    s.Substring(0,3) // will return "Rah"
+    s.Replace("a", "Z") // RZhul KumZr
+    s.Trim() //. remove leading trailing spaces
+    string.Join("O", s.Split(" "));   // return new string 
+    s.Contains("o") // false
+    s.IndexOf("a") // 4
+    s.StartsWith("Ra") // true
+    s.EndsWith("ar") // true
+    string.IsNullOrEmpty(s) // true
+    s.ToUpper() // RAHUL Kumar
+    s.ToLower() // rahul Kumar
+    s.Length // 11
+
+2. reverse a string
+    char[] arr = s.ToCharArray();
+    Array.Reverse(arr);
+    new String(arr);
+
+    string rev = "";
+    int n = s.Length;
+    for(int i =n-1; i>=0; i--){
+        rev += s[i];
+    }
+    Console.WriteLine(rev);
+
+3. Array methods:
+
+Array.Sort(arr, (a,b)=>a-b);
+Array.Reverse(arr);
+Array.IndexOf(10);
+Array.BinarySearch(arr, 20)
+Array.Find(arr, num=> num == 30)
+
+4. using System.LINQ
+    you can use it on collection.
+
+    .Where(x=>x==20)
+    .Max()
+    .Min()
+    .Single(x=>x==20)
+    .Any(x=>x==20)  // true
+    .FirstOrDefault()
+    .Find
+    arr.OrderByDescending(num=>num).ToArray() // by default it works for List
+    arr.OrderByDescending(num=>num).ToArray() // ascending

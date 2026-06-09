@@ -32,3 +32,25 @@ lazy loading vs early loading
 Global exception handling middleware
 Authorization middleware
 HttpPatch Doc 
+
+1. All http verbs and their difference: GET, POST, PUT, DELETE, PATCH & OPTIONS
+2. Query vs path parameter: 
+3. Controller helper meethod for return: OK(), NotFound(), BadRequest(), NoContent(), Conflict(), REdirect()
+4. FromBody, FromQuery, FromRoute, FromForm, FromHeader
+5. Read Headers: Request.Headers
+6. Read Authorization : Token
+7. [Authorize], [ApiController], [Route("/api/[controller]")], [EnableCors("name")],
+8. SeriLog, Logger
+9. Statuc code: 200, 404, etc
+10. REST vs SOAP definition
+11. WEB 2.0 vs 3.0
+12. HTTPS vs HTTP
+13. API lifecycle : 
+14. Eager Loading vs Lazy loading in entity framework and dapper
+15. how to get only 50 records from table in entity framework
+16. How to implement pagination in EF core and dapper 
+17. Validation on Model : Data annotation, Create validation class using Fluent Validator.
+18. Filter vs Middleware Resource filter 
+19. Return all response in particular format.
+20. Image upload in Database, and response it. how to use Base64 string. 
+21. ADO.net vs Entity Framework vs Dapper.

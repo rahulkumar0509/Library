@@ -1,6 +1,8 @@
 docker run --name sql_server_container -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=rahul@123" -p 1433:1433 -d mcr.microsoft.com/azure-sql-edge:latestdotnet --list-runtimes
 
 1. How to install root certificate in database and use it for connection in code.
+    usually we install the certificate in the machine and use the path in database connection string sslrootcert.
+    
 2. Path vs Query Parameter
 
 Topic to complete

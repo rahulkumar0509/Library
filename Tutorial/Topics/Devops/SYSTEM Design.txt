@@ -1,3 +1,84 @@
+
+                                                High Level Design
+====================================================================================================================
+1. Application starts with hitting the aplication url in the browser
+2. The request goes to Domain Name service, it find the mapped IP address and return back to browser.
+3. This IP can be CDN IP adress, API gateway server IP, Load Balancer IP or the Application server IP.
+    3.1 Large services use robust DNS managers (like Amazon's own Route 53) to handle massive traffic by assigning different IP addresses based 
+        on your geographical location and server loads, but the final output is always an IP address,
+4. The Angular app must be deployed at some blob storage location and will have different url, IP address.
+5. The API services like order, product, user service must be running on different server url, IP address.
+6. User should not see the different url while navigating and just see amazon.com/order, /products
+7. For this we need load balancer so everytime the request comes from the user browser it will hit the load balancer first
+    Load balancer will receiver amazon.com it will hit to mapped url: azure.websites.net/amazon and will load the storage account 
+    startup html file , index.html for angular.
+8. index.html will load angular routing code which have mapped the login screen as default url.
+9. on click of login it will hit the amazon.com/login and load balancer will inspect the url and map /product to 
+    a healthy server from product service group. 
+10. Here, product service group is collection of multiple server running Product micro service.
+11. Load balancer have its own rule set to map the incoming url to actual service group. 
+12. Now lets introduce API Gateway
+13. if you have API Gateway then it will be the front door of the application so now all the request should come to API gateway.
+14. angular will have api.amazon.com for any backend service.
+15. User request hits the API gateway.
+16. API gateway performs tasks like Authentication, Authorization, Rate limiting, Caching 
+    publicly most requested data should be cached, like product info, Help content, FAQ
+17. Also does Protocol Translation: rest to gRPC or websocket.
+18. Also observability: unified logging, monitoring and analytics.
+19. Also request routing 
+20. Also Aggregation: Combines results from multiple microservices into a single response, reducing the number of round trips for the client.
+21. So, from now the user request will go to API gateway first, it will do check above operation and then call the required service and 
+    return the response. 
+22. Once the request is done with API gateway it will come to Internal load balancer which will call the healthy available server from the cluster.
+23. Lets consider we have Order microservice.
+24. Now this service can connect to multiple components 
+25. For data fetching, it can either go to Redis(Caching) or Database if cache fail. OR elasticSearch for complex query.
+26. It can connect to Worker service to run any batch processing.
+27. Logging aggregator: can connect to SEQ or azure monitor using serilog.
+28. connect to other microservice using sync or async call.
+29. For sync call use REST API, gRPC or GraphQl
+30. For Async or Event driven use RabbitMQ or Kafka
+31. For highly available, fault tolerence, use Polly library to handle the Retry pattern, Circuit breaker pattern, Timeout pattern
+32. Use HealthCheck for application and DB both to check the health of service.
+33. For observability, use serilog, Azure monitoring, external tools like splunk longs.
+34. Define Health check url for api and database.
+35. Use Datadog tool to monitor the health and performance of their entire technology stack. 
+36. Check metrics like performance, request rate, CPU load, memory usage. 
+
+whats is Database Replication
+================================
+1. Database Sharding to deploy multiple server horizontally.
+    Sharding technique splits the data for required table where data grows rapidly like order, transaction, user.
+    Need to decide sharding Key like order id, User id, 
+    Decide the rule or pattern like % 4, user id divide by 4 =0, goes to 1st table, then 2nd , then 3rd
+2. Use Azure cosmos for No SQL Database
+
+How to build fault tolerant application in dot net ?
+========================================================
+1. Scale the application horizontally
+2. use polly 
+3. Use CQRS, read replicas
+4. Use Message broker like RabbitMQ to communicate asyn so system do not need to wait for blocked service.
+5. Prefer aync communication everywhere.
+
+
+When to use NoSQL DB:
+=========================
+1. When columns are not fixed for for any entity. 
+    For e.g., Products can different column like Shirt will have the size column while mobile will not.
+    So, better to store product info as json against product id in MongoDB.
+
+2. Shopping cart 
+    can store the cart info in Redis because the transaction is yet to be happen.
+    to ensure low-latency performance.
+
+3. Orders Archiving
+    You can move "Completed" or "Cancelled" orders into a wide-column store like Cassandra or Azure Cosmos DB.
+    These databases are designed to scale horizontally across hundreds of servers, making them ideal for analytical 
+    queries and long-term storage without slowing down the primary checkout flow.
+
+Idempotency to handle duplicaste orders
+
 OSI Model
 ---------------
 7 layer and protocol and their use in real time
@@ -6,4 +87,17 @@ API: REST vs WebSocket vs GraphQl
 
 Twitter Snowflake 
 Zookeeper vs API Gateway
+=====================================================================================================================================================
 
+1. Web Application Firewall(WAF)
+---------------------------------
+WAF stands for Web Application Firewall. 
+It is a cloud-native security service that sits in front of web applications to filter, monitor, 
+and block malicious HTTP/HTTPS traffic. It specifically protects web apps from application-layer 
+attacks like SQL injection (SQLi), Cross-Site Scripting (XSS), malicious bots, and zero-day exploits.
+
+WAF deployed at Global and Regional load balancing services.
+For Global, WAF is deployed with Azure Front door at the netwrok edges to protect applications globally,
+blocking attacks close to the source before they reach the application.
+
+For Regional WAF, we deploy it along with Application Gateway that inspects traffic 
