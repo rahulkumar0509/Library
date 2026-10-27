@@ -1,0 +1,64 @@
+Async Await
+==============================
+Main thread - program executes
+
+.ToListAsync() // Async // Eager loading 
+
+IEnumerable<User> users = context.Users;
+users.find()
+
+
+ToListAsync() vs without ToList()
+=========================================
+1. When we want to execute the sql immediately and load the data into the memory.
+2. Make sure all the filters like .where, .take defined then after user .ToList().
+3. Without .ToList(), code will execute the sql multiple time if we are doing any operation on result.
+    // ❌ BAD: Hits the database three separate times
+    var query = db.Users.Where(u => u.IsActive);
+    var count = query.Count(); 
+    var first = query.First(); 
+
+
+4. When millions of recrds are there then dont use ToList() because everything will load into ram  and app becomes slow.
+5. Without toList if you perform .remove(), it will actually deletes the records from DB. so better use .ToListAsync() to do oepration in memory.
+
+
+Task<string> vs Task.Run()
+=========================================
+Task (from System.Threading.Tasks) is a class that represents an asynchronous operation — some unit of work that 
+may still be running, may complete in the future, and will eventually produce a result (or just complete, if it's non-generic).
+
+Task<string> means there is async process or promise that some taks will be completed in sometime and will return string.
+
+Key Nuances & Details to Keep in Mind:
+---------------------------------------
+Returning Data: Task.Run returns a Task or Task<T>. To get the data back, you use await on the task (e.g., var result = await Task.Run(() => ComputeSomething());).
+
+1. CPU-Bound vs. I/O-Bound:
+
+    Task.Run is designed for CPU-bound work (heavy calculations, image processing, cryptography) where you want to shift work off the main thread.
+
+2. For I/O-bound work 
+    (like reading files, querying databases, or making HTTP requests), you should not wrap it in Task.Run. 
+    Those operations are already asynchronous natively (e.g., HttpClient.GetAsync()), and wrapping them in Task.Run 
+    just wastes a ThreadPool thread waiting for the I/O to finish.
+
+We have run method inside which we can pass any method or direct computation/operation which will run in async 
+and will return the data. it will run tha task in new separate thred from thread pool.
+
+why Task.Result and .Wait() gives deadlock
+==============================================
+it is used in dot net framework application mostly and not in dot net core. 
+it is bad practice in dot net core because .result will wait the main thread to return data but operation is async. so 
+better use async await. 
+
+
+Thread vs Task
+==========================================
+We dont use Thread class for parallelism instead we use TPL task parallel library.
+
+Task.Run() does nto create new thread and instead it queue the newe taask to the Thread pool.
+Thread pool will have multiple thread depending on CPU cores.
+each available thread will pick one task and after completes takes another. 
+
+Thread class only guarantess new thread. 

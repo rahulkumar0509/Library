@@ -1,10 +1,14 @@
+https://medium.com/@kanyakrishi/httpclient-vs-httpclientfactory-b2939d03e72b
+
+HttpClient vs HtppClientFactory
+
 1. Language
 -------------
     1. C# Basics
     --------------
         1. Language definition & overview.
         2. CLR
-        3. compiler & running environments
+        3. compiler & running environments.
         4. Primitive & Non-primitive data types
         5. Loops, Conditions, Functions, Methods
         6. List & ArrayList, Generic Collections
@@ -13,7 +17,7 @@
         9. CONST, Readonly, Is , As operator
         10. == vs .Equals() Methods
         11. String vs StringBuilder 
-        12. Casting
+        12. Casting Type int a = (int)b;
         13. Boxing & Unboxing
         14. Managed vs Unmanaged Code
         15. Early vs Late binding
@@ -21,7 +25,11 @@
         17. Preprocessor
         18. Dispose vs Finalize
         19. nameof operator
-        20. HashSet & Dictionary generic collection, 
+        20. HashSet, HashMap, Set, & Dictionary, HashTable non/generic collection, 
+        21. List, ArrayList, Stack, Queue, PriorityQueue, Dictionary, SortedDictionary, SortedList, HashSet, SortedSet, 
+        22. Thread safe Alternative: ConcurrentDictionary, ConcurrentQueue, ConcurrentStack, ConcurrentBag(List)
+
+
     2. C# OOP
     -----------
         1. Class & Objects
@@ -32,8 +40,10 @@
                 1. Private Constructor & its uses
                 2. Static constructor & its uses
                 3. Copy constructor - provides deep copy. takes existing obj as argument
-            4. Abstract class
+            4. Abstract class// can we make object of abstract class in c#
+                A class cannot be both abstract and static
             5. Access Modifier
+                private protected(AND), protected internal(OR)
         2. Static
         -----------
             1. Static class
@@ -51,17 +61,18 @@
             6. override methods
         5. Encapsulation
         6. Abstraction
-        7. Extension methods
-        8. method hiding new keyword
+        7. Extension methods // this 
+        8. method hiding new keyword // 
     3. C# Console application
     --------------------------
-        1. ref, In & out operator
+        1. ref, In & out operator //
     4. Asynchronous programming
     -----------------------------
         1. why to use?
         2. Multiple async handling
         3. Task.Start vs Task.Run()
         4. Async Await 
+        5. CPU bound task vs I/O bound tasks
     5. MultiThreading 
     ------------------
         1. Define Thread
@@ -75,7 +86,7 @@
         1. MVC 
         -------
             1. Http method verbs
-            2. Http Status code
+            2. Http Status code 200, 201, 204(No content), 302, 304(not modified),400(Bad request) 401, 403, 404, 429(too many request), 500, 502(bad gateway), 503(service unavailable), 504(gateway timeout)
             3. Controller definition
             4. Register & Map controller
             5. Route
@@ -130,8 +141,13 @@
         12. LaunchSettings
         13. .csproj & .sln file 
         14. Query vs Path Parameter 
-        15. 3rd party API call  .. httpClient .. optimize 
+        15. 3rd party API call  .. httpClient .. optimize  --- learn
         16. Standardize Error Response - ProblemDetails
+        17. Task.Result or Task.Wait() - 
+            No, you should never use Task.Result or Task.Wait() in a modern C# Web API.
+            Both of these mechanisms force asynchronous code to run synchronously by freezing the executing thread until the background work completes. 
+            In a modern web application, doing this can trigger thread starvation or severe performance bottlenecks. 
+            Instead, you should always use the async and await keywords.
 
     2. Entity Framework
     -------------------------
@@ -249,11 +265,11 @@
         what kind of data should be cached? https://learn.microsoft.com/en-us/aspnet/core/performance/caching/overview?view=aspnetcore-10.0
 
     3. Database 
-    4. Polling
+    4. Polling -- learn 
     5. Event architechcture
     6. SignalR
     7. Websockets
-    8. Message Queue, Pub/Sub.
+    8. Message Queue, Pub/Sub. -- learn
     9. Lazy loading
     10. High Traffic & Spontaneous request 
     11. security in dot net application
@@ -290,5 +306,10 @@
 6. Unit Testing
 -----------------------
 - basics 
+
+7. Azure Services
+-----------------------------
+    - User Authentication Jou
+
 
 https://learn.microsoft.com/en-us/dotnet/csharp/

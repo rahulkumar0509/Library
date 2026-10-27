@@ -1,4 +1,5 @@
-This is a classic "Enterprise Grade" pattern. To handle 1,000 records with individual row-level error logging and retry logic, we use a combination of C# (Dapper) for the orchestration and SQL (Stored Procedure) for the heavy lifting.
+This is a classic "Enterprise Grade" pattern. To handle 1,000 records with individual row-level error logging and retry logic, 
+we use a combination of C# (Dapper) for the orchestration and SQL (Stored Procedure) for the heavy lifting.
 
 Step 1: SQL Server Setup
 --------------------------------------
@@ -30,7 +31,8 @@ CREATE TYPE ProductTableType AS TABLE (
 
 Step 2: The Stored Procedure (Row-by-Row Logging)
 --------------------------------------------------------------
-In SQL Server, if one row in a bulk INSERT fails, the whole batch fails. To log specific errors while allowing others to succeed, we use a Cursor inside the Stored Procedure.
+In SQL Server, if one row in a bulk INSERT fails, the whole batch fails. 
+To log specific errors while allowing others to succeed, we use a Cursor inside the Stored Procedure.
 
 SQL
 CREATE PROCEDURE usp_InsertProductsWithLogging
@@ -69,7 +71,8 @@ END
 
 Step 3: C# Implementation with Retry Logic
 --------------------------------------------------------
-We use Polly (the industry-standard library) to handle Transient Retries (like database deadlocks or network hiccups) before the data even hits the error-handling logic in the Stored Procedure.
+We use Polly (the industry-standard library) to handle Transient Retries (like database deadlocks or network hiccups) 
+before the data even hits the error-handling logic in the Stored Procedure.
 
 C#
 using Dapper;
@@ -119,11 +122,13 @@ Why this is the "Best" Way
 Network Efficiency: You send all 1,000 records in one single trip to the database.
 Resilience: The Polly Retry Policy handles infrastructure failures (the "outside" errors).
 Data Integrity: The SQL TRY...CATCH handles data-specific failures (the "inside" errors) like duplicate SKUs or invalid formats.
-Audit Trail: By using an ErrorLog table, your Web API can immediately return a success message while your background processes (or admins) check the error table for "bad data" reports.
+Audit Trail: By using an ErrorLog table, your Web API can immediately return a success message while your background 
+processes (or admins) check the error table for "bad data" reports.
 
 What about Exception Handling in the API?
 -------------------------------------------------
-If the entire database is down, the retryPolicy will eventually throw an exception. You should catch this in your Controller:
+If the entire database is down, the retryPolicy will eventually throw an exception. 
+You should catch this in your Controller:
 
 C#
 [HttpPost("bulk-insert")]

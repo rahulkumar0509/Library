@@ -1,0 +1,103 @@
+Plan to study
+---------------------
+
+1. LLD, creating classes and interfaces https://algomaster.io/learn/lld
+2. Azure Service Bus
+3. Managed Identity
+4. Azure functions
+5. Azure Blob Storage
+6. Azure cosmos DB
+7. Whatsapp System Design 
+8. Ciruit breaker - retry, dlq, and polly for timeout, circuit break.
+9. Stored procedure
+10. AKS Kubernetes
+
+
+====================================================================================================================================
+
+1. Azure Entra Id setup
+    - Add/Invite user
+    - App registration
+        - UI App (RedirectUrl)
+            - Access Token
+            - Refresh Token 
+            - ID Token 
+            - API Permission
+                - API Gateway url
+                - Dotnet API microservice url
+        - API App registration (No Redirect Url)
+            - Expose an API (api://cliendId)
+            - Scope (Access_As_user)
+            - Client Secret
+            - App Role(Managed Identify)
+        - Enterprise application
+            - Product API
+                - Add user (Order MI Access)
+
+2. Service Deployment
+    - VM // try this
+    - AppService
+    - Azure SQL Database
+3. Storage Account 
+    - Container Storage
+        - BLOB
+        - Static Web App (UI App deployment)
+4. API Gateway
+    - APIs
+        - Add microservice
+            - Add endpoints
+            - Add Inbound 
+                - JWT authentication
+                - CORS 
+                - Rate Limiting
+            - Redirect to backend(microservice) auth token
+5. Azure Key Vault // try this
+6. Azure Service Bus:
+    - Queue
+        - Producer
+        - Consumer
+        - acknowledgement
+            - Reply to 
+            - Correlation Id (Message Id)
+            - Separate Queue for response
+    - Topics
+        - multiple Queue
+        - multiple microservice listening to same message.
+    - DLQ 
+7. Managed Identity
+8. Microservice to Microservice Sync call 
+    - Managed Identity
+    - Client Secret
+9. Token Validation in Microservice
+10. Azure Cache for Redis
+11. Azure Cosmos DB
+ 
+
+===============================================================================================================
+
+
+Lets Design Whatsapp 
+=======================
+1. One to One Messaging 
+2. User enters the application and login with email, they login with otp.
+3. Setup Azure Entra ID, App resigration for UI application with redirect url
+4. User should be able to access the My profile page.
+5. Client should get the access token of API userService registration
+6. from user service access the database and fetch user details
+7. navigate to chat section.
+8. Invite friend button
+9. Search user with email id 
+10. User service will have its own database of users. 
+11. From there it will get the user.
+12. User open the chat of user.
+13. It hits chat api server with the access token.
+14. There should be chat dtaabase with table having sender Id, Receiver Id, message, 
+15. In Ui all the messages should be displayed order by date.
+16. User type and send the message to receiver.
+17. it hits the message signalR service in dot net. 
+18. signalR service checks if receiver is online or not.
+19. if user is not online then the message is sent to azure service bus queue.
+20. When user comes online he receives notification. 
+21. for offline user sends firebase push notification
+22. all the recent messages should be stored in redis 
+

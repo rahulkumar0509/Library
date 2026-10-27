@@ -34,12 +34,95 @@ Gang of 4 is basically 4 scientists have defined 23 design pattern whican can be
         
         When object creation is little complex and involves multiple checks then better to define factory for separation of concerns.
 
+        True factory method pattern example:
+        // --------------------------------------------------
+            // 1. PRODUCT INTERFACES & CLASSES
+            // --------------------------------------------------
+            // The abstract product or interface that defines the output
+            public interface IDocument
+            {
+                void PrintFormat();
+            }
+
+            // Concrete Product A
+            public class PdfDocument : IDocument
+            {
+                public void PrintFormat() => Console.WriteLine("Rendering PDF layout...");
+            }
+
+            // Concrete Product B
+            public class WordDocument : IDocument
+            {
+                public void PrintFormat() => Console.WriteLine("Rendering Microsoft Word layout...");
+            }
+
+            // --------------------------------------------------
+            // 2. CREATOR CLASSES (THE INHERITANCE CORE)
+            // --------------------------------------------------
+            // Base Creator class utilizing inheritance
+            public abstract class DocumentCreator
+            {
+                // The Factory Method - must be implemented or overridden by subclasses
+                public abstract IDocument CreateDocument();
+
+                // Core business logic operates on the abstraction, not the concrete classes
+                public void ProcessDocument()
+                {
+                    IDocument doc = CreateDocument(); // Calls the overridden method in the subclass
+                    doc.PrintFormat();
+                }
+            }
+
+            // Subclass Creator A
+            public class PdfCreator : DocumentCreator
+            {
+                // Overriding the base factory method via inheritance
+                public override IDocument CreateDocument()
+                {
+                    return new PdfDocument();
+                }
+            }
+
+            // Subclass Creator B
+            public class WordCreator : DocumentCreator
+            {
+                // Overriding the base factory method via inheritance
+                public override IDocument CreateDocument()
+                {
+                    return new WordDocument();
+                }
+            }
+
+            // --------------------------------------------------
+            // 3. CLIENT EXECUTION
+            // --------------------------------------------------
+            public class Program
+            {
+                public static void Main()
+                {
+                    // Client interacts with the base class but instantiates a specific subclass
+                    DocumentCreator creator;
+
+                    // Choose PDF via inheritance
+                    creator = new PdfCreator();
+                    creator.ProcessDocument(); // Outputs: Rendering PDF layout...
+
+                    // Choose Word via inheritance
+                    creator = new WordCreator();
+                    creator.ProcessDocument(); // Outputs: Rendering Microsoft Word layout...
+                }
+            }
+
+
     3. Dependency Injection:
         It is not from goF pattern.
+        
+    4. Builder Pattern
 
 2. Structural
     It defines how the classes and objects are related and bound together.
     1. Adapter pattern:
+    =======================
         When two interfaces are not compatible to work together we can create a Adapter Class which bridges the agp between both.
         The Adapter Design Pattern is a structural pattern that allows two incompatible interfaces to work together.
 
@@ -57,6 +140,7 @@ Gang of 4 is basically 4 scientists have defined 23 design pattern whican can be
         Best for legacy or 3rd party Api call. 
 
     2. Facade Pattern
+    =======================
         Facade means fake big door or fake face to hide the multiple things behind.
         The facade design pattern provides a simple, unified interface to comlex multiple classes.
 
@@ -84,6 +168,7 @@ Gang of 4 is basically 4 scientists have defined 23 design pattern whican can be
                 
 3. Behavioural
     1. Strategy pattern 
+    ================================
         To build the Strategy pattern, you need exactly three components:
         
         The Strategy Interface: 
@@ -94,31 +179,143 @@ Gang of 4 is basically 4 scientists have defined 23 design pattern whican can be
         The Context: 
         The class that uses the strategy and can switch between them at runtime.
 
-        public class ShoppingCart
+        1. Interface
+            public interface IPaymentStrategy
+            {
+                void Pay(decimal amount);
+            }
+
+        2. Concrete Class
+            public class CreditCardPayment : IPaymentStrategy
+            {
+                public void Pay(decimal amount)
+                {
+                    Console.WriteLine($"Paid {amount} using Credit Card");
+                }
+            }
+
+            public class PayPalPayment : IPaymentStrategy
+            {
+                public void Pay(decimal amount)
+                {
+                    Console.WriteLine($"Paid {amount} using PayPal");
+                }
+            }
+        
+        3. Composition in context
+            public class ShoppingCart
+            {
+                private readonly IPaymentStrategy _paymentStrategy;
+
+                public ShoppingCart(IPaymentStrategy paymentStrategy)
+                {
+                    _paymentStrategy = paymentStrategy;
+                }
+
+                public void Checkout(decimal amount)
+                {
+                    _paymentStrategy.Pay(amount);
+                }
+            }
+        
+        uses
+        -------
+            IPaymentStrategy payment = new CreditCardPayment();
+            ShoppingCart cart = new ShoppingCart(payment);
+            cart.Checkout(500);
+
+
+    2. Observer Design Pattern
+    =================================
+    The Observer Pattern is a behavioral design pattern where one object (the Subject) automatically notifies multiple 
+    dependent objects (Observers) whenever its state changes.
+
+    Youtube Subscription-> send video upload alerts to all Subscrbers.
+
+
+        // ---------------Observer Interface----------------
+        public interface IOrderObserver
         {
-            private IPaymentStrategy _paymentStrategy;
+            void Update(Order order);
+        }
 
-            // Inject the initial strategy via constructor
-            public ShoppingCart(IPaymentStrategy paymentStrategy)
+        // ---------------Concrete Observers---------------
+        public class EmailNotification : IOrderObserver
+        {
+            public void Update(Order order)
             {
-                _paymentStrategy = paymentStrategy;
-            }
-
-            // Allow changing the strategy dynamically at runtime
-            public void SetPaymentStrategy(IPaymentStrategy paymentStrategy)
-            {
-                _paymentStrategy = paymentStrategy;
-            }
-
-            public void Checkout(decimal totalAmount)
-            {
-                // Delegates the work to the current strategy
-                _paymentStrategy.ProcessPayment(totalAmount);
+                Console.WriteLine($"Email: Order {order.OrderId} confirmation sent.");
             }
         }
 
+        public class SmsNotification : IOrderObserver
+        {
+            public void Update(Order order)
+            {
+                Console.WriteLine($"SMS: Order {order.OrderId} confirmation sent.");
+            }
+        }
 
-    2. Unit of work pattern 
+        public class WhatsAppNotification : IOrderObserver
+        {
+            public void Update(Order order)
+            {
+                Console.WriteLine($"WhatsApp: Order {order.OrderId} confirmation sent.");
+            }
+        }
+
+        // ---------------Subject--------------- // Composition : OrderService compose all observer objects.
+        public class OrderService
+        {
+            private readonly List<IOrderObserver> _observers = new();
+
+            public void Subscribe(IOrderObserver observer)
+            {
+                _observers.Add(observer);
+            }
+
+            public void Unsubscribe(IOrderObserver observer)
+            {
+                _observers.Remove(observer);
+            }
+
+            public void CreateOrder(Order order)
+            {
+                Console.WriteLine($"Order {order.OrderId} created.");
+
+                // Notify all observers
+                foreach (var observer in _observers)
+                {
+                    observer.Update(order);
+                }
+            }
+        }
+
+        public class Order
+        {
+            public int OrderId { get; set; }
+        }
+
+        ------------------------------Execution------------------------------
+        class Program
+        {
+            static void Main()
+            {
+                var orderService = new OrderService();
+
+                // Register observers
+                orderService.Subscribe(new EmailNotification());
+                orderService.Subscribe(new SmsNotification());
+                orderService.Subscribe(new WhatsAppNotification());
+
+                // Create Order
+                var order = new Order { OrderId = 101 };
+
+                orderService.CreateOrder(order);
+            }
+        }
+    
+    3. Unit of work pattern 
     
         Entity framework:
             It keeps track of every change made to your entities during a single session.

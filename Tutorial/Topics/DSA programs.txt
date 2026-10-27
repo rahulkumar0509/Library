@@ -1,7 +1,6 @@
 Core Concepts:
 ============================
 1. String
-
 2. Array
 
 3. List
@@ -19,6 +18,7 @@ Core Concepts:
 9. Sorting Merge Sort
 
 10. Dictionary & HashTable
+
 
 11. HashSet // store single unique value
 
@@ -127,3 +127,23 @@ Array.Find(arr, num=> num == 30)
     .Find
     arr.OrderByDescending(num=>num).ToArray() // by default it works for List
     arr.OrderByDescending(num=>num).ToArray() // ascending
+
+5. Dictionary Methods:
+    Dictionary<string, string> data = new Dictionary<string, string>();
+    Dictionary<string, string> data = new Dictionary<string, string> {
+        {"name", "rahul"},
+        {"Sex", "male"}
+    }
+
+    data.Add({"name", "kumar"});
+    data.Remove("name");
+
+    Keys should not be duplicate.
+
+    if(data.ContainsKey("name")) // check key
+    foreach(var{key, value} in data){}
+    data.Count // to count
+    data.Clear() // clear all data.
+    data.ContainsValue("rahul");
+    data.Equals({"name", "rahul"})
+    

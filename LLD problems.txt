@@ -1,0 +1,394 @@
+Concepts
+=====================
+1. Class Relationships:
+
+    1. Aggregation(Has-A): The parent has children, but children can exist independently.
+        Facade 
+    2. Association (Use-A):  One class knows about another.
+        Adapter Design Pattern
+        Chain of Responsibility Pattern
+        Observer
+    3. Composition (Owns-A): Strong ownership. If parent dies, child dies.
+        Singleton Design Pattern
+        Composite Pattern
+        Decorator Pattern
+        
+    4. Relatization (Interface pattern)
+
+    5. Generalization (Is-A Inheritance pattern)
+        Factory Method
+    6. Dependency Pattern
+
+    7. Dependency Injection
+
+===============================================Problems ====================================================
+
+1. Design system for online system where user can customtize the AC unit and purchase.
+2. Each Unit -> Basic Model -> Temperature adjust
+3. optional feature: HEPA filter, upgraded insulation, smart power consumption tracker in any combination
+4. Skeleton classes, design artefacts to represent the AC 
+5. class and interface is neough 
+6. Design should allow for unlimited n. of future add on feature wihtout major refactoring. 
+7. focus on extensibility, oop 
+
+public interface IAirConditioner{
+    public string GetDescription();
+    public int getPrice();
+    int Temperature {get; set;}
+}
+
+Class BasicAC: IAirConditioner{
+    public string GetDescription()
+    {
+        return "Basic AC";
+    }
+    public int getPrice()
+    {
+        return 40000;
+    }
+    public int Temperature {get; set;} = 24;
+}
+
+we need to add multiple feature into same component so we need decorator class.
+
+public abstract class AcDecorator: IAirConditioner{
+    public IAirConditioner _Ac;
+    protected AcDecorator(IAirConditioner Ac){
+        _Ac = Ac;
+    }
+    public virtual int Temperature {get=>Ac.Temperature; set=>Ac.Temperature=value;}
+    public abstract string GetDescription();
+    public abstract int GetPrice();
+}
+
+Public class HepaFilterFeature: AcDecorator{
+    public HepaFilterFeature(IAirConditioner ac): base(ac){
+
+    } 
+
+    public override string GetDescription(){
+        return ac.GetDescription() + ", Hepa Filter";
+    }
+
+    public override int GetPrice(){
+        return ac.GetPrice() + 5000;
+    }
+}
+
+public class UpgradedInsulation: AcDecorator{
+    public UpgradedInsulation(IAirConditioner Ac): base(Ac){}
+
+    public override string GetDescription(){
+        return Ac.GetDescription() + ", With upgraded insulation";
+    }
+    public override int GetPrice(){
+        return Ac.GetPrice() + 5000;
+    }
+}
+
+IAirConditioner myCutomAc = new BasicAC();
+myCutomAc = new HepaFilterFeature(myCutomAc);
+myCutomAc = new UpgradedInsulation(myCutomAc);
+
+Console.WriteLine($"AC Description: {myCutomAc.GetDescription()}");
+Console.WriteLine($"AC Price: {myCutomAc.GetPrice()}")
+
+
+Problem 2:
+===========================
+2. Coffee Shop Billing System
+Requirements
+    Base beverages:
+        Espresso
+        Cappuccino
+        Latte
+    Add-ons:
+        Soy Milk
+        Extra Shot
+        Whipped Cream
+        Caramel
+    Example
+        Latte
+        + Soy Milk
+        + Caramel
+        + Extra Shot
+Concepts
+Decorator Pattern
+Dynamic pricing
+Extensible add-ons
+
+
+public Interface ICoffee{
+    public string GetDescription();
+    public int GetPrice();
+}
+
+public class Coffee: ICoffee{
+    public string coffeetype {get; set;}
+    public int coffeeprice {get; set;}
+    public Coffee(string type, int price){
+        coffeetype = type;
+        coffeeprice = price;
+    }
+    public string GetDescription()
+    {
+        return type;
+    }
+    public int GetPrice()
+    {
+        return price;
+    }
+}
+
+public abstract class CoffeeDecorator: ICoffee{
+    public ICoffee _coffee;
+    protected CoffeeDecorator(ICoffee coffee){
+        _coffee = coffee;
+    }
+    public abstract string GetDescription();
+    public abstract int GetPrice();
+}
+
+public class CoffeeWithSoyMilk: CoffeeDecorator{
+    public CoffeeWithSoyMilk(ICoffee coffee): base(coffee){}
+    public override string GetDescription(){
+        return _coffee.GetDescription() + ", Soy Milk";
+    }
+    public override int GetPrice()
+    {
+        return _coffee.GetPrice() + 40;
+    }
+}
+
+public class CoffeeWithCaramel: CoffeeDecorator{
+    public CoffeeWithCaramel(ICoffee coffee): base(coffee){}
+    public override string GetDescription(){
+        return _coffee.GetDescription() + ", Caramel";
+    }
+    public override int GetPrice()
+    {
+        return _coffee.GetPrice() + 30;
+    }
+}
+
+public class CoffeeWithExtraShot: CoffeeDecorator{
+    public CoffeeWithExtraShot(ICoffee coffee): base(coffee){}
+    public override string GetDescription(){
+        return _coffee.GetDescription() + ", Extra Shot";
+    }
+    public override int GetPrice()
+    {
+        return _coffee.GetPrice() + 20;
+    }
+}
+
+ICoffee coffee = new Coffee("Latte", 100);
+coffee = new CoffeeWithCaramel(new CoffeeWithExtraShot(LatteCoffee));
+// Get the end result
+Console.WriteLine(coffee.GetDescription());
+Console.WriteLine(coffee.GetPrice());
+
+3. Requirements
+
+Support:
+Credit Card
+UPI
+PayPal
+Net Banking
+
+Checkout:
+payment.Pay(amount);
+
+public class PyamentResult{
+    public bool Success {get; set;}
+    public string TransactionId {get; set;}
+    public string Message {get; set;}
+}
+
+// Abstraction
+public interface IPayment{
+    PyamentResult Pay(double amount);
+}
+
+// implementation
+public class CreditCardPayment: IPayment{
+    public PyamentResult Pay(double amount){
+        // fetch credit card information and make payment.
+        // return success or error.
+    }
+}
+public class UPIPayment: IPayment{
+    public PyamentResult Pay(){
+        // fetch Redirect UPI screen and make payment.
+        // return success or error.
+    }
+}
+
+// following open/closed principle
+public class PaypalPayment: IPayment{
+    public PyamentResult Pay(){
+        // fetch Redirect paypal and make payment.
+        // return success or error.
+    }
+}
+
+// context or service layer, so client will not know the Strategy
+public class PaymentService{
+    public IPayment _payment;
+    public PaymentService(IPayment payment){
+        _payment = payment;
+    }
+
+    public PyamentResult MakePayment(double amount){
+        _payment.Pay(amount);
+    }
+}
+
+IPayment payment = new PaymentService(new UPIPayment());
+payment.pay();
+
+4. Pattern: Factory + Strategy + Singleton
+Requirements
+
+Design a parking system.
+
+Vehicle types:
+
+Car
+Bike
+Truck
+
+Parking slots:
+
+Small
+Medium
+Large
+
+Rules:
+
+Bike → Small slot
+Car → Medium slot
+Truck → Large slot
+
+Generate ticket when vehicle enters.
+
+Calculate fee when vehicle exits.
+
+public enum VehicleType
+{
+    Bike,
+    Car,
+    Truck
+}
+
+=============Interface Design====================
+public interface IVehicle{
+    public string PlateNumber {get;}
+    public VehicleType Type {get;}
+}
+
+=============Concrete Class=======================
+public class Car: IVehicle{
+    public string PlateNumber {get;}
+    public Car(string Number){
+        PlateNumber = Number;
+    }
+    public VehicleType Type => VehicleType.Car;
+}
+
+public class Bike: IVehicle{
+    public string PlateNumber {get;}
+    public Bike(string Number){
+        PlateNumber = Number;
+    }
+    public VehicleType Type => VehicleType.Bike;
+}
+
+public Interface IParkingSlot{
+    string SlotNumber {get;}
+    void allotParking(IVehicle vehicle);
+    decimal parkingPrice();
+}
+
+public class SmallParkingSlot: IParkingSlot{
+    private IVehicle vehicle;
+    public SmallParkingSlot(IVehicle vehicle){
+        _vehicle = new Bike(vehicle.Number, vehicle.Type);
+    }
+    public void allotParking(IVehicle vehicle){
+        this.vehicle = vehicle;
+    }
+    public double ParkingPrice(){
+        return 100;
+    }
+}
+
+public class MediumParkingSlot: IParkingSlot{
+    IVehicle _vehicle;
+    public MediumParkingSlot(IVehicle vehicle){
+        _vehicle = new Car(vehicle.Number, vehicle.Type);
+    }
+    public string allotParking(){
+        return "Medium Slot";
+    }
+    public double ParkingPrice(){
+        return 150;
+    }
+}
+
+public class LargeParkingSlot: IParkingSlot{
+    IVehicle _vehicle;
+    public LargeParkingSlot(IVehicle vehicle){
+        _vehicle = new Truck(vehicle.Number, vehicle.Type);
+    }
+    public string allotParking(){
+        return "Large Slot";
+    }
+    public double ParkingPrice(){
+        return 200;
+    }
+}
+
+==================Factory Class=======================
+public class ParkingSlotFactory{
+    IVehicle _vehicle;
+    public ParkingSlotFactory(IVehicle vehicle){
+        _vehicle = vehicle;
+    }
+    public IParkingSlot buildParkingSlot(){
+        if(_vehicle.VehicleType == "Bike"){
+            return new SmallParkingSlot();
+        } else if(_vehicle.VehicleType == "Car"){
+            return new MediumParkingSlot();
+        } else{
+            return new LargeParkingSlot();
+        }
+    }
+}
+
+public class ParkingManager{
+    IVehicle _vehicle {get; set;}
+    public ParkingSlotFactory _factory;
+
+    public ParkingManager(IVehicle vehicle){
+        _vehicle = vehicle;
+    }
+
+    public ParkingResponse BookParking(){
+        _factory = new ParkingSlotFactory(_vehicle);
+        IParkingSlot bookedslot = _factory.buildParkingSlot();
+        return new ParkingResponse {
+            slot = bookedslot.allotParking(),
+            vehicletype = _vehicle.VehicleType;
+            plateNumber = _vehicle.PlateNumber;
+            price = bookedslot.ParkingPrice();
+        }
+    }
+}
+
+public class ParkingResponse{
+    string slot {get; set;}
+    string vehicletype {get; set;}
+    string plateNumer {get; set;}
+    double price {get; set;}
+}
